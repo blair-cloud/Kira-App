@@ -1,0 +1,63 @@
+/* Motion is scoped to the landing page and keeps the document in normal flow. */
+.landing-motion { --motion-ease: cubic-bezier(.22, 1, .36, 1); }
+.landing-motion.motion-enhanced[data-motion="running"] [data-reveal] {
+  opacity: 0;
+  translate: 0 22px;
+  transition: opacity 650ms var(--motion-ease), translate 750ms var(--motion-ease);
+  transition-delay: calc(var(--reveal-order, 0) * 70ms);
+}
+.landing-motion.motion-enhanced[data-motion="running"] [data-revealed="true"] { opacity: 1; translate: 0 0; }
+.landing-motion[data-motion="paused"] [data-reveal] { opacity: 1; translate: none; }
+.landing-motion .service-card, .landing-motion .resource-card, .landing-motion .trust-card, .landing-motion .wellness-card {
+  transition: transform 300ms var(--motion-ease), box-shadow 300ms ease, border-color 300ms ease;
+}
+.landing-motion .service-icon, .landing-motion .resource-art svg, .landing-motion .wellness-icon, .landing-motion .trust-card>span { transition: transform 350ms var(--motion-ease); }
+@media (hover: hover) and (pointer: fine) {
+  .landing-motion .service-card:hover, .landing-motion .service-card:focus-visible, .landing-motion .resource-card:hover { transform: translateY(-6px); }
+  .landing-motion .trust-card:hover, .landing-motion .wellness-card:hover { transform: translateY(-3px); box-shadow: 0 18px 38px #17476a12; }
+  .landing-motion .service-card:hover .service-icon, .landing-motion .trust-card:hover>span { transform: translateY(-2px) rotate(-5deg); }
+  .landing-motion .resource-card:hover .resource-art svg { transform: scale(1.08); }
+  .landing-motion .wellness-card:hover .wellness-icon { transform: rotate(-5deg); }
+}
+.wellness-illustration { position: relative; z-index: 1; width: 100%; max-width: 540px; }
+.wellness-illustration svg { display: block; width: 100%; height: auto; }
+.landing-motion .feature-note-top { top: 28px; right: 27px; }
+.landing-motion .feature-note-bottom { bottom: 25px; }
+.wellness-halo { transform-origin: 260px 189px; animation: kira-breathe 7s ease-in-out infinite; }
+.halo-inner { animation-delay: -1.5s; }
+.wellness-leaf { transform-origin: 400px 338px; animation: kira-sway 8s ease-in-out infinite; }
+.wellness-cloud, .wellness-heart-bubble { animation: kira-float 7s ease-in-out infinite; }
+.wellness-heart-bubble { animation-delay: -3s; }
+.wellness-spark { animation: kira-soft-glow 5s ease-in-out infinite; }
+.landing-motion .hero-daily-center { animation: kira-breathe 7s ease-in-out infinite; }
+.landing-motion .hero-daily-orbit-outer { animation: kira-breathe 7s ease-in-out -1s infinite; }
+.landing-motion .hero-daily-spark { animation: kira-soft-glow 5s ease-in-out infinite; }
+.landing-motion .hero-daily-spark.two { animation-delay: -2s; }
+.landing-motion .hero-daily-copy-content { animation: kira-card-change 280ms var(--motion-ease); }
+.landing-motion .feature-note-top { animation: kira-note-float 8s ease-in-out infinite; --note-angle: 5deg; }
+.landing-motion .feature-note-bottom { animation: kira-note-float 8s ease-in-out -4s infinite; --note-angle: -5deg; }
+.landing-motion .ai-chat { animation: kira-float 8s ease-in-out infinite; }
+.landing-motion .ai-chat-right { animation-delay: -4s; }
+.landing-motion .ai-glow { animation: kira-ai-glow 8s ease-in-out infinite; }
+.landing-motion [data-animated-graphic] *, .landing-motion [data-animated-graphic] { animation-play-state: paused; }
+.landing-motion[data-motion="running"] [data-graphic-active="true"],
+.landing-motion[data-motion="running"] [data-graphic-active="true"] * { animation-play-state: running; }
+.motion-preference { position: fixed; right: 20px; bottom: 18px; z-index: 40; display: flex; width: auto; pointer-events: none; }
+.motion-toggle { display: inline-flex; min-height: 40px; align-items: center; gap: 7px; border: 1px solid #dceaf2; border-radius: 9px; background: white; padding: 8px 12px; color: #57798f; font-size: 11px; font-weight: 600; box-shadow: 0 4px 18px #17476a12; pointer-events: auto; }
+.motion-toggle:hover { border-color: #2585c5; color: #1b5278; }
+.motion-toggle:disabled { cursor: default; }
+@keyframes kira-breathe { 0%,100% { scale: 1; } 50% { scale: 1.045; } }
+@keyframes kira-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+@keyframes kira-sway { 0%,100% { rotate: -1.5deg; } 50% { rotate: 2deg; } }
+@keyframes kira-soft-glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes kira-note-float { 0%,100% { transform: translateY(0) rotate(var(--note-angle)); } 50% { transform: translateY(-5px) rotate(var(--note-angle)); } }
+@keyframes kira-ai-glow { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
+@keyframes kira-card-change { from { opacity: .3; translate: 0 5px; } to { opacity: 1; translate: 0 0; } }
+@media (max-width: 560px) { .wellness-illustration { min-width: 340px; } .motion-preference { right: 12px; bottom: 12px; } }
+@media (prefers-reduced-motion: reduce) {
+  .landing-motion *, .landing-motion *::before, .landing-motion *::after { animation: none !important; transition: none !important; }
+  .landing-motion [data-reveal] { opacity: 1 !important; translate: none !important; }
+  .landing-motion .service-card:hover, .landing-motion .resource-card:hover, .landing-motion .trust-card:hover, .landing-motion .wellness-card:hover,
+  .landing-motion .service-card:hover .service-icon, .landing-motion .trust-card:hover>span, .landing-motion .resource-card:hover .resource-art svg,
+  .landing-motion .wellness-card:hover .wellness-icon { transform: none; }
+}

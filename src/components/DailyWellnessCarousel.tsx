@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
+import { createPortal } from 'react-dom'
 import { Activity, Bookmark, BookOpen, Brain, Heart, Leaf, Sparkles, Users, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { WellnessCard } from '../data/wellness'
@@ -71,7 +72,7 @@ export function DailyWellnessCarousel({ compact = false }: { compact?: boolean }
     if (event.key === 'ArrowLeft') { event.preventDefault(); emblaApi?.scrollPrev() }
     if (event.key === 'ArrowRight') { event.preventDefault(); emblaApi?.scrollNext() }
   }
-  return <section className={`wellness-section ${compact ? 'wellness-section-compact' : ''}`} aria-labelledby="daily-heading" onKeyDown={handleKeys}>
+  return <section className={`wellness-section ${compact ? 'wellness-section-compact' : ''}`} data-reveal aria-labelledby="daily-heading" onKeyDown={handleKeys}>
     <div className="shell">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div><span className="eyebrow"><Sparkles size={16} /> A daily pause, just for you</span><h2 id="daily-heading" className="section-title mt-3">Your Daily Wellness Moment</h2><p className="section-subtitle mt-3">A little reminder, a helpful insight, and a moment for yourself.</p></div><div className="flex gap-2"><button type="button" className="carousel-control" onClick={() => emblaApi?.scrollPrev()} aria-label="Previous wellness card">Previous</button><button type="button" className="carousel-control" onClick={() => emblaApi?.scrollNext()} aria-label="Next wellness card">Next</button></div></div>
       {loading ? <div className="mt-9 grid gap-5 md:grid-cols-3" aria-live="polite">{[0,1,2].map(i => <div key={i} className="h-[330px] animate-pulse rounded-[20px] bg-[#e4f0f7]" />)}</div> : error ? <div className="mt-9 rounded-2xl border border-line bg-white p-8 text-center"><p className="text-main">Daily wellness cards could not be loaded.</p><button type="button" className="btn btn-primary mt-4" onClick={() => void load()}>Try again</button></div> : <>
@@ -79,6 +80,6 @@ export function DailyWellnessCarousel({ compact = false }: { compact?: boolean }
         <div className="mt-7 flex items-center justify-between gap-4"><div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Choose wellness card">{snaps.map((_, index) => <button key={index} type="button" className={`carousel-dot ${index === active ? 'carousel-dot-active' : ''}`} aria-label={`Go to wellness card ${index + 1}`} aria-selected={index === active} role="tab" onClick={() => emblaApi?.scrollTo(index)} />)}</div><span className="text-xs font-medium text-secondary">Featured card refreshes daily in Kigali</span></div>
       </>}
     </div>
-    {detail && <CardDetail card={detail} onClose={() => setDetail(null)} />}
+    {detail && createPortal(<CardDetail card={detail} onClose={() => setDetail(null)} />, document.body)}
   </section>
 }
