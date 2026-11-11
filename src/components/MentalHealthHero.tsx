@@ -92,9 +92,9 @@ export function MentalHealthHero() {
       </div>) : error ? <p className="mental-hero-error" role="status">The reflections are unavailable right now. You can still explore our wellness resources below.</p> : Array.from({ length: 7 }, (_, index) => <div key={index} className="mental-fan-skeleton" aria-hidden="true" />)}
     </div>
     {moment && <div className="mental-cycle-controls" role="group" aria-label="Choose a reflection">
-      <button type="button" className="carousel-control" onClick={() => setActiveIndex(index => (index + 6) % 7)}>Previous</button>
+
       <div className="mental-cycle-dots">{moment.cards.map((card, index) => <button key={card.id} type="button" className="mental-cycle-dot" aria-label={`Show reflection ${index + 1}: ${card.title}`} aria-pressed={index === activeIndex} onClick={() => setActiveIndex(index)} />)}</div>
-      <button type="button" className="carousel-control" onClick={() => setActiveIndex(index => (index + 1) % 7)}>Next</button>
+
     </div>}
     <div className="mental-hero-outro shell"><p>Seven small reminders to pause, reconnect, and care for your mental wellbeing.</p><div className="mental-hero-actions"><Link to="/register" className="btn btn-primary">Get Started</Link><Link to="/resources" className="btn btn-outline">Explore Wellness</Link></div></div>
     {selected && <ReflectionDialog card={selected} onClose={() => setSelected(null)} />}
