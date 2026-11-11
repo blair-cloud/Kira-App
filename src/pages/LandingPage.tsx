@@ -1,11 +1,10 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
-import { BookOpen, Brain, CalendarDays, Check, CircleHelp, Heart, HeartHandshake, LockKeyhole, MessageCircle, ShieldCheck, Sparkles, Stethoscope, UserRoundCheck } from 'lucide-react'
+import { BookOpen, Brain, CalendarDays, Check, CircleHelp, Heart, HeartHandshake, LockKeyhole, MessageCircle, ShieldCheck, Stethoscope, UserRoundCheck } from 'lucide-react'
 import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
 import { MentalHealthHero } from '../components/MentalHealthHero'
 import { resources } from '../data/wellness'
 import { LandingMotion } from '../components/LandingMotion'
-import { WellnessIllustration } from '../components/WellnessIllustration'
 
 const services = [
   { label: 'INFORM', title: 'Explore Wellness', description: 'Discover reliable information about mental health, physical health, relationships, and general wellbeing.', to: '/resources', icon: BookOpen, tone: 'blue' },
@@ -29,13 +28,13 @@ function Services() {
 
 function BeginWhereYouAre() {
   return <section className="prototype-feature-section"><div className="shell prototype-feature-grid">
-    <div className="prototype-feature-visual" data-reveal data-animated-graphic aria-hidden="true"><WellnessIllustration /><span className="feature-note feature-note-top"><Sparkles size={18} /> Take a breath</span><span className="feature-note feature-note-bottom"><ShieldCheck size={18} /> You belong here</span></div>
+    <div className="prototype-feature-visual home-photo-panel" data-reveal><img src="/images/groupPhoto.jpg" alt="Kepler community members gathered around a table playing a board game" width={799} height={533} loading="lazy" decoding="async" /></div>
     <div className="prototype-feature-copy" data-reveal><span className="eyebrow">Care without pressure</span><h2>Begin wherever<br />you are today.</h2><p>Some days you need an answer. Other days you need a conversation. Kira App brings information, connection, and care into one calm place.</p><div className="prototype-feature-points"><span><Check size={18} /> Youth-friendly and welcoming</span><span><Check size={18} /> Grounded in reliable information</span></div><Link to="/check-in" className="btn btn-primary">Explore check-ins</Link></div>
   </div></section>
 }
 
 function AiSection() {
-  return <section className="section-pad bg-[#f8fbfe]"><div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-20"><div className="ai-visual" data-reveal data-animated-graphic><div className="ai-glow" /><div className="ai-chat ai-chat-left"><span className="ai-avatar"><Brain size={19} /></span><p>What can I do when I feel overwhelmed by coursework?</p></div><div className="ai-chat ai-chat-right"><span className="ai-avatar ai-avatar-teal"><Sparkles size={19} /></span><p>We can explore a few small steps, or I can help you find human support.</p></div><div className="ai-status"><span className="h-2 w-2 rounded-full bg-teal" /> Educational guidance · AI assistant</div></div><div data-reveal><h2 className="section-title">Wellness support, one question away.</h2><p className="section-subtitle mt-5">Explore everyday wellness questions and find relevant resources in a calm, conversational space.</p><div className="mt-6 space-y-3">{['How can I manage academic stress?', 'Where can I find support?', 'How do I prepare for a counselling session?'].map(question => <div key={question} className="flex items-center gap-3 text-sm text-main"><span className="grid h-7 w-7 place-items-center rounded-lg bg-softsky text-trust"><CircleHelp size={15} /></span>{question}</div>)}</div><p className="mt-7 max-w-lg text-xs leading-6 text-secondary">The AI assistant provides educational information and navigation help. It does not diagnose or treat health conditions. Qualified professionals are available for personal support.</p><Link to="/ai-assistant" className="btn btn-primary mt-7">Explore AI Assistant</Link></div></div></section>
+  return <section className="section-pad bg-[#f8fbfe]"><div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-20"><div className="ai-visual home-photo-panel" data-reveal><img src="/images/counselors.jpg" alt="Two people smiling with a Kepler World Mental Health Day frame" width={799} height={533} loading="lazy" decoding="async" /></div><div data-reveal><h2 className="section-title">Wellness support, one question away.</h2><p className="section-subtitle mt-5">Explore everyday wellness questions and find relevant resources in a calm, conversational space.</p><div className="mt-6 space-y-3">{['How can I manage academic stress?', 'Where can I find support?', 'How do I prepare for a counselling session?'].map(question => <div key={question} className="flex items-center gap-3 text-sm text-main"><span className="grid h-7 w-7 place-items-center rounded-lg bg-softsky text-trust"><CircleHelp size={15} /></span>{question}</div>)}</div><p className="mt-7 max-w-lg text-xs leading-6 text-secondary">The AI assistant provides educational information and navigation help. It does not diagnose or treat health conditions. Qualified professionals are available for personal support.</p><Link to="/ai-assistant" className="btn btn-primary mt-7">Explore AI Assistant</Link></div></div></section>
 }
 
 function FeaturedResources() {

@@ -90,3 +90,7 @@ html{scroll-behavior:smooth}body{margin:0;min-width:320px}button,a,input{touch-a
 /* Keep reading text and navigation black while retaining heading colors. */
 main p:not(.final-cta p), main label, main small, main time, main .eyebrow, main .mental-card-message, main .prototype-field-label, main .prototype-service-detail, main .prototype-feature-points span, main .ai-status { color: #000; }
 header .nav-link, header .nav-link:hover, header .nav-link-active, header a:not(.btn), #mobile-nav a:not(.btn) { color: #000; }
+
+/* Home section photography fills the existing rounded panels. */
+.home-photo-panel { position: relative; }
+.home-photo-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
