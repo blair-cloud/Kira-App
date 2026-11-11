@@ -1,4 +1,4 @@
-# Wellness App — Kepler College
+# Kira App — Kepler College
 
 Phase 1 of the Kepler College wellness frontend. Built with React, TypeScript, Vite, Tailwind CSS, React Router, Lucide React, and Embla Carousel.
 

@@ -42,7 +42,7 @@ function Services() {
 function BeginWhereYouAre() {
   return <section className="prototype-feature-section"><div className="shell prototype-feature-grid">
     <div className="prototype-feature-visual" aria-hidden="true"><span className="feature-ring first" /><span className="feature-ring second" /><span className="feature-heart"><Heart size={54} strokeWidth={1.6} /><strong>Small steps.<br />Stronger wellbeing.</strong></span><span className="feature-note feature-note-top"><Sparkles size={18} /> Take a breath</span><span className="feature-note feature-note-bottom"><ShieldCheck size={18} /> You belong here</span></div>
-    <div className="prototype-feature-copy"><span className="eyebrow">Care without pressure</span><h2>Begin wherever<br />you are today.</h2><p>Some days you need an answer. Other days you need a conversation. Wellness App brings information, connection, and care into one calm place.</p><div className="prototype-feature-points"><span><Check size={18} /> Youth-friendly and welcoming</span><span><Check size={18} /> Grounded in reliable information</span></div><Link to="/check-in" className="btn btn-primary">Explore check-ins</Link></div>
+    <div className="prototype-feature-copy"><span className="eyebrow">Care without pressure</span><h2>Begin wherever<br />you are today.</h2><p>Some days you need an answer. Other days you need a conversation. Kira App brings information, connection, and care into one calm place.</p><div className="prototype-feature-points"><span><Check size={18} /> Youth-friendly and welcoming</span><span><Check size={18} /> Grounded in reliable information</span></div><Link to="/check-in" className="btn btn-primary">Explore check-ins</Link></div>
   </div></section>
 }
 

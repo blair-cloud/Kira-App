@@ -6,7 +6,7 @@ import { resources } from '../data/wellness'
 
 type PageInfo = { eyebrow: string; title: string; description: string; phase?: string; points?: string[] }
 export const pageContent: Record<string, PageInfo> = {
-  '/about': { eyebrow: 'About the platform', title: 'Wellness, made easier to reach.', description: 'Wellness App is being designed for the Kepler College community to bring information, questions, connection, and support into one welcoming place.', points: ['Reliable wellness information', 'Clear routes to professional support', 'Respectful handling of personal information'] },
+  '/about': { eyebrow: 'About the platform', title: 'Wellness, made easier to reach.', description: 'Kira App is being designed for the Kepler College community to bring information, questions, connection, and support into one welcoming place.', points: ['Reliable wellness information', 'Clear routes to professional support', 'Respectful handling of personal information'] },
   '/services': { eyebrow: 'Our services', title: 'Support for different moments.', description: 'Explore information, ask a question, connect with a professional, or plan an appointment. Each service will explain what happens before you share personal information.', points: ['Explore wellness resources', 'Ask a confidential question', 'Find appointments and human support'] },
   '/resources': { eyebrow: 'Explore wellness', title: 'Find a helpful starting point.', description: 'Browse sample resource previews across mental health, academic balance, relationships, and physical wellbeing.' },
   '/resources/:slug': { eyebrow: 'Wellness resources', title: 'Resource overview', description: 'A preview of the educational content library.' },
