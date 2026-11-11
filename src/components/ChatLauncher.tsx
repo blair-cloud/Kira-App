@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
-import { CircleHelp, Sparkles, X } from 'lucide-react'
+import { CircleHelp, Sparkles } from 'lucide-react'
 import { Link } from 'react-router'
 import { MedicalSupportIcon } from './MedicalSupportIcon'
 import '../styles/chat-launcher.css'
@@ -42,11 +42,10 @@ export function ChatLauncher() {
   }, [open])
   return <motion.div ref={root} className="chat-launcher" initial={reduceMotion ? false : { opacity: 0, y: 22, scale: .8 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 240, damping: 22, delay: .4 }}
     onPointerEnter={event => { if (event.pointerType === 'mouse') { cancelClose(); setOpen(true) } }}
-    onPointerLeave={event => { if (event.pointerType === 'mouse') { cancelClose(); leaveTimer.current = setTimeout(() => { if (!root.current?.contains(document.activeElement)) setOpen(false) }, 220) } }}
+    onPointerLeave={event => { if (event.pointerType === 'mouse') { cancelClose(); leaveTimer.current = setTimeout(() => { if (!root.current?.contains(document.activeElement)) setOpen(false) }, 320) } }}
     onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) closePanel() }}>
-    <AnimatePresence>{open && <motion.nav id="kira-chat-options" className="chat-launcher-panel" aria-label="Chat support options" initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: .94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: .96 }} transition={{ duration: .22, ease: [.22,1,.36,1] }}>
-      <div className="chat-launcher-panel-heading"><div><span className="chat-launcher-kicker">KIRA SUPPORT</span><h2>How can we help?</h2><p>Choose a way to start a conversation.</p></div><button type="button" className="chat-launcher-close" aria-label="Close chat options" onClick={() => { closePanel(); trigger.current?.focus() }}><X size={17} /></button></div>
-      <div className="chat-launcher-features">{features.map((feature,index) => { const Icon=feature.icon; return <motion.div key={feature.to} initial={reduceMotion ? false : { opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .25, delay: index * .05 }}><Link to={feature.to} className="chat-launcher-feature" onClick={closePanel}><span className={`chat-launcher-feature-icon ${feature.tone}`}><Icon size={23} strokeWidth={1.7} aria-hidden="true" /></span><span><strong>{feature.title}</strong><small>{feature.description}</small></span></Link></motion.div> })}</div>
+    <AnimatePresence>{open && <motion.nav id="kira-chat-options" className="chat-launcher-orbit" aria-label="Chat support options" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .18 }}>
+      {features.map((feature,index) => { const Icon=feature.icon; const point=[{ x: -146, y: -2 }, { x: -108, y: -92 }, { x: -4, y: -164 }][index]; return <motion.div key={feature.to} className="chat-orbit-slot" initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 0, y: 0, scale: .35 }} animate={{ opacity: 1, x: point.x, y: point.y, scale: 1 }} exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 0, y: 0, scale: .35 }} transition={{ type: 'spring', stiffness: 230, damping: 22, delay: reduceMotion ? 0 : index * .065 }}><Link to={feature.to} className={`chat-launcher-feature ${feature.tone}`} aria-label={`${feature.title}. ${feature.description}`} onClick={closePanel}><Icon size={26} strokeWidth={1.9} aria-hidden="true" /><span>{feature.title}</span></Link></motion.div> })}
     </motion.nav>}</AnimatePresence>
     <motion.button ref={trigger} type="button" className="chat-launcher-button" aria-label={open ? 'Close Kira chat options' : 'Open Kira chat options'} aria-expanded={open} aria-controls={open ? 'kira-chat-options' : undefined} onClick={() => { cancelClose(); setOpen(value => !value) }} onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); setOpen(true); requestAnimationFrame(() => root.current?.querySelector<HTMLAnchorElement>('.chat-launcher-feature')?.focus()) } }}
       animate={reduceMotion || open ? { y: 0, scale: 1 } : { y: [0,-5,0], scale: [1,1.045,1] }} transition={{ duration: 3.6, repeat: reduceMotion || open ? 0 : Infinity, ease: 'easeInOut' }} whileHover={reduceMotion ? undefined : { scale: 1.06 }} whileTap={reduceMotion ? undefined : { scale: .96 }}>
