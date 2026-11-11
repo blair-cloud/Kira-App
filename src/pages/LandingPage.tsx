@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
-import { BookOpen, CalendarDays, Check, CircleHelp, Clock3, Heart, LockKeyhole, MessageCircle, ShieldCheck, UserRoundCheck } from 'lucide-react'
+import { BookOpen, CalendarDays, Check, CircleHelp, Clock3, Heart, LockKeyhole, MessageCircle, ShieldCheck } from 'lucide-react'
 import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
 import { MentalHealthHero } from '../components/MentalHealthHero'
 import { resources } from '../data/wellness'
@@ -15,12 +15,6 @@ const services = [
   { label: 'ASK', title: 'Ask a Question', description: 'Share a confidential or anonymous question and find appropriate guidance.', to: '/ask', icon: CircleHelp, tone: 'lavender' },
   { label: 'CONNECT', title: 'Chat with a Professional', description: 'Find a private way to connect with authorized wellness professionals.', to: '/chat', icon: MessageCircle, tone: 'teal' },
   { label: 'SUPPORT', title: 'Book an Appointment', description: 'Explore counselling and medical consultation appointments.', to: '/appointments', icon: CalendarDays, tone: 'peach' },
-]
-
-const trust = [
-  { icon: LockKeyhole, title: 'Confidential Support', text: 'Choose how to begin a conversation. Each service will explain how information is handled before you share it.' },
-  { icon: ShieldCheck, title: 'Secure Access', text: 'Account and data controls will be designed around the privacy needs of the Kepler community.' },
-  { icon: UserRoundCheck, title: 'Professional Guidance', text: 'Human support pathways connect students with authorized wellness staff when personal care is needed.' },
 ]
 
 function Services() {
@@ -64,7 +58,13 @@ function FeaturedResources() {
 }
 
 function TrustSection() {
-  return <section className="section-pad bg-[#f8fbfe]"><div className="shell"><div className="max-w-2xl" data-reveal><span className="eyebrow">Privacy and trust</span><h2 className="section-title mt-3">Your wellbeing deserves respect and privacy.</h2><p className="section-subtitle mt-4">Every interaction should make it clear what is shared, who can see it, and what happens next.</p></div><div className="mt-10 grid gap-5 md:grid-cols-3">{trust.map((item, index) => { const Icon = item.icon; return <div key={item.title} className="trust-card" data-reveal style={{ '--reveal-order': index } as CSSProperties}><span className="grid h-12 w-12 place-items-center rounded-xl bg-softsky text-trust"><Icon size={24} /></span><h3 className="mt-5 text-base font-semibold text-navy">{item.title}</h3><p className="mt-2 text-sm leading-6 text-secondary">{item.text}</p></div> })}</div></div></section>
+  return <section className="confidentiality-section" aria-labelledby="confidentiality-heading"><div className="shell">
+    <div className="confidentiality-panel" data-reveal>
+      <div className="confidentiality-graphic" aria-hidden="true"><span className="confidentiality-ring" /><ShieldCheck size={88} strokeWidth={1.5} /><span className="confidentiality-lock"><LockKeyhole size={20} strokeWidth={1.8} /></span></div>
+      <div className="confidentiality-copy"><h2 id="confidentiality-heading">Your privacy matters.</h2><p>Understand how your information is handled before you share.</p></div>
+      <Link to="/privacy" className="confidentiality-link">About confidentiality</Link>
+    </div>
+  </div></section>
 }
 
 function FinalCta() {

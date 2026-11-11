@@ -100,3 +100,18 @@ header .nav-link, header .nav-link:hover, header .nav-link-active, header a:not(
 .wellness-icon { width: 40px; height: 40px; border-radius: 0; background: transparent; color: #2585c5; }
 .wellness-section .save-button { border: 0; border-radius: 0; background: transparent; color: #000; }
 .wellness-section .save-button:hover, .wellness-section .save-button-active { color: #2585c5; }
+
+/* A concise confidentiality statement with a single security illustration. */
+.confidentiality-section { background: #fff; padding: 18px 0 32px; }
+.confidentiality-panel { display: flex; align-items: center; gap: 32px; padding: 28px 36px; border-radius: 24px; background: #f0f8fd; }
+.confidentiality-graphic { position: relative; display: grid; flex: 0 0 116px; height: 116px; place-items: center; color: #2585c5; }
+.confidentiality-ring { position: absolute; inset: 0; border: 1px solid #d0e7f5; border-radius: 50%; }
+.confidentiality-graphic>svg { fill: #e0f1fc; }
+.confidentiality-lock { position: absolute; right: 2px; bottom: 8px; display: grid; width: 36px; height: 36px; place-items: center; border: 3px solid #f0f8fd; border-radius: 50%; background: #2585c5; color: #fff; }
+.confidentiality-copy { flex: 1; }
+.confidentiality-copy h2 { margin: 0; color: #1b5278; font-size: clamp(24px,2.5vw,30px); font-weight: 600; line-height: 1.25; letter-spacing: -.03em; }
+.confidentiality-copy p { margin: 10px 0 0; color: #000; font-size: 13px; line-height: 1.8; }
+.confidentiality-link { flex-shrink: 0; color: #2585c5; font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.confidentiality-link:hover { color: #1b5278; }
+@media (max-width:760px) { .confidentiality-panel { gap: 20px; flex-wrap: wrap; padding: 26px; } .confidentiality-graphic { flex-basis: 88px; height: 88px; } .confidentiality-graphic>svg { width: 68px; height: 68px; } .confidentiality-link { margin-left: 108px; } }
+@media (max-width:480px) { .confidentiality-panel { flex-direction: column; align-items: flex-start; gap: 18px; } .confidentiality-graphic { flex-basis: auto; width: 88px; } .confidentiality-link { margin-left: 0; } }
