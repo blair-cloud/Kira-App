@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link, NavLink } from 'react-router'
-import { CalendarDays, Check, ChevronDown, CircleHelp, Heart, LifeBuoy, LockKeyhole, MessageCircle, Plus, Send, ShieldCheck, Sparkles, X } from 'lucide-react'
+import { CalendarDays, Check, ChevronDown, CircleHelp, Heart, LifeBuoy, LockKeyhole, MessageCircle, Moon, Plus, Send, ShieldCheck, Sparkles, Sun, X } from 'lucide-react'
 import { MedicalSupportIcon } from '../components/MedicalSupportIcon'
 import '../styles/chat.css'
 
@@ -28,6 +28,10 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
   const [conversations, setConversations] = useState<Record<ChatMode, Conversation[]>>(() => ({ ask: [createConversation()], professional: [createConversation()], ai: [createConversation()] }))
   const [selectedIds, setSelectedIds] = useState<Partial<Record<ChatMode, string>>>({})
   const [drafts, setDrafts] = useState<Record<ChatMode, string>>({ ask: '', professional: '', ai: '' })
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try { const saved = localStorage.getItem('kira-chat-theme'); if (saved === 'light' || saved === 'dark') return saved } catch { /* Use system preference when storage is unavailable. */ }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
   const [anonymous, setAnonymous] = useState(true)
   const [topic, setTopic] = useState('General wellbeing')
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -39,6 +43,7 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
   const draft = drafts[mode]
 
   useEffect(() => { setSidebarOpen(false) }, [mode])
+  useEffect(() => { try { localStorage.setItem('kira-chat-theme', theme) } catch { /* Theme still works without storage. */ } }, [theme])
   useEffect(() => {
     const updateHeight = () => {
       const visual = window.visualViewport
@@ -67,7 +72,7 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
   }
   function sendMessage(value = draft) {
     const text = value.trim()
-    if (!text || conversation.pending || text.length > 2000) return
+    if (!text || conversation.pending) return
     const targetMode = mode, targetId = conversation.id
     const time = new Date().toISOString()
     const message: Message = { id: crypto.randomUUID(), role: 'user', text, time }
@@ -85,7 +90,9 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
     if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && !window.matchMedia('(max-width: 700px)').matches) { event.preventDefault(); sendMessage() }
   }
 
-  return <main ref={viewport} className={`chat-page chat-mode-${mode}`} aria-label={config.label}>
+  const composerPanel = <div className="chat-composer-area"><form className="chat-composer" onSubmit={submit}><label className="sr-only" htmlFor="chat-message">Your message</label><textarea ref={composer} id="chat-message" rows={2} value={draft} onChange={event => setDrafts(previous => ({ ...previous, [mode]: event.target.value }))} onKeyDown={handleComposerKey} /><div className="chat-composer-bottom"><button type="submit" className="chat-send" disabled={!draft.trim() || conversation.pending} aria-label="Send preview message"><Send size={15} strokeWidth={1.7} /></button></div></form><div className="chat-composer-note"><span><LockKeyhole size={12} />Preview only · not saved after refresh</span>{mode === 'ai' && <span>AI information does not replace professional care.</span>}</div></div>
+
+  return <main ref={viewport} className={`chat-page chat-mode-${mode}`} data-theme={theme} aria-label={config.label}>
     <div className="shell">
       <div className="chat-workspace">
         <button type="button" className="chat-mobile-sidebar" aria-expanded={sidebarOpen} aria-controls="chat-sidebar" onClick={() => setSidebarOpen(open => !open)}>{sidebarOpen ? <X size={18} /> : <MessageCircle size={18} />}Conversations<ChevronDown size={15} /></button>
@@ -100,13 +107,13 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
           <Link to="/privacy" className="chat-urgent-link"><LockKeyhole size={16} />About confidentiality</Link>
           <Link to="/emergency" className="chat-urgent-link"><LifeBuoy size={16} />Need urgent support?</Link>
         </aside>
-        <div className="chat-main">
-          <header className="chat-conversation-header"><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h1>{config.short}</h1><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div></header>
+        <div className={`chat-main ${!conversation.messages.length ? 'is-new-chat' : ''}`}>
+          <header className="chat-conversation-header"><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h1>{config.short}</h1><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div><button type="button" className="chat-theme-toggle" aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'} aria-pressed={theme === 'dark'} onClick={() => setTheme(value => value === 'light' ? 'dark' : 'light')}>{theme === 'light' ? <Moon size={19} strokeWidth={1.7} /> : <Sun size={19} strokeWidth={1.7} />}</button></header>
           {mode === 'ask' && <div className="chat-options"><label>Topic<select value={topic} onChange={event => setTopic(event.target.value)}>{['General wellbeing', 'Academic balance', 'Relationships', 'Accessing services'].map(item => <option key={item}>{item}</option>)}</select></label><label className="chat-anonymous"><input type="checkbox" checked={anonymous} onChange={event => setAnonymous(event.target.checked)} /><span className="chat-switch" aria-hidden="true" /><span>Ask anonymously</span></label></div>}
           <div className="chat-message-list" ref={messageList} role="log" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions text">
-            {!conversation.messages.length ? <div className="chat-empty"><div className="chat-welcome-art" aria-hidden="true"><span className="chat-welcome-ring" /><span className="chat-welcome-icon"><Icon size={43} strokeWidth={1.5} /></span><span className="chat-welcome-heart"><Heart size={16} /></span></div><h2>{config.title}</h2><p>{config.description}</p><div className="chat-prompts">{config.prompts.map(prompt => <button type="button" key={prompt} onClick={() => sendMessage(prompt)}><MessageCircle size={15} strokeWidth={1.6} /><span>{prompt}</span></button>)}</div><span className="chat-empty-note">Start with a suggestion, or write in your own words.</span></div> : <><div className="chat-day-label">Today · preview conversation</div>{conversation.messages.map(message => <div key={message.id} className={`chat-message chat-message-${message.role}`}>{message.role === 'assistant' && <span className="chat-message-avatar"><Icon size={17} strokeWidth={1.7} /></span>}<div className="chat-message-content"><span className="chat-message-name">{message.role === 'user' ? mode === 'ask' && anonymous ? 'You · anonymous' : 'You' : mode === 'ai' ? 'Kira · example response' : 'Preview assistant'}</span><div className="chat-bubble"><p>{message.text}</p></div><span className="chat-message-time">{new Date(message.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}{message.role === 'user' && <><Check size={12} />Preview only</>}</span></div></div>)}{conversation.pending && <div className="chat-pending" role="status"><span /><span /><span /><span className="sr-only">Preparing a preview response</span></div>}{mode !== 'ai' && !conversation.pending && <Link to="/appointments" className="chat-appointment-link"><CalendarDays size={15} />Explore appointment options</Link>}</>}
+            {!conversation.messages.length ? <div className="chat-empty"><div className="chat-welcome-art" aria-hidden="true"><span className="chat-welcome-ring" /><span className="chat-welcome-icon"><Icon size={43} strokeWidth={1.5} /></span><span className="chat-welcome-heart"><Heart size={16} /></span></div><h2>{config.title}</h2><p>{config.description}</p>{composerPanel}<div className="chat-prompts">{config.prompts.map(prompt => <button type="button" key={prompt} onClick={() => sendMessage(prompt)}><MessageCircle size={15} strokeWidth={1.6} /><span>{prompt}</span></button>)}</div></div> : <><div className="chat-day-label">Today · preview conversation</div>{conversation.messages.map(message => <div key={message.id} className={`chat-message chat-message-${message.role}`}>{message.role === 'assistant' && <span className="chat-message-avatar"><Icon size={17} strokeWidth={1.7} /></span>}<div className="chat-message-content"><span className="chat-message-name">{message.role === 'user' ? mode === 'ask' && anonymous ? 'You · anonymous' : 'You' : mode === 'ai' ? 'Kira · example response' : 'Preview assistant'}</span><div className="chat-bubble"><p>{message.text}</p></div><span className="chat-message-time">{new Date(message.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}{message.role === 'user' && <><Check size={12} />Preview only</>}</span></div></div>)}{conversation.pending && <div className="chat-pending" role="status"><span /><span /><span /><span className="sr-only">Preparing a preview response</span></div>}{mode !== 'ai' && !conversation.pending && <Link to="/appointments" className="chat-appointment-link"><CalendarDays size={15} />Explore appointment options</Link>}</>}
           </div>
-          <div className="chat-composer-area"><form className="chat-composer" onSubmit={submit}><label className="sr-only" htmlFor="chat-message">Your message</label><textarea ref={composer} id="chat-message" rows={2} maxLength={2000} value={draft} placeholder={config.placeholder} onChange={event => setDrafts(previous => ({ ...previous, [mode]: event.target.value }))} onKeyDown={handleComposerKey} /><div className="chat-composer-bottom"><span>{draft.length ? `${draft.length}/2000` : 'Your words. Your pace.'}</span><button type="submit" className="chat-send" disabled={!draft.trim() || conversation.pending} aria-label="Send preview message"><span>Send</span><Send size={15} strokeWidth={1.7} /></button></div></form><div className="chat-composer-note"><span><LockKeyhole size={12} />Preview only · not saved after refresh</span>{mode === 'ai' && <span>AI information does not replace professional care.</span>}</div></div>
+          {!!conversation.messages.length && composerPanel}
         </div>
       </div>
     </div>
