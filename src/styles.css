@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: sans-serif;
+  --font-sans: "Open Sans", sans-serif;
   --color-trust: #2585c5;
   --color-navy: #1b5278;
   --color-softsky: #e8f5fd;
