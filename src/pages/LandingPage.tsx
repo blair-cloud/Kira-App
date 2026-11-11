@@ -1,14 +1,11 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
-import { BookOpen, CalendarDays, Check, CircleHelp, Clock3, Heart, LockKeyhole, MessageCircle, ShieldCheck } from 'lucide-react'
+import { BookOpen, CalendarDays, Check, CircleHelp, Heart, LockKeyhole, MessageCircle, ShieldCheck } from 'lucide-react'
 import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
 import { MentalHealthHero } from '../components/MentalHealthHero'
-import { resources } from '../data/wellness'
 import { LandingMotion } from '../components/LandingMotion'
 import { WellnessIllustration } from '../components/WellnessIllustration'
-import { ResourceCartoon } from '../components/ResourceCartoon'
 import '../styles/support-section.css'
-import '../styles/featured-resources.css'
 
 const services = [
   { label: 'INFORM', title: 'Explore Wellness', description: 'Discover reliable information about mental health, physical health, relationships, and general wellbeing.', to: '/resources', icon: BookOpen, tone: 'blue' },
@@ -47,15 +44,6 @@ function AiSection() {
   return <section className="section-pad bg-[#f8fbfe]"><div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-20"><div className="ai-visual home-photo-panel" data-reveal><img src="/images/counselors.jpg" alt="Two people smiling with a Kepler World Mental Health Day frame" width={799} height={533} loading="lazy" decoding="async" /></div><div data-reveal><h2 className="section-title">Wellness support, one question away.</h2><p className="section-subtitle mt-5">Explore everyday wellness questions and find relevant resources in a calm, conversational space.</p><div className="mt-6 space-y-3">{['How can I manage academic stress?', 'Where can I find support?', 'How do I prepare for a counselling session?'].map(question => <div key={question} className="flex items-center gap-3 text-sm text-main"><span className="grid h-7 w-7 place-items-center rounded-lg bg-softsky text-trust"><CircleHelp size={15} /></span>{question}</div>)}</div><p className="mt-7 max-w-lg text-xs leading-6 text-secondary">The AI assistant provides educational information and navigation help. It does not diagnose or treat health conditions. Qualified professionals are available for personal support.</p><Link to="/ai-assistant" className="btn btn-primary mt-7">Explore AI Assistant</Link></div></div></section>
 }
 
-function FeaturedResources() {
-  return <section className="featured-resources section-pad" aria-labelledby="featured-resources-heading"><div className="shell">
-    <div className="featured-resources-header" data-reveal><div><h2 id="featured-resources-heading" className="section-title">Featured wellness resources</h2><p className="section-subtitle mt-3">Thoughtful starting points for the questions students often bring.</p></div><Link to="/resources" className="btn btn-outline">View all resources</Link></div>
-    <div className="featured-resources-grid">{resources.map((resource,index) => <Link to={`/resources/${resource.slug}`} key={resource.slug} className={`featured-reading-card featured-reading-${resource.tone} ${index === 0 ? 'featured-reading-lead' : ''}`} data-reveal style={{ '--reveal-order': index } as CSSProperties}>
-      <div className="featured-reading-art" aria-hidden="true"><span className="featured-reading-halo" /><ResourceCartoon topic={resource.slug} /></div>
-      <div className="featured-reading-copy"><div className="featured-reading-meta"><span className="featured-reading-category">{resource.category}</span><span className="featured-reading-time"><Clock3 size={13} aria-hidden="true" />{resource.minutes} min read</span></div><h3>{resource.title}</h3><p>{resource.description}</p><span className="featured-reading-link"><BookOpen size={15} strokeWidth={1.7} aria-hidden="true" />Read article</span></div>
-    </Link>)}</div>
-  </div></section>
-}
 
 function TrustSection() {
   return <section className="confidentiality-section" aria-labelledby="confidentiality-heading"><div className="shell">
@@ -72,5 +60,5 @@ function FinalCta() {
 }
 
 export function LandingPage() {
-  return <LandingMotion><MentalHealthHero /><Services /><BeginWhereYouAre /><DailyWellnessCarousel /><AiSection /><FeaturedResources /><TrustSection /><FinalCta /></LandingMotion>
+  return <LandingMotion><MentalHealthHero /><Services /><BeginWhereYouAre /><DailyWellnessCarousel /><AiSection /><TrustSection /><FinalCta /></LandingMotion>
 }
