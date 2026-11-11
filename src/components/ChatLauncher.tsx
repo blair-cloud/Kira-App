@@ -26,12 +26,19 @@ function HealthChatIcon({ still }: { still: boolean }) {
 export function ChatLauncher() {
   const [open, setOpen] = useState(false)
   const reduceMotion = useReducedMotion()
+  const [pageVisible, setPageVisible] = useState(() => !document.hidden)
+  const still = !!reduceMotion || open || !pageVisible
   const root = useRef<HTMLDivElement>(null)
   const trigger = useRef<HTMLButtonElement>(null)
   const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   function cancelClose() { if (leaveTimer.current) { clearTimeout(leaveTimer.current); leaveTimer.current = null } }
   function closePanel() { cancelClose(); setOpen(false) }
   useEffect(() => () => { if (leaveTimer.current) clearTimeout(leaveTimer.current) }, [])
+  useEffect(() => {
+    const updateVisibility = () => setPageVisible(!document.hidden)
+    document.addEventListener('visibilitychange', updateVisibility)
+    return () => document.removeEventListener('visibilitychange', updateVisibility)
+  }, [])
   useEffect(() => {
     if (!open) return
     const outside = (event: PointerEvent) => { if (!root.current?.contains(event.target as Node)) setOpen(false) }
@@ -48,9 +55,9 @@ export function ChatLauncher() {
       {features.map((feature,index) => { const Icon=feature.icon; const point=[{ x: -146, y: -2 }, { x: -108, y: -92 }, { x: -4, y: -164 }][index]; return <motion.div key={feature.to} className="chat-orbit-slot" initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 0, y: 0, scale: .35 }} animate={{ opacity: 1, x: point.x, y: point.y, scale: 1 }} exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: 0, y: 0, scale: .35 }} transition={{ type: 'spring', stiffness: 230, damping: 22, delay: reduceMotion ? 0 : index * .065 }}><Link to={feature.to} className={`chat-launcher-feature ${feature.tone}`} aria-label={`${feature.title}. ${feature.description}`} onClick={closePanel}><Icon size={26} strokeWidth={1.9} aria-hidden="true" /><span>{feature.title}</span></Link></motion.div> })}
     </motion.nav>}</AnimatePresence>
     <motion.button ref={trigger} type="button" className="chat-launcher-button" aria-label={open ? 'Close Kira chat options' : 'Open Kira chat options'} aria-expanded={open} aria-controls={open ? 'kira-chat-options' : undefined} onClick={() => { cancelClose(); setOpen(value => !value) }} onKeyDown={event => { if (event.key === 'ArrowDown') { event.preventDefault(); setOpen(true); requestAnimationFrame(() => root.current?.querySelector<HTMLAnchorElement>('.chat-launcher-feature')?.focus()) } }}
-      animate={reduceMotion || open ? { y: 0, scale: 1 } : { y: [0,-5,0], scale: [1,1.045,1] }} transition={{ duration: 3.6, repeat: reduceMotion || open ? 0 : Infinity, ease: 'easeInOut' }} whileHover={reduceMotion ? undefined : { scale: 1.06 }} whileTap={reduceMotion ? undefined : { scale: .96 }}>
-      <motion.span className="chat-launcher-pulse" aria-hidden="true" animate={reduceMotion || open ? { opacity: 0, scale: 1 } : { opacity: [.4,0], scale: [1,1.65] }} transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1.1 }} />
-      <HealthChatIcon still={!!reduceMotion || open} />
+      animate={still ? { x: 0, y: 0, rotate: 0, scale: 1 } : { x: [0,-3,3,-3,3,-2,2,0], rotate: [0,-7,7,-6,6,-3,3,0], y: [0,-5,0], scale: [1,1.045,1] }} transition={{ duration: 3.6, repeat: still ? 0 : Infinity, ease: 'easeInOut', x: { duration: still ? .15 : .65, repeat: still ? 0 : Infinity, repeatDelay: 7.35, delay: still ? 0 : 2.5, ease: 'easeInOut' }, rotate: { duration: still ? .15 : .65, repeat: still ? 0 : Infinity, repeatDelay: 7.35, delay: still ? 0 : 2.5, ease: 'easeInOut' } }} whileHover={reduceMotion ? undefined : { scale: 1.06 }} whileTap={reduceMotion ? undefined : { scale: .96 }}>
+      <motion.span className="chat-launcher-pulse" aria-hidden="true" animate={still ? { opacity: 0, scale: 1 } : { opacity: [.4,0], scale: [1,1.65] }} transition={{ duration: 2.5, repeat: Infinity, repeatDelay: 1.1 }} />
+      <HealthChatIcon still={still} />
     </motion.button>
   </motion.div>
 }
