@@ -1,0 +1,14 @@
+.chat-launcher { position: fixed; right: 26px; bottom: max(26px,env(safe-area-inset-bottom)); z-index: 45; animation: kira-chat-launcher-enter 650ms cubic-bezier(.22,1,.36,1) 400ms both; }
+.chat-launcher-button { position: relative; display: grid; place-items: center; width: 60px; height: 60px; border: 1px solid #ffffff80; border-radius: 22px; background: linear-gradient(145deg,#329bd8,#2585c5 65%,#2174b1); color: #fff; box-shadow: 0 8px 26px #2585c530, inset 0 1px 1px #ffffff40; transition: transform 280ms cubic-bezier(.22,1,.36,1),box-shadow 280ms ease,border-radius 280ms ease; }
+.chat-launcher-symbol { display: grid; place-items: center; animation: kira-chat-launcher-float 6s ease-in-out 1.1s infinite; }
+.chat-launcher-halo { position: absolute; inset: -5px; border: 1px solid #2585c524; border-radius: 27px; pointer-events: none; }
+.chat-launcher-spark { position: absolute; right: -3px; top: -4px; display: grid; place-items: center; width: 23px; height: 23px; border: 3px solid #fff; border-radius: 50%; background: #e8f5fd; color: #2585c5; }
+.chat-launcher-hint { position: absolute; right: calc(100% + 15px); padding: 9px 13px; border: 1px solid #dceaf4; border-radius: 12px; background: #fff; color: #1b5278; font-family: var(--font-sans); font-size: 12px; font-weight: 600; white-space: nowrap; box-shadow: 0 6px 20px #19344d0d; opacity: 0; transform: translateX(7px); pointer-events: none; transition: opacity 220ms ease,transform 280ms cubic-bezier(.22,1,.36,1); }
+.chat-launcher-button:hover,.chat-launcher-button:focus-visible { transform: translateY(-4px); border-radius: 25px; box-shadow: 0 13px 32px #2585c540; }
+.chat-launcher-button:hover .chat-launcher-hint,.chat-launcher-button:focus-visible .chat-launcher-hint { opacity: 1; transform: translateX(0); }
+.chat-launcher-button:hover .chat-launcher-symbol,.chat-launcher-button:focus-visible .chat-launcher-symbol { animation-play-state: paused; }
+.chat-launcher-button:focus-visible { outline: 3px solid #35afa3; outline-offset: 7px; }
+@keyframes kira-chat-launcher-enter { from { opacity: 0; transform: translateY(18px) scale(.85); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes kira-chat-launcher-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@media (max-width:640px) { .chat-launcher { right: 18px; bottom: max(18px,env(safe-area-inset-bottom)); }.chat-launcher-button { width: 54px; height: 54px; border-radius: 20px; }.chat-launcher-halo { border-radius: 25px; } }
+@media (prefers-reduced-motion:reduce) { .chat-launcher,.chat-launcher-symbol { animation: none; }.chat-launcher-button,.chat-launcher-hint { transition: none; } }

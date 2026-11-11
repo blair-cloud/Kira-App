@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
 import { ChevronDown, HeartPulse, LifeBuoy, Menu, X } from 'lucide-react'
+import { ChatLauncher } from './ChatLauncher'
 
 const nav = [
   { to: '/resources', label: 'Learn' },
@@ -68,4 +69,4 @@ function Footer() {
   </footer>
 }
 
-export function PublicLayout() { return <div className="public-layout"><a href="#main-content" className="skip-link">Skip to content</a><Header /><main id="main-content"><Outlet /></main><Footer /></div> }
+export function PublicLayout() { return <div className="public-layout"><a href="#main-content" className="skip-link">Skip to content</a><Header /><main id="main-content"><Outlet /></main><Footer /><ChatLauncher /></div> }
