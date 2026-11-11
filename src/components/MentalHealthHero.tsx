@@ -42,7 +42,6 @@ export function MentalHealthHero() {
   const [error, setError] = useState(false)
   const [selected, setSelected] = useState<MentalHealthCard | null>(null)
   const [activeIndex, setActiveIndex] = useState(3)
-  const [interacting, setInteracting] = useState(false)
   const touchStart = useRef<number | null>(null)
   const hero = useRef<HTMLElement>(null)
   const cardButtons = useRef<(HTMLButtonElement | null)[]>([])
@@ -63,7 +62,7 @@ export function MentalHealthHero() {
   }, [])
 
   useEffect(() => {
-    if (!moment || selected || interacting) return
+    if (!moment || selected) return
     const timer = window.setInterval(() => {
       const section = hero.current
       if (!section || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -71,7 +70,7 @@ export function MentalHealthHero() {
       setActiveIndex(index => (index + 1) % moment.cards.length)
     }, 4500)
     return () => window.clearInterval(timer)
-  }, [moment, selected, interacting])
+  }, [moment, selected])
 
   function navigateCards(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     const next = event.key === 'ArrowRight' ? (index + 1) % 7 : event.key === 'ArrowLeft' ? (index + 6) % 7 : event.key === 'Home' ? 0 : event.key === 'End' ? 6 : null
@@ -82,8 +81,6 @@ export function MentalHealthHero() {
   return <section ref={hero} className="mental-health-hero" data-animated-graphic aria-labelledby="mental-hero-title">
     <div className="mental-hero-intro shell"><h1 id="mental-hero-title">Your mind matters.<br /><span>Make space for yourself.</span></h1></div>
     <div className="mental-fan-stage mental-card-cycle" role="region" aria-roledescription="carousel" aria-label="Mental health reflections" aria-busy={!moment && !error}
-      onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)}
-      onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false) }}
       onTouchStart={event => { touchStart.current = event.touches[0].clientX }} onTouchEnd={event => { const start = touchStart.current; touchStart.current = null; if (start !== null && Math.abs(event.changedTouches[0].clientX - start) > 35) setActiveIndex(index => (index + (event.changedTouches[0].clientX < start ? 1 : 6)) % 7) }}>
       {moment ? moment.cards.map((card, index) => <div className="mental-fan-slot" key={card.id} data-active={index === activeIndex} style={{ '--cycle-x': [0, 140, 240, 325, -325, -240, -140][(index - activeIndex + 7) % 7] + 'px', '--cycle-angle': [0, 7, 12, 16, -16, -12, -7][(index - activeIndex + 7) % 7] + 'deg', '--card-layer': index === activeIndex ? 10 : 7 - ((index - activeIndex + 7) % 7), '--card-color': card.color, '--card-end': card.colorEnd, '--card-accent': card.accent, '--card-ink': card.ink } as CSSProperties}>
         <button type="button" className="mental-flash-card" ref={button => { cardButtons.current[index] = button }} tabIndex={index === activeIndex ? 0 : -1} onClick={() => { if (index === activeIndex) setSelected(card); else setActiveIndex(index) }} onKeyDown={event => navigateCards(event, index)} aria-label={`${card.category}: ${card.title}${card.id === moment.featuredId ? ' Featured today.' : ''} Open reflection.`}>

@@ -42,10 +42,6 @@
 .landing-motion [data-animated-graphic] *, .landing-motion [data-animated-graphic] { animation-play-state: paused; }
 .landing-motion[data-motion="running"] [data-graphic-active="true"],
 .landing-motion[data-motion="running"] [data-graphic-active="true"] * { animation-play-state: running; }
-.motion-preference { position: fixed; right: 20px; bottom: 18px; z-index: 40; display: flex; width: auto; pointer-events: none; }
-.motion-toggle { display: inline-flex; height: var(--button-height); min-height: var(--button-height); align-items: center; gap: 7px; border: 1px solid #dceaf2; border-radius: var(--button-radius); background: white; padding: 0 12px; color: #000000; font-size: 11px; font-weight: 600; box-shadow: 0 4px 18px #17476a12; pointer-events: auto; }
-.motion-toggle:hover { border-color: #2585c5; color: #1b5278; }
-.motion-toggle:disabled { cursor: default; }
 @keyframes kira-breathe { 0%,100% { scale: 1; } 50% { scale: 1.045; } }
 @keyframes kira-float { 0%,100% { translate: 0 0; } 50% { translate: 0 -6px; } }
 @keyframes kira-sway { 0%,100% { rotate: -1.5deg; } 50% { rotate: 2deg; } }

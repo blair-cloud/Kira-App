@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Pause, Play } from 'lucide-react'
 
 export function LandingMotion({ children }: { children: ReactNode }) {
   const root = useRef<HTMLDivElement>(null)
-  const [paused, setPaused] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [pageVisible, setPageVisible] = useState(() => !document.hidden)
 
@@ -49,11 +47,7 @@ export function LandingMotion({ children }: { children: ReactNode }) {
     }
   }
 
-  return <div ref={root} className="landing-motion" data-motion={!paused && !reducedMotion && pageVisible ? 'running' : 'paused'} onFocusCapture={event => revealFocusedContent(event.target)}>
+  return <div ref={root} className="landing-motion" data-motion={!reducedMotion && pageVisible ? 'running' : 'paused'} onFocusCapture={event => revealFocusedContent(event.target)}>
     {children}
-    <div className="motion-preference shell"><button type="button" className="motion-toggle" aria-pressed={paused} disabled={reducedMotion} onClick={() => setPaused(value => !value)}>
-      {paused || reducedMotion ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}
-      {reducedMotion ? 'Reduced motion enabled' : paused ? 'Resume animations' : 'Pause animations'}
-    </button></div>
   </div>
 }
