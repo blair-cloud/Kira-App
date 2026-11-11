@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router'
 import { App } from './routes/App'
 import './styles.css'
 import './styles/landing-motion.css'
+import './styles/mental-health-hero.css'
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
 import { BookOpen, Brain, CalendarDays, Check, CircleHelp, Heart, HeartHandshake, LockKeyhole, MessageCircle, ShieldCheck, Sparkles, Stethoscope, UserRoundCheck } from 'lucide-react'
 import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
-import { HeroDailyCard } from '../components/HeroDailyCard'
+import { MentalHealthHero } from '../components/MentalHealthHero'
 import { resources } from '../data/wellness'
 import { LandingMotion } from '../components/LandingMotion'
 import { WellnessIllustration } from '../components/WellnessIllustration'
@@ -19,21 +19,6 @@ const trust = [
   { icon: ShieldCheck, title: 'Secure Access', text: 'Account and data controls will be designed around the privacy needs of the Kepler community.' },
   { icon: UserRoundCheck, title: 'Professional Guidance', text: 'Human support pathways connect students with authorized wellness staff when personal care is needed.' },
 ]
-
-function Hero() {
-  return <section className="prototype-hero">
-    <div className="shell prototype-hero-grid">
-      <div className="prototype-hero-content" data-reveal>
-        <span className="prototype-hero-badge"><Heart size={16} fill="currentColor" /> Your wellbeing matters here</span>
-        <h1>Feel better.<br /><span>Find your way.</span></h1>
-        <p>Discover trusted wellness information, ask questions confidentially, and connect with professional support. Your journey towards a healthier and more supported university experience starts here.</p>
-        <div className="prototype-hero-actions"><Link to="/register" className="btn btn-primary">Get Started</Link><Link to="/resources" className="btn btn-outline">Explore Wellness <BookOpen size={18} /></Link></div>
-      </div>
-      <HeroDailyCard />
-    </div>
-    <span className="prototype-hero-ring ring-one" aria-hidden="true" /><span className="prototype-hero-ring ring-two" aria-hidden="true" />
-  </section>
-}
 
 function Services() {
   return <section className="section-pad bg-white" id="services"><div className="shell">
@@ -66,5 +51,5 @@ function FinalCta() {
 }
 
 export function LandingPage() {
-  return <LandingMotion><Hero /><Services /><BeginWhereYouAre /><DailyWellnessCarousel /><AiSection /><FeaturedResources /><TrustSection /><FinalCta /></LandingMotion>
+  return <LandingMotion><MentalHealthHero /><Services /><BeginWhereYouAre /><DailyWellnessCarousel /><AiSection /><FeaturedResources /><TrustSection /><FinalCta /></LandingMotion>
 }

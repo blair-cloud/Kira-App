@@ -1,0 +1,69 @@
+/* The reference-inspired fan is deliberately limited to the Home hero. */
+.mental-health-hero { position: relative; overflow: hidden; padding: 45px 0 28px; background: radial-gradient(ellipse at 50% 47%, #e6f4fc85 0, #f8fcff 53%, #fff 100%); }
+.mental-hero-intro { position: relative; z-index: 2; text-align: center; }
+.mental-hero-intro .eyebrow { font-size: 10px; letter-spacing: .18em; }
+.mental-hero-intro h1 { margin: 17px auto 4px; color: #1b5278; font-size: clamp(42px, 5.2vw, 64px); font-weight: 800; line-height: 1.09; letter-spacing: -.055em; }
+.mental-hero-intro h1 span { color: #2585c5; }
+.mental-fan-stage { --fan-step: 122px; position: relative; max-width: 1200px; height: 334px; margin: 18px auto 0; isolation: isolate; }
+.mental-fan-stage::after { position: absolute; left: 18%; right: 18%; bottom: 19px; z-index: -1; height: 33px; border-radius: 50%; background: #43789a15; filter: blur(17px); content: ''; }
+.mental-fan-slot { position: absolute; top: 30px; left: 50%; z-index: var(--card-layer); width: 192px; height: 256px; transform: translate(calc(-50% + var(--card-position) * var(--fan-step)), var(--card-y)) rotate(var(--card-angle)); transition: transform 550ms cubic-bezier(.22,1,.36,1); animation: kira-fan-arrive 950ms cubic-bezier(.22,1,.36,1) var(--card-delay) backwards; }
+.mental-flash-card { position: relative; display: flex; width: 100%; height: 100%; flex-direction: column; overflow: hidden; border: 1px solid #ffffff65; border-radius: 15px; background: var(--card-color); padding: 17px 17px 13px; color: var(--card-ink); text-align: left; box-shadow: 0 10px 22px #35597916, 0 1px 2px #35597914; animation: kira-fan-drift 9s ease-in-out calc(var(--card-position) * -850ms) infinite; transition: box-shadow 350ms ease; }
+.mental-flash-card::before { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(145deg,#ffffff32,transparent 48%); pointer-events: none; content: ''; }
+.mental-card-top { position: relative; display: flex; min-height: 24px; justify-content: space-between; gap: 10px; font-size: 8px; font-weight: 800; line-height: 1.35; letter-spacing: .055em; text-transform: uppercase; }
+.mental-card-top>span:first-child { max-width: 115px; }
+.mental-card-top>span:last-child { opacity: .65; font-variant-numeric: tabular-nums; }
+.mental-card-art { width: 100%; height: 112px; flex: none; margin-top: 1px; }
+.mental-flash-card h2 { position: relative; margin: 4px 0 10px; font-size: 21px; font-weight: 800; line-height: 1.14; letter-spacing: -.045em; }
+.mental-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 5px; margin-top: auto; border-top: 1px solid currentColor; padding-top: 9px; font-size: 8px; font-weight: 600; }
+.mental-card-foot>span { font-size: 13px; }
+.mental-fan-slot:focus-within { z-index: 20; transform: translate(calc(-50% + var(--card-position) * var(--fan-step)), calc(var(--card-y) - 25px)) rotate(0deg) scale(1.06); }
+.mental-flash-card:focus-visible { outline: 3px solid #2585c5; outline-offset: 5px; }
+.mental-fan-slot:focus-within .mental-flash-card { animation-play-state: paused !important; box-shadow: 0 24px 42px #35597925; }
+@media (hover: hover) and (pointer: fine) {
+  .mental-fan-slot:hover { z-index: 20; transform: translate(calc(-50% + var(--card-position) * var(--fan-step)), calc(var(--card-y) - 29px)) rotate(0deg) scale(1.07); }
+  .mental-fan-slot:hover .mental-flash-card { animation-play-state: paused !important; box-shadow: 0 24px 42px #35597925; }
+}
+.mental-hero-outro { position: relative; text-align: center; }
+.mental-hero-outro>p { color: #617b90; font-size: 14px; line-height: 1.8; }
+.mental-hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 21px; }
+.mental-hero-actions .btn { min-height: 46px; padding-inline: 25px; }
+.mental-hero-hint { display: block; margin-top: 12px; color: #71849a; font-size: 10px; line-height: 1.8; }
+.mental-mobile-hint { display: none; }
+.mental-hero-error { max-width: 450px; margin: auto; padding-top: 105px; color: #617b90; font-size: 14px; text-align: center; }
+.mental-fan-skeleton { display: inline-block; width: 12%; height: 245px; margin: 35px 1% 0; border-radius: 15px; background: #e8f3fa; }
+.mental-reflection-overlay { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; overflow-y: auto; background: #173c5c80; padding: 24px; backdrop-filter: blur(7px); }
+.mental-reflection-panel { width: min(100%,440px); max-height: calc(100dvh - 48px); overflow-y: auto; border-radius: 23px; background: #fff; box-shadow: 0 30px 100px #123b6540; animation: kira-reflection-open 260ms ease-out; }
+.mental-reflection-art { position: relative; background: var(--card-color); padding: 24px 28px 8px; color: var(--card-ink); }
+.mental-reflection-art>span { font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.mental-reflection-art>button { position: absolute; top: 15px; right: 15px; display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: #ffffffb0; }
+.mental-reflection-art .mental-card-art { height: 128px; margin-top: 7px; }
+.mental-reflection-copy { padding: 25px 28px 23px; }
+.mental-reflection-copy h2 { color: #1b5278; font-size: 28px; font-weight: 800; line-height: 1.15; letter-spacing: -.035em; }
+.mental-reflection-copy>p { margin-top: 14px; color: #617b90; font-size: 14px; line-height: 1.7; }
+.mental-reflection-prompt { margin: 21px 0; border-radius: 13px; background: #f2f8fc; padding: 17px; }
+.mental-reflection-prompt>span { color: #2585c5; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.mental-reflection-prompt p { margin-top: 7px; color: #19344d; font-size: 14px; line-height: 1.65; }
+.mental-reflection-copy .mental-reflection-note { margin-top: 13px; font-size: 10px; }
+@keyframes kira-fan-arrive { from { opacity: 0; transform: translate(-50%,45px) rotate(0deg) scale(.82); } to { opacity: 1; transform: translate(calc(-50% + var(--card-position) * var(--fan-step)),var(--card-y)) rotate(var(--card-angle)); } }
+@keyframes kira-fan-drift { 0%,100% { translate: 0 0; } 50% { translate: 0 -5px; } }
+@keyframes kira-reflection-open { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+@media (min-width: 701px) and (max-width: 1050px) { .mental-fan-stage { --fan-step: 96px; } .mental-fan-slot { width: 168px; height: 244px; } .mental-flash-card { padding-inline: 14px; } .mental-flash-card h2 { font-size: 19px; } .mental-card-art { height: 106px; } }
+@media (max-width: 700px) {
+  .mental-health-hero { padding-top: 43px; }
+  .mental-hero-intro h1 { font-size: clamp(30px,7.8vw,50px); }
+  .mental-fan-stage { display: flex; height: 292px; gap: 13px; overflow-x: auto; margin-top: 19px; padding: 22px max(24px,calc((100vw - 192px)/2)) 25px; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .mental-fan-stage::-webkit-scrollbar { display: none; }
+  .mental-fan-stage::after { display: none; }
+  .mental-fan-slot { position: relative; top: auto; left: auto; width: 192px; height: 244px; flex: 0 0 192px; transform: none; animation: kira-reflection-open 650ms ease-out var(--card-delay) backwards; scroll-snap-align: center; }
+  .mental-fan-slot:focus-within { transform: none; }
+  .mental-flash-card { animation: none; }
+  .mental-card-art { height: 103px; }
+  .mental-hero-outro>p { max-width: 320px; margin: auto; font-size: 13px; }
+  .mental-desktop-hint { display: none; } .mental-mobile-hint { display: inline; }
+  .mental-hero-hint { max-width: 290px; margin-inline: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mental-health-hero *, .mental-reflection-panel { animation: none !important; transition: none !important; }
+  .mental-fan-slot:hover, .mental-fan-slot:focus-within { transform: translate(calc(-50% + var(--card-position) * var(--fan-step)),var(--card-y)) rotate(var(--card-angle)); }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 700px) { .mental-fan-slot:hover, .mental-fan-slot:focus-within { transform: none; } }
