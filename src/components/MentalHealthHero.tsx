@@ -41,7 +41,10 @@ export function MentalHealthHero() {
   const [moment, setMoment] = useState<HeroMoment | null>(null)
   const [error, setError] = useState(false)
   const [selected, setSelected] = useState<MentalHealthCard | null>(null)
-  const fan = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(3)
+  const [interacting, setInteracting] = useState(false)
+  const touchStart = useRef<number | null>(null)
+  const hero = useRef<HTMLElement>(null)
   const cardButtons = useRef<(HTMLButtonElement | null)[]>([])
 
   useEffect(() => {
@@ -60,27 +63,39 @@ export function MentalHealthHero() {
   }, [])
 
   useEffect(() => {
-    if (!moment || !window.matchMedia('(max-width: 700px)').matches) return
-    const middle = cardButtons.current[3], track = fan.current
-    const slot = middle?.parentElement
-    if (middle && slot && track) track.scrollTo({ left: slot.offsetLeft - (track.clientWidth - middle.clientWidth) / 2 })
-  }, [moment])
+    if (!moment || selected || interacting) return
+    const timer = window.setInterval(() => {
+      const section = hero.current
+      if (!section || document.hidden || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+      if (section.closest('[data-motion]')?.getAttribute('data-motion') === 'paused' || section.dataset.graphicActive === 'false') return
+      setActiveIndex(index => (index + 1) % moment.cards.length)
+    }, 4500)
+    return () => window.clearInterval(timer)
+  }, [moment, selected, interacting])
 
   function navigateCards(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     const next = event.key === 'ArrowRight' ? (index + 1) % 7 : event.key === 'ArrowLeft' ? (index + 6) % 7 : event.key === 'Home' ? 0 : event.key === 'End' ? 6 : null
     if (next === null) return
-    event.preventDefault(); cardButtons.current[next]?.focus()
+    event.preventDefault(); setActiveIndex(next); cardButtons.current[next]?.focus()
   }
 
-  return <section className="mental-health-hero" data-animated-graphic aria-labelledby="mental-hero-title">
+  return <section ref={hero} className="mental-health-hero" data-animated-graphic aria-labelledby="mental-hero-title">
     <div className="mental-hero-intro shell"><h1 id="mental-hero-title">Your mind matters.<br /><span>Make space for yourself.</span></h1></div>
-    <div className="mental-fan-stage" ref={fan} role="group" aria-label="Seven mental health flash cards. Use left and right arrow keys to explore." aria-busy={!moment && !error}>
-      {moment ? moment.cards.map((card, index) => <div className="mental-fan-slot" key={card.id} style={{ '--card-position': index - 3, '--card-y': [28, 8, -8, -26, -8, 8, 28][index] + 'px', '--card-angle': [-15, -10, -5, 0, 5, 10, 15][index] + 'deg', '--card-delay': Math.abs(index - 3) * 90 + 'ms', '--card-layer': 7 - Math.abs(index - 3), '--card-color': card.color, '--card-end': card.colorEnd, '--card-accent': card.accent, '--card-ink': card.ink } as CSSProperties}>
-        <button type="button" className="mental-flash-card" ref={button => { cardButtons.current[index] = button }} onClick={() => setSelected(card)} onKeyDown={event => navigateCards(event, index)} aria-label={`${card.category}: ${card.title}${card.id === moment.featuredId ? ' Featured today.' : ''} Open reflection.`}>
+    <div className="mental-fan-stage mental-card-cycle" role="region" aria-roledescription="carousel" aria-label="Mental health reflections" aria-busy={!moment && !error}
+      onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)}
+      onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false) }}
+      onTouchStart={event => { touchStart.current = event.touches[0].clientX }} onTouchEnd={event => { const start = touchStart.current; touchStart.current = null; if (start !== null && Math.abs(event.changedTouches[0].clientX - start) > 35) setActiveIndex(index => (index + (event.changedTouches[0].clientX < start ? 1 : 6)) % 7) }}>
+      {moment ? moment.cards.map((card, index) => <div className="mental-fan-slot" key={card.id} data-active={index === activeIndex} style={{ '--cycle-x': [0, 140, 240, 325, -325, -240, -140][(index - activeIndex + 7) % 7] + 'px', '--cycle-angle': [0, 7, 12, 16, -16, -12, -7][(index - activeIndex + 7) % 7] + 'deg', '--card-layer': index === activeIndex ? 10 : 7 - ((index - activeIndex + 7) % 7), '--card-color': card.color, '--card-end': card.colorEnd, '--card-accent': card.accent, '--card-ink': card.ink } as CSSProperties}>
+        <button type="button" className="mental-flash-card" ref={button => { cardButtons.current[index] = button }} tabIndex={index === activeIndex ? 0 : -1} onClick={() => { if (index === activeIndex) setSelected(card); else setActiveIndex(index) }} onKeyDown={event => navigateCards(event, index)} aria-label={`${card.category}: ${card.title}${card.id === moment.featuredId ? ' Featured today.' : ''} Open reflection.`}>
           <MentalHealthBadge theme={card.id} category={card.category} /><h2>{card.title}</h2><p className="mental-card-message">{card.message}</p><MentalHealthArtwork theme={card.id} />
         </button>
       </div>) : error ? <p className="mental-hero-error" role="status">The reflections are unavailable right now. You can still explore our wellness resources below.</p> : Array.from({ length: 7 }, (_, index) => <div key={index} className="mental-fan-skeleton" aria-hidden="true" />)}
     </div>
+    {moment && <div className="mental-cycle-controls" role="group" aria-label="Choose a reflection">
+      <button type="button" className="carousel-control" onClick={() => setActiveIndex(index => (index + 6) % 7)}>Previous</button>
+      <div className="mental-cycle-dots">{moment.cards.map((card, index) => <button key={card.id} type="button" className="mental-cycle-dot" aria-label={`Show reflection ${index + 1}: ${card.title}`} aria-pressed={index === activeIndex} onClick={() => setActiveIndex(index)} />)}</div>
+      <button type="button" className="carousel-control" onClick={() => setActiveIndex(index => (index + 1) % 7)}>Next</button>
+    </div>}
     <div className="mental-hero-outro shell"><p>Seven small reminders to pause, reconnect, and care for your mental wellbeing.</p><div className="mental-hero-actions"><Link to="/register" className="btn btn-primary">Get Started</Link><Link to="/resources" className="btn btn-outline">Explore Wellness</Link></div></div>
     {selected && <ReflectionDialog card={selected} onClose={() => setSelected(null)} />}
   </section>

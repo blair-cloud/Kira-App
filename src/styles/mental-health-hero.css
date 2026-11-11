@@ -69,3 +69,26 @@
   .mental-fan-slot:hover, .mental-fan-slot:focus-within { transform: translate(calc(-50% + var(--card-position) * var(--fan-step)),var(--card-y)) rotate(var(--card-angle)); }
 }
 @media (prefers-reduced-motion: reduce) and (max-width: 700px) { .mental-fan-slot:hover, .mental-fan-slot:focus-within { transform: none; } }
+/* A repeating deck: one clear reflection, with the remaining cards softly behind it. */
+.mental-card-cycle { display: block; height: 410px; max-width: 1080px; overflow: visible; padding: 0; }
+.mental-card-cycle .mental-fan-slot,
+.mental-card-cycle .mental-fan-slot:hover,
+.mental-card-cycle .mental-fan-slot:focus-within { position: absolute; z-index: var(--card-layer); top: 20px; left: 50%; width: 230px; height: 350px; transform: translate(calc(-50% + var(--cycle-x)), 20px) rotate(var(--cycle-angle)) scale(.86); opacity: .46; filter: blur(2px); animation: none; transition: transform 1000ms cubic-bezier(.22,1,.36,1), opacity 850ms ease, filter 850ms ease; }
+.mental-card-cycle .mental-fan-slot[data-active="true"] { transform: translate(-50%, 0) rotate(0deg) scale(1.04); opacity: 1; filter: blur(0); }
+.mental-card-cycle .mental-flash-card { animation: none; }
+.mental-card-cycle .mental-fan-slot:not([data-active="true"]) .mental-flash-card { box-shadow: 0 10px 24px #354f8015; }
+.mental-card-cycle .mental-fan-slot[data-active="true"] .mental-flash-card { box-shadow: 0 24px 44px #354f8033; }
+.mental-cycle-controls { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 0 auto 20px; }
+.mental-cycle-dots { display: flex; align-items: center; gap: 8px; }
+.mental-cycle-dot { position: relative; width: 16px; height: 30px; padding: 0; border: 0; background: transparent; }
+.mental-cycle-dot::after { position: absolute; top: 11px; left: 4px; width: 8px; height: 8px; border-radius: 50%; background: #b8cbd9; content: ''; transition: background 300ms ease, transform 300ms ease; }
+.mental-cycle-dot[aria-pressed="true"]::after { background: #2585c5; transform: scale(1.35); }
+@media (max-width: 700px) {
+  .mental-card-cycle { height: 390px; margin-top: 24px; overflow: visible; }
+  .mental-card-cycle .mental-fan-slot, .mental-card-cycle .mental-fan-slot:hover, .mental-card-cycle .mental-fan-slot:focus-within { width: 222px; height: 350px; transform: translate(calc(-50% + var(--cycle-x) * .45), 18px) rotate(var(--cycle-angle)) scale(.8); }
+  .mental-card-cycle .mental-fan-slot[data-active="true"] { transform: translate(-50%, 0) rotate(0deg) scale(1); }
+  .mental-cycle-controls { gap: 10px; padding-inline: 15px; }
+  .mental-cycle-dots { gap: 2px; }
+  .mental-cycle-controls .carousel-control { min-width: 66px; padding-inline: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .mental-card-cycle .mental-fan-slot { transition: none; } }
