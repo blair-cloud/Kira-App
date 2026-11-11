@@ -29,7 +29,7 @@
 .mental-hero-outro { position: relative; text-align: center; }
 .mental-hero-outro>p { color: #617b90; font-size: 14px; line-height: 1.8; }
 .mental-hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 21px; }
-.mental-hero-actions .btn { min-height: 46px; padding-inline: 25px; }
+.mental-hero-actions .btn { padding-inline: 25px; }
 .mental-hero-hint { display: block; margin-top: 12px; color: #71849a; font-size: 10px; line-height: 1.8; }
 .mental-mobile-hint { display: none; }
 .mental-hero-error { max-width: 450px; margin: auto; padding-top: 105px; color: #617b90; font-size: 14px; text-align: center; }

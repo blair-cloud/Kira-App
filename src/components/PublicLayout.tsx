@@ -44,7 +44,7 @@ function Header() {
         </div>
         {nav.slice(1).map(item => <NavLink key={item.to} to={item.to} className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>{item.label}</NavLink>)}
       </nav>
-      <div className="hidden items-center gap-3 lg:flex"><Link to="/login" className="px-4 py-2.5 text-sm font-bold text-navy hover:text-trust">Login</Link><Link to="/register" className="btn btn-primary !min-h-[43px] !px-5">Get Started</Link></div>
+      <div className="hidden items-center gap-3 lg:flex"><Link to="/login" className="px-4 py-2.5 text-sm font-bold text-navy hover:text-trust">Login</Link><Link to="/register" className="btn btn-primary !px-5">Get Started</Link></div>
       <div className="flex items-center gap-2 lg:hidden"><Link to="/emergency" className="grid h-11 w-11 place-items-center rounded-xl border border-[#f3d3d3] bg-[#fff7f7] text-[#c74747]" aria-label="Emergency support"><LifeBuoy size={21} /></Link><button type="button" className="grid h-11 w-11 place-items-center rounded-xl border border-line text-navy" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen} aria-controls="mobile-nav" onClick={() => setMobileOpen(v => !v)}>{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button></div>
     </div>
     {mobileOpen && <nav id="mobile-nav" className="max-h-[calc(100dvh-78px)] overflow-y-auto border-t border-line bg-white px-5 pb-6 pt-3 lg:hidden" aria-label="Mobile navigation">
