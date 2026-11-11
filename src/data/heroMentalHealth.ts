@@ -1,4 +1,4 @@
-export type MentalHealthTheme = 'breathe' | 'kindness' | 'emotions' | 'rest' | 'connection' | 'boundaries' | 'support'
+export type MentalHealthTheme = 'breathe' | 'kindness' | 'study' | 'emotions' | 'rest' | 'connection' | 'growth'
 
 export type MentalHealthCard = {
   id: MentalHealthTheme
@@ -7,15 +7,17 @@ export type MentalHealthCard = {
   message: string
   reflection: string
   color: string
+  colorEnd: string
+  accent: string
   ink: string
 }
 
 export const heroMentalHealthCards: MentalHealthCard[] = [
-  { id: 'breathe', category: 'Mindful moments', title: 'Pause. Breathe. Begin again.', message: 'You can give yourself a moment before deciding what comes next.', reflection: 'Notice your feet on the ground. What is one thing you can see, hear, or feel right now?', color: '#CFEAFF', ink: '#164B73' },
-  { id: 'kindness', category: 'Self-compassion', title: 'Be on your own side.', message: 'A difficult moment does not define who you are. You deserve patience and kindness.', reflection: 'What would you say to a friend having the day you are having? Try offering yourself those words.', color: '#E2DCF8', ink: '#4B3A7B' },
-  { id: 'emotions', category: 'Emotional awareness', title: 'Every feeling has a place.', message: 'You do not have to find the perfect word for how you feel. Noticing is a place to start.', reflection: 'If your mood were weather, what would it look like today? What might you need?', color: '#FFDCD0', ink: '#813F38' },
-  { id: 'rest', category: 'Rest & balance', title: 'You are allowed to slow down.', message: 'There is room for a pause, even on a busy day. Your needs matter alongside your responsibilities.', reflection: 'Where could you make a little room for rest today?', color: '#F9EBA9', ink: '#66501C' },
-  { id: 'connection', category: 'Human connection', title: 'A small hello can mean a lot.', message: 'Connection can begin with a short message or a moment shared with someone you trust.', reflection: 'Who is one person you would like to check in with today?', color: '#C9EDE0', ink: '#245D50' },
-  { id: 'boundaries', category: 'Healthy boundaries', title: 'Your energy deserves care.', message: 'You can express your needs and make space for what feels manageable.', reflection: 'Is there one boundary you would like to communicate kindly and clearly?', color: '#F7D8E6', ink: '#793D60' },
-  { id: 'support', category: 'Asking for support', title: 'You can take the first step.', message: 'You do not need to have everything figured out before talking to someone.', reflection: 'Think of a trusted person or a support service you could reach out to when you need it.', color: '#D5DFFA', ink: '#354C83' },
+  { id: 'rest', category: 'Rest & Balance', title: 'Make room to slow down', message: 'A little pause is part of caring for yourself.', reflection: 'Where could you make a little room for rest today?', color: '#D2EEFF', colorEnd: '#85BFF1', accent: '#256AB2', ink: '#15344E' },
+  { id: 'connection', category: 'Relationships', title: 'Stay connected', message: 'A meaningful conversation matters.', reflection: 'Who is one person you would like to check in with today?', color: '#B4F1D8', colorEnd: '#65CDA9', accent: '#207B5F', ink: '#153F37' },
+  { id: 'growth', category: 'Personal Growth', title: 'Dream big', message: 'Believe in yourself and keep going.', reflection: 'What is one small step you can take towards something that matters to you?', color: '#FFC5DE', colorEnd: '#F18DB6', accent: '#A8326A', ink: '#4A2340' },
+  { id: 'breathe', category: 'Mental Health', title: 'Take a breath', message: "You don't have to figure everything out today.", reflection: 'Notice your feet on the ground. What is one thing you can see, hear, or feel right now?', color: '#A9DEFF', colorEnd: '#67B7F0', accent: '#216CB6', ink: '#113D63' },
+  { id: 'kindness', category: 'Self Care', title: 'Make time for yourself', message: 'Rest is an important part of your journey.', reflection: 'What would you say to a friend having the day you are having? Try offering yourself those words.', color: '#A1ECE0', colorEnd: '#4FC6B4', accent: '#137C71', ink: '#12463E' },
+  { id: 'study', category: 'Study Wellbeing', title: 'Progress over perfection', message: 'Even a small step brings you closer.', reflection: 'What is one manageable task you could begin without needing to get everything perfect?', color: '#E4D1FF', colorEnd: '#BD9BEF', accent: '#743CB8', ink: '#36235D' },
+  { id: 'emotions', category: 'Emotional Wellbeing', title: 'Your feelings matter', message: 'Give yourself permission to feel and reflect.', reflection: 'If your mood were weather, what would it look like today? What might you need?', color: '#FFEAA1', colorEnd: '#FFBA74', accent: '#AB5C11', ink: '#4B321A' },
 ]

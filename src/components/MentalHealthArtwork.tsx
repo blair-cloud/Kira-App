@@ -1,13 +1,13 @@
+import { Brain, GraduationCap, Heart, Moon, Rocket, Smile, Users } from 'lucide-react'
 import type { MentalHealthTheme } from '../data/heroMentalHealth'
 
+const themeIcons = { breathe: Brain, kindness: Heart, study: GraduationCap, emotions: Smile, rest: Moon, connection: Users, growth: Rocket }
+
+export function MentalHealthBadge({ theme, category }: { theme: MentalHealthTheme; category: string }) {
+  const Icon = themeIcons[theme]
+  return <span className="mental-theme-badge"><span><Icon size={15} strokeWidth={2} aria-hidden="true" /></span>{category}</span>
+}
+
 export function MentalHealthArtwork({ theme }: { theme: MentalHealthTheme }) {
-  return <svg viewBox="0 0 160 115" fill="none" aria-hidden="true" className="mental-card-art">
-    {theme === 'breathe' && <><circle cx="80" cy="57" r="48" stroke="currentColor" strokeOpacity=".2" /><circle cx="80" cy="57" r="34" stroke="currentColor" strokeOpacity=".35" /><circle cx="80" cy="57" r="21" fill="currentColor" fillOpacity=".12" /><path d="M69 58c6-9 16-9 22 0m-22 8c6-9 16-9 22 0" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" /><circle cx="124" cy="38" r="5" fill="currentColor" /><circle cx="43" cy="88" r="3" fill="currentColor" fillOpacity=".5" /></>}
-    {theme === 'kindness' && <><path d="M80 30C58 5 26 25 36 50c8 20 44 47 44 47s36-27 44-47C134 25 102 5 80 30Z" fill="currentColor" fillOpacity=".16" stroke="currentColor" strokeWidth="2" /><path d="M69 55c3 3 6 3 9 0m9 0c3 3 6 3 9 0m-20 15c4 4 10 4 14 0" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" /><path d="m24 20 2 7 7 2-7 2-2 7-2-7-7-2 7-2 2-7Z" fill="currentColor" /></>}
-    {theme === 'emotions' && <><circle cx="59" cy="44" r="26" fill="currentColor" fillOpacity=".12" /><path d="M59 10v-5m-34 39h-5m15-24-4-4m52 4 4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /><path d="M47 74c0-18 23-25 33-11 8-21 40-17 42 6 25-3 30 30 3 31H45C24 100 25 74 47 74Z" fill="white" fillOpacity=".75" stroke="currentColor" strokeWidth="2" /><path d="M75 84h1m21 0h1" stroke="currentColor" strokeWidth="4" strokeLinecap="round" /></>}
-    {theme === 'rest' && <><path d="M101 14c-19 1-39 16-39 39 0 22 17 39 39 39-34 14-67-9-67-38 0-27 27-48 67-40Z" fill="currentColor" fillOpacity=".18" stroke="currentColor" strokeWidth="2" /><path d="m116 33 3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9Z" fill="currentColor" /><circle cx="119" cy="85" r="3" fill="currentColor" /><circle cx="139" cy="17" r="2" fill="currentColor" /></>}
-    {theme === 'connection' && <><path d="M24 24h75v48H52L30 87V72h-6V24Z" fill="white" fillOpacity=".65" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M69 48h65v43h-8v13l-19-13H69V48Z" fill="currentColor" fillOpacity=".16" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M41 46h33m11 23h32m-32 10h21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></>}
-    {theme === 'boundaries' && <><rect x="37" y="15" width="86" height="86" rx="43" stroke="currentColor" strokeWidth="2" strokeDasharray="4 5" /><path d="M80 87V43m0 17C57 60 49 47 51 31c21 0 32 11 29 29Zm0 12c23 0 31-13 29-29-21 0-32 11-29 29Z" fill="currentColor" fillOpacity=".18" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><circle cx="131" cy="32" r="4" fill="currentColor" /></>}
-    {theme === 'support' && <><path d="m80 12 13 28 31 4-23 23 6 32-27-15-27 15 6-32-23-23 31-4 13-28Z" fill="currentColor" fillOpacity=".14" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M68 56c3 3 6 3 9 0m9 0c3 3 6 3 9 0m-20 14c4 4 10 4 14 0" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" /><circle cx="21" cy="75" r="4" fill="currentColor" /><circle cx="139" cy="32" r="3" fill="currentColor" /></>}
-  </svg>
+  return <span className={`mental-card-illustration mental-card-illustration-${theme}`} aria-hidden="true"><img src={`/images/hero-wellness/${theme}.png`} alt="" width="512" height="512" decoding="async" className="mental-card-art" /></span>
 }
