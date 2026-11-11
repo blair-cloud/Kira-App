@@ -1,12 +1,13 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
-import { BookOpen, Brain, CalendarDays, Check, CircleHelp, Heart, HeartHandshake, LockKeyhole, MessageCircle, ShieldCheck, Stethoscope, UserRoundCheck } from 'lucide-react'
+import { BookOpen, CalendarDays, Check, CircleHelp, Clock3, Heart, LockKeyhole, MessageCircle, ShieldCheck, UserRoundCheck } from 'lucide-react'
 import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
 import { MentalHealthHero } from '../components/MentalHealthHero'
 import { resources } from '../data/wellness'
 import { LandingMotion } from '../components/LandingMotion'
 import { WellnessIllustration } from '../components/WellnessIllustration'
 import '../styles/support-section.css'
+import '../styles/featured-resources.css'
 
 const services = [
   { label: 'INFORM', title: 'Explore Wellness', description: 'Discover reliable information about mental health, physical health, relationships, and general wellbeing.', to: '/resources', icon: BookOpen, tone: 'blue' },
@@ -52,7 +53,14 @@ function AiSection() {
 }
 
 function FeaturedResources() {
-  return <section className="section-pad bg-white"><div className="shell"><div className="flex flex-wrap items-end justify-between gap-5" data-reveal><div><h2 className="section-title">Featured wellness resources</h2><p className="section-subtitle mt-3">Thoughtful starting points for the questions students often bring.</p></div><Link to="/resources" className="inline-flex items-center gap-2 text-sm font-bold text-trust hover:underline">View all resources</Link></div><div className="mt-9 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">{resources.map((resource,index) => <Link to={`/resources/${resource.slug}`} key={resource.slug} className="resource-card group" data-reveal style={{ '--reveal-order': index } as CSSProperties}><div className={`resource-art resource-art-${resource.tone}`}><span className="resource-art-circle" />{index === 0 ? <Brain size={47} /> : index === 1 ? <BookOpen size={47} /> : index === 2 ? <HeartHandshake size={47} /> : <Stethoscope size={47} />}</div><div className="p-5"><div className="flex items-center justify-between gap-2 text-[11px] font-bold text-secondary"><span className="uppercase tracking-[.1em] text-trust">{resource.category}</span><span>{resource.minutes} min read</span></div><h3 className="mt-3 min-h-[50px] text-base font-semibold leading-6 text-navy">{resource.title}</h3><p className="mt-2 min-h-[68px] text-xs leading-5 text-secondary">{resource.description}</p><span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-trust group-hover:gap-3">Read More</span></div></Link>)}</div></div></section>
+  const artwork = ['breathe', 'study', 'connection', 'kindness']
+  return <section className="featured-resources section-pad" aria-labelledby="featured-resources-heading"><div className="shell">
+    <div className="featured-resources-header" data-reveal><div><h2 id="featured-resources-heading" className="section-title">Featured wellness resources</h2><p className="section-subtitle mt-3">Thoughtful starting points for the questions students often bring.</p></div><Link to="/resources" className="btn btn-outline">View all resources</Link></div>
+    <div className="featured-resources-grid">{resources.map((resource,index) => <Link to={`/resources/${resource.slug}`} key={resource.slug} className={`featured-reading-card featured-reading-${resource.tone} ${index === 0 ? 'featured-reading-lead' : ''}`} data-reveal style={{ '--reveal-order': index } as CSSProperties}>
+      <div className="featured-reading-art" aria-hidden="true"><span className="featured-reading-halo" /><img src={`/images/hero-wellness/${artwork[index]}.png`} alt="" width={512} height={512} loading="lazy" decoding="async" /></div>
+      <div className="featured-reading-copy"><div className="featured-reading-meta"><span className="featured-reading-category">{resource.category}</span><span className="featured-reading-time"><Clock3 size={13} aria-hidden="true" />{resource.minutes} min read</span></div><h3>{resource.title}</h3><p>{resource.description}</p><span className="featured-reading-link"><BookOpen size={15} strokeWidth={1.7} aria-hidden="true" />Read article</span></div>
+    </Link>)}</div>
+  </div></section>
 }
 
 function TrustSection() {
