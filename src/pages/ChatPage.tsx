@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link, NavLink } from 'react-router'
-import { CalendarDays, Check, ChevronDown, CircleHelp, Heart, LifeBuoy, LockKeyhole, MessageCircle, Moon, PanelLeftClose, PanelLeftOpen, Plus, Send, ShieldCheck, Sparkles, Square, Sun, X } from 'lucide-react'
+import { CalendarDays, Check, ChevronDown, CircleHelp, Heart, Siren, LockKeyhole, MessageCircle, Moon, PanelLeftClose, PanelLeftOpen, Plus, Send, ShieldCheck, Sparkles, Square, Sun, X } from 'lucide-react'
 import { MedicalSupportIcon } from '../components/MedicalSupportIcon'
 import '../styles/chat.css'
 
@@ -150,14 +150,14 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
         <button type="button" className="chat-mobile-sidebar" aria-expanded={sidebarOpen} aria-controls="chat-sidebar" onClick={() => setSidebarOpen(open => !open)}>{sidebarOpen ? <X size={18} /> : <MessageCircle size={18} />}Conversations<ChevronDown size={15} /></button>
         {sidebarOpen && <button type="button" className="chat-sidebar-backdrop" aria-label="Close conversations" onClick={() => setSidebarOpen(false)} />}
         <aside id="chat-sidebar" className={`chat-sidebar ${sidebarOpen ? 'chat-sidebar-open' : ''}`} aria-label="Chat navigation">
-          <Link to="/" className="chat-sidebar-brand" aria-label="Kira App home"><span><Heart size={20} strokeWidth={1.7} /></span><div><strong>Kira support</strong><small>A place to begin</small></div></Link>
+          <Link to="/" className="chat-sidebar-brand" aria-label="Kira App home"><span><img src="/images/kira-brain-health-logo-outline.png" alt="" width={32} height={32} /></span><div><strong>Kira support</strong><small>A place to begin</small></div></Link>
           <nav className="chat-mode-nav" aria-label="Choose support type">{(Object.keys(modes) as ChatMode[]).map(key => { const ModeIcon = modes[key].icon; return <NavLink key={key} to={modes[key].path} className={`chat-mode-link ${mode === key ? 'is-active' : ''}`} title={modes[key].label} aria-label={modes[key].label}><ModeIcon size={18} strokeWidth={1.7} /><span>{modes[key].label}</span></NavLink> })}</nav>
           <button type="button" className="chat-new-button" onClick={newConversation} aria-label="New conversation" title="New conversation"><Plus size={18} /><span>New conversation</span></button>
           <div className="chat-history-heading">THIS VISIT<span>{conversations[mode].length}</span></div>
           <div className="chat-history">{conversations[mode].map(item => <button type="button" key={item.id} aria-current={conversation.id === item.id ? 'true' : undefined} className={`chat-history-item ${conversation.id === item.id ? 'is-active' : ''}`} onClick={() => { followResponse.current = true; setSelectedIds(previous => ({ ...previous, [mode]: item.id })); setSidebarOpen(false) }}><MessageCircle size={15} /><span>{item.title}</span></button>)}</div>
           <div className="chat-sidebar-note"><ShieldCheck size={19} /><p>Preview conversations stay in this visit and clear when you refresh.</p></div>
           <Link to="/privacy" className="chat-urgent-link" aria-label="About confidentiality" title="About confidentiality"><LockKeyhole size={17} /><span>About confidentiality</span></Link>
-          <Link to="/emergency" className="chat-urgent-link" aria-label="Need urgent support?" title="Need urgent support?"><LifeBuoy size={17} /><span>Need urgent support?</span></Link>
+          <Link to="/emergency" className="chat-urgent-link" aria-label="Need urgent support?" title="Need urgent support?"><Siren size={17} /><span>Need urgent support?</span></Link>
         </aside>
         <div className={`chat-main ${!conversation.messages.length ? 'is-new-chat' : ''}`}>
           <header className="chat-conversation-header"><div className="chat-header-leading"><button type="button" className="chat-sidebar-toggle" aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'} aria-expanded={!sidebarCollapsed} aria-controls="chat-sidebar" onClick={() => setSidebarCollapsed(value => !value)}>{sidebarCollapsed ? <PanelLeftOpen size={21} strokeWidth={1.7} /> : <PanelLeftClose size={21} strokeWidth={1.7} />}</button><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h1>{config.short}</h1><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div></div><button type="button" className="chat-theme-toggle" aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'} aria-pressed={theme === 'dark'} onClick={() => setTheme(value => value === 'light' ? 'dark' : 'light')}>{theme === 'light' ? <Moon size={19} strokeWidth={1.7} /> : <Sun size={19} strokeWidth={1.7} />}</button></header>

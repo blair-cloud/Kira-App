@@ -12,15 +12,11 @@ const features = [
 ]
 
 function HealthChatIcon({ still }: { still: boolean }) {
-  return <svg className="health-chat-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-    <path d="M15 10h32a9 9 0 0 1 9 9v25a9 9 0 0 1-9 9H28L15 60v-7a9 9 0 0 1-9-9V19a9 9 0 0 1 9-9Z" stroke="white" strokeWidth="2.4" strokeLinejoin="round" opacity=".9" />
-    <motion.g style={{ transformOrigin: '32px 33px' }} animate={still ? { scale: 1 } : { scale: [1, 1.12, 1, 1.07, 1] }} transition={{ duration: 1.45, repeat: Infinity, repeatDelay: 2.1, times: [0,.2,.4,.6,1] }}>
-      <path d="M32 46S16 37 16 27c0-9 11-12 16-4 5-8 16-5 16 4 0 10-16 19-16 19Z" fill="white" />
-      <motion.path d="M19 32h8l3-7 5 14 3-7h7" stroke="#2585c5" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" initial={false} animate={still ? { pathLength: 1 } : { pathLength: [0,1,1] }} transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 1.75, times: [0,.65,1] }} />
-    </motion.g>
-    <circle cx="52" cy="12" r="9" fill="#249f97" stroke="white" strokeWidth="2.5" />
-    <path d="M52 8v8m-4-4h8" stroke="white" strokeWidth="2" strokeLinecap="round" />
-  </svg>
+  return <span className="health-chat-icon" aria-hidden="true">
+    <svg className="health-chat-bubble" viewBox="0 0 48 48" fill="none"><path d="M12 5h24a7 7 0 0 1 7 7v21a7 7 0 0 1-7 7H22l-11 6v-6a7 7 0 0 1-7-7V12a7 7 0 0 1 8-7Z" stroke="white" strokeWidth="2" strokeLinejoin="round" /></svg>
+    <motion.img className="health-chat-brain" src="/images/kira-brain-health-logo-outline.png" alt="" width={31} height={31}
+      animate={still ? { scale: 1, y: 0 } : { scale: [1, 1.12, 1], y: [0, -1, 0] }} transition={{ duration: 2, repeat: still ? 0 : Infinity, repeatDelay: .6, ease: 'easeInOut' }} />
+  </span>
 }
 
 export function ChatLauncher() {

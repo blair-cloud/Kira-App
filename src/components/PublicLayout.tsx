@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
-import { ChevronDown, HeartPulse, LifeBuoy, Menu, X } from 'lucide-react'
+import { ChevronDown, Siren, Menu, X } from 'lucide-react'
 import { ChatLauncher } from './ChatLauncher'
 
 const nav = [
@@ -16,8 +16,8 @@ const supportLinks = [
 
 function Brand({ inverse = false }: { inverse?: boolean }) {
   return <Link to="/" className={`inline-flex items-center gap-3 ${inverse ? 'text-white' : 'text-navy'}`} aria-label={inverse ? "Kira App, Kepler College home" : "Kira App home"}>
-    <span className={`grid h-11 w-11 place-items-center rounded-[14px] ${inverse ? 'bg-white/15' : 'bg-trust'} text-white`}><HeartPulse size={25} strokeWidth={2.1} /></span>
-    <span className="flex flex-col leading-none"><strong className="text-[19px] font-extrabold tracking-[.06em]">KIRA APP</strong>{inverse && <small className={`mt-1 text-[9px] font-bold tracking-[.23em] ${inverse ? 'text-white/85' : 'text-muted'}`}>KEPLER COLLEGE</small>}</span>
+    <img src="/images/kira-brain-health-logo-outline.png" alt="" width="60" height="60" className="kira-brand-mark shrink-0 object-contain" />
+    <span className="flex flex-col leading-none"><strong className="kira-wordmark"><span>KIRA</span> <span>APP</span></strong>{inverse && <small className={`mt-1 text-[11px] font-bold tracking-[.23em] ${inverse ? 'text-white/85' : 'text-muted'}`}>KEPLER COLLEGE</small>}</span>
   </Link>
 }
 
@@ -46,7 +46,7 @@ function Header() {
         {nav.slice(1).map(item => <NavLink key={item.to} to={item.to} className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>{item.label}</NavLink>)}
       </nav>
       <div className="hidden items-center gap-3 lg:flex"><Link to="/login" className="px-4 py-2.5 text-sm font-bold text-navy hover:text-trust">Login</Link><Link to="/register" className="btn btn-primary !px-5">Get Started</Link></div>
-      <div className="flex items-center gap-2 lg:hidden"><Link to="/emergency" className="grid h-11 w-11 place-items-center rounded-xl border border-[#f3d3d3] bg-[#fff7f7] text-[#c74747]" aria-label="Emergency support"><LifeBuoy size={21} /></Link><button type="button" className="grid h-11 w-11 place-items-center rounded-xl border border-line text-navy" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen} aria-controls="mobile-nav" onClick={() => setMobileOpen(v => !v)}>{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button></div>
+      <div className="flex items-center gap-2 lg:hidden"><button type="button" className="grid h-11 w-11 place-items-center rounded-xl border border-line text-navy" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen} aria-controls="mobile-nav" onClick={() => setMobileOpen(v => !v)}>{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button></div>
     </div>
     {mobileOpen && <nav id="mobile-nav" className="max-h-[calc(100dvh-78px)] overflow-y-auto border-t border-line bg-white px-5 pb-6 pt-3 lg:hidden" aria-label="Mobile navigation">
       <div className="mx-auto max-w-2xl">{[{ to: '/resources', label: 'Learn' }, ...supportLinks, ...nav.slice(1), { to: '/emergency', label: 'Emergency support' }].map(item => <Link key={item.to} to={item.to} className="block border-b border-line py-3 text-sm font-semibold text-navy">{item.label}</Link>)}<div className="mt-5 flex gap-3"><Link to="/login" className="btn btn-outline flex-1">Login</Link><Link to="/register" className="btn btn-primary flex-1">Get Started</Link></div></div>
@@ -62,10 +62,10 @@ function Footer() {
   ]
   return <footer className="bg-navy text-white">
     <div className="shell grid gap-10 py-16 md:grid-cols-[1.5fr_1fr_1fr] xl:grid-cols-[1.7fr_1fr_1fr_1fr]">
-      <div><Brand inverse /><p className="mt-6 max-w-xs text-sm leading-7 text-white/85">A welcoming space for the Kepler College community to learn, connect, and find wellbeing support.</p><Link to="/emergency" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"><LifeBuoy size={17} /> Emergency support</Link></div>
+      <div><Brand inverse /><p className="mt-6 max-w-xs text-sm leading-7 text-white/85">A welcoming space for the Kepler College community to learn, connect, and find wellbeing support.</p><Link to="/emergency" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"><Siren size={17} /> Emergency support</Link></div>
       {groups.map(group => <div key={group.title}><h2 className="text-sm font-semibold">{group.title}</h2><ul className="mt-5 space-y-3">{group.links.map(([label,to]) => <li key={to}><Link to={to} className="text-sm text-white/85 transition hover:text-white">{label}</Link></li>)}</ul></div>)}
     </div>
-    <div className="border-t border-white/15"><div className="shell flex flex-col gap-2 py-5 text-xs text-white/80 sm:flex-row sm:justify-between"><span>© {new Date().getFullYear()} Kira App — Kepler College</span><span>Contact information will be added after institutional approval.</span></div></div>
+    <div className="border-t border-white/15"><div className="shell flex flex-col gap-2 py-5 text-xs text-white/80 sm:flex-row sm:justify-between"><span>© {new Date().getFullYear()} Kira App — Kepler College</span><Link to="/contact" className="hover:underline">Find a campus support contact</Link></div></div>
   </footer>
 }
 

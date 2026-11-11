@@ -1,6 +1,6 @@
 .chat-launcher { position: fixed; right: 26px; bottom: max(26px,env(safe-area-inset-bottom)); z-index: 60; }
-.chat-launcher-button { position: relative; display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid #ffffff90; border-radius: 50%; background: linear-gradient(145deg,#36a2db,#2585c5 65%,#1b6da9); color: #fff; box-shadow: 0 7px 22px #2585c530,inset 0 1px 1px #ffffff55; cursor: pointer; }
-.health-chat-icon { position: relative; width: 36px; height: 36px; overflow: visible; }
+.chat-launcher-button { position: relative; display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid #ffffff90; border-radius: 50%; background: #2585c5; color: #fff; box-shadow: 0 7px 22px #2585c530,inset 0 1px 1px #ffffff55; cursor: pointer; }
+.health-chat-icon { position: relative; display: block; width: 32px; height: 32px; }
 .chat-launcher-pulse { position: absolute; inset: -4px; border: 1px solid #2585c5; border-radius: 50%; pointer-events: none; }
 .chat-launcher-button:focus-visible { outline: 3px solid #35afa3; outline-offset: 5px; }
 .chat-launcher-orbit { position: absolute; inset: 0; pointer-events: none; }
@@ -9,8 +9,11 @@
 .chat-launcher-feature>svg { color: #2585c5; filter: drop-shadow(0 1px 3px #fff); }
 .chat-launcher-feature.teal>svg { color: #248d80; }
 .chat-launcher-feature.violet>svg { color: #7760ad; }
-.chat-launcher-feature>span { max-width: 110px; font-size: 10px; font-weight: 600; line-height: 1.4; }
+.chat-launcher-feature>span { max-width: 110px; font-size: 12px; font-weight: 600; line-height: 1.4; }
 .chat-launcher-feature:hover { transform: translateY(-3px) scale(1.06); color: #2585c5; }
 .chat-launcher-feature:focus-visible { outline: 2px solid #2585c5; outline-offset: 2px; }
-@media (max-width:640px) { .chat-launcher { right: 18px; bottom: max(18px,env(safe-area-inset-bottom)); }.chat-launcher-button { width: 48px; height: 48px; }.health-chat-icon { width: 33px; height: 33px; } }
+@media (max-width:640px) { .chat-launcher { right: 18px; bottom: max(18px,env(safe-area-inset-bottom)); }.chat-launcher-button { width: 48px; height: 48px; }.health-chat-icon { width: 30px; height: 30px; } }
 @media (prefers-reduced-motion:reduce) { .chat-launcher-feature { transition: none; } }
+
+.health-chat-bubble { display: block; width: 100%; height: 100%; filter: drop-shadow(0 1px 2px #15568730); }
+.health-chat-brain { position: absolute; width: 72%; height: 72%; top: 10%; left: 14%; object-fit: contain; transform-origin: center; filter: brightness(0) invert(1); }

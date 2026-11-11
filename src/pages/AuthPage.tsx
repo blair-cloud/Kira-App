@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router'
-import { BookOpen, Check, CircleCheck, Eye, EyeOff, Heart, HeartPulse, LockKeyhole, Mail, MessageCircle, UserRound } from 'lucide-react'
+import { BookOpen, Check, CircleCheck, Eye, EyeOff, Heart, LockKeyhole, Mail, MessageCircle, UserRound } from 'lucide-react'
 import '../styles/auth.css'
 
 type AuthMode = 'login' | 'register' | 'recover'
@@ -53,8 +53,8 @@ export function AuthPage({ mode }: { mode: AuthMode }) {
   }
 
   return <main className={`auth-page auth-mode-${mode}`}>
-    <aside className="auth-image-panel" aria-label="Welcome to Kira"><img className="auth-cover-photo" src="/images/login.jpg" alt="Kepler community members attending a mental health panel discussion" width={799} height={369} /><Link to="/" className="auth-brand" aria-label="Kira App home"><span><HeartPulse size={25} strokeWidth={1.9} /></span><strong>KIRA APP</strong></Link><div className="auth-image-content"><span className="auth-image-kicker"><Heart size={15} />A LITTLE CARE, EVERY DAY</span><h2>{config.imageTitle}</h2><p>{config.imageDescription}</p><div className="auth-image-values"><span><BookOpen size={16} />Learn</span><span><MessageCircle size={16} />Connect</span><span><Heart size={16} />Feel supported</span></div></div><span className="auth-image-bottom">One small step can make a difference.</span></aside>
-    <section className="auth-form-panel" aria-labelledby="auth-heading"><div className="auth-switch-link">{mode === 'register' ? <>Already have an account? <Link to="/login">Log in</Link></> : <>New to Kira? <Link to="/register">Get started</Link></>}</div><div className="auth-form-content"><h1 id="auth-heading">{config.title}</h1><p className="auth-intro">{config.description}</p>
+    <aside className="auth-image-panel" aria-label="Welcome to Kira"><img className="auth-cover-photo" src="/images/login.jpg" alt="Kepler community members attending a mental health panel discussion" width={799} height={369} /><Link to="/" className="auth-brand" aria-label="Kira App home"><span><img src="/images/kira-brain-health-logo-outline.png" alt="" width={60} height={60} /></span><strong className="kira-wordmark"><span>KIRA</span> <span>APP</span></strong></Link><div className="auth-image-content"><span className="auth-image-kicker"><Heart size={15} />A LITTLE CARE, EVERY DAY</span><h2>{config.imageTitle}</h2><p>{config.imageDescription}</p><div className="auth-image-values"><span><BookOpen size={16} />Learn</span><span><MessageCircle size={16} />Connect</span><span><Heart size={16} />Feel supported</span></div></div><span className="auth-image-bottom">One small step can make a difference.</span></aside>
+    <section className="auth-form-panel" aria-labelledby="auth-heading"><div className="auth-form-topbar"><Link to="/" className="auth-home-link">Back to home</Link><div className="auth-switch-link">{mode === 'register' ? <>Already have an account? <Link to="/login">Log in</Link></> : <>New to Kira? <Link to="/register">Get started</Link></>}</div></div><div className="auth-form-content"><h1 id="auth-heading">{config.title}</h1><p className="auth-intro">{config.description}</p>
       <form ref={form} className="auth-form" noValidate onSubmit={submit}>
         {mode === 'register' && <div className="auth-field"><label htmlFor="auth-name">Full name</label><div className={`auth-input ${errors.name ? 'has-error' : ''}`}><UserRound size={17} aria-hidden="true" /><input id="auth-name" name="name" type="text" autoComplete="name" required value={fields.name} onChange={event => update('name', event.target.value)} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'auth-name-error' : undefined} /></div>{errors.name && <p className="auth-error" id="auth-name-error">{errors.name}</p>}</div>}
         <div className="auth-field"><label htmlFor="auth-email">Email address</label><div className={`auth-input ${errors.email ? 'has-error' : ''}`}><Mail size={17} aria-hidden="true" /><input id="auth-email" name="email" type="email" autoComplete="email" inputMode="email" autoCapitalize="none" spellCheck={false} required value={fields.email} onChange={event => update('email', event.target.value)} aria-invalid={!!errors.email} aria-describedby={errors.email ? 'auth-email-error' : undefined} /></div>{errors.email && <p className="auth-error" id="auth-email-error">{errors.email}</p>}</div>
@@ -67,6 +67,6 @@ export function AuthPage({ mode }: { mode: AuthMode }) {
       <div className="auth-preview-note"><Check size={14} /><span>Form preview · account services are not connected yet.</span></div>
       {mode === 'recover' && <Link className="auth-back-login" to="/login">Back to log in</Link>}
       <p className="auth-policy">Read our <Link to="/privacy">Privacy policy</Link> and <Link to="/terms">Terms of service</Link>.</p>
-    </div><div className="auth-footer"><span>© {new Date().getFullYear()} Kira App</span><Link to="/">Back to Home</Link></div></section>
+    </div><div className="auth-footer"><span>© {new Date().getFullYear()} Kira App</span></div></section>
   </main>
 }

@@ -22,7 +22,7 @@
 .support-card-copy { padding: 25px 24px 29px; }
 .support-card-label { display: block; color: var(--support-accent); font-size: 21px; font-weight: 800; line-height: 1.25; letter-spacing: .04em; }
 .support-card-copy h3 { margin: 10px 0; color: #1b5278; font-size: 19px; font-weight: 600; line-height: 1.4; letter-spacing: -.025em; }
-.support-card-copy p { margin: 0; color: #000; font-size: 13px; line-height: 1.8; }
+.support-card-copy p { margin: 0; color: #000; font-size: 15px; line-height: 1.8; }
 .support-card-art .support-icon-tile { animation: support-icon-float 6s ease-in-out infinite; }
 .support-art-orbit-outer { animation: support-orbit-breathe 7s ease-in-out infinite; }
 .support-art-dot { animation: support-dot-glow 5s ease-in-out infinite; }

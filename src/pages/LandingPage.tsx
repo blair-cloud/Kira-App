@@ -48,7 +48,7 @@ function TrustSection() {
   return <section className="confidentiality-section" aria-labelledby="confidentiality-heading"><div className="shell">
     <div className="confidentiality-panel" data-reveal>
       <div className="confidentiality-graphic" aria-hidden="true"><span className="confidentiality-ring" /><ShieldCheck size={88} strokeWidth={1.5} /><span className="confidentiality-lock"><LockKeyhole size={20} strokeWidth={1.8} /></span></div>
-      <div className="confidentiality-copy"><h2 id="confidentiality-heading">Your privacy matters.</h2><p>Understand how your information is handled before you share.</p></div>
+      <div className="confidentiality-copy"><h2 id="confidentiality-heading">Your privacy matters.</h2><p>Kira’s privacy approach puts your consent first: collect only what is needed, explain how it is used, and restrict access to authorized support staff.</p><p className="confidentiality-status">Live services will require verified security safeguards and a clear policy explaining confidentiality and its limits. This app is currently a frontend preview.</p></div>
       <Link to="/privacy" className="confidentiality-link">About confidentiality</Link>
     </div>
   </div></section>
@@ -59,5 +59,5 @@ function FinalCta() {
 }
 
 export function LandingPage() {
-  return <LandingMotion><MentalHealthHero /><Services /><BeginWhereYouAre /><AiSection /><TrustSection /><FinalCta /></LandingMotion>
+  return <LandingMotion><MentalHealthHero /><BeginWhereYouAre /><Services /><AiSection /><TrustSection /><FinalCta /></LandingMotion>
 }
