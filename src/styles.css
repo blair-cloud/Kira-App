@@ -120,3 +120,8 @@ header .nav-link, header .nav-link:hover, header .nav-link-active, header a:not(
 .public-layout { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; overflow-x: clip; }
 .public-layout > header, .public-layout > footer { flex: none; }
 .public-layout > main { display: flow-root; flex: 1 0 auto; min-width: 0; }
+
+/* Stop native scroll bounce from exposing space beyond the page boundary. */
+html, body { overscroll-behavior-y: none; }
+#root { min-height: 100vh; min-height: 100dvh; }
+.public-layout > footer { display: flow-root; margin-bottom: 0; }
