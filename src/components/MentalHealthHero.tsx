@@ -73,7 +73,7 @@ export function MentalHealthHero() {
   }
 
   return <section className="mental-health-hero" data-animated-graphic aria-labelledby="mental-hero-title">
-    <div className="mental-hero-intro shell"><span className="eyebrow">Your daily moment of care</span><h1 id="mental-hero-title">Your mind matters.<br /><span>Make space for yourself.</span></h1></div>
+    <div className="mental-hero-intro shell"><h1 id="mental-hero-title">Your mind matters.<br /><span>Make space for yourself.</span></h1></div>
     <div className="mental-fan-stage" ref={fan} role="group" aria-label="Seven mental health flash cards. Use left and right arrow keys to explore." aria-busy={!moment && !error}>
       {moment ? moment.cards.map((card, index) => <div className="mental-fan-slot" key={card.id} style={{ '--card-position': index - 3, '--card-y': [28, 8, -8, -26, -8, 8, 28][index] + 'px', '--card-angle': [-15, -10, -5, 0, 5, 10, 15][index] + 'deg', '--card-delay': Math.abs(index - 3) * 90 + 'ms', '--card-layer': 7 - Math.abs(index - 3), '--card-color': card.color, '--card-end': card.colorEnd, '--card-accent': card.accent, '--card-ink': card.ink } as CSSProperties}>
         <button type="button" className="mental-flash-card" ref={button => { cardButtons.current[index] = button }} onClick={() => setSelected(card)} onKeyDown={event => navigateCards(event, index)} aria-label={`${card.category}: ${card.title}${card.id === moment.featuredId ? ' Featured today.' : ''} Open reflection.`}>
@@ -81,7 +81,7 @@ export function MentalHealthHero() {
         </button>
       </div>) : error ? <p className="mental-hero-error" role="status">The reflections are unavailable right now. You can still explore our wellness resources below.</p> : Array.from({ length: 7 }, (_, index) => <div key={index} className="mental-fan-skeleton" aria-hidden="true" />)}
     </div>
-    <div className="mental-hero-outro shell"><p>Seven small reminders to pause, reconnect, and care for your mental wellbeing.</p><div className="mental-hero-actions"><Link to="/register" className="btn btn-primary">Get Started</Link><Link to="/resources" className="btn btn-outline">Explore Wellness</Link></div><span className="mental-hero-hint"><span className="mental-desktop-hint">Choose a card for a gentle reflection.</span><span className="mental-mobile-hint">Swipe to explore. Tap a card to reflect.</span> A new featured card every day.</span></div>
+    <div className="mental-hero-outro shell"><p>Seven small reminders to pause, reconnect, and care for your mental wellbeing.</p><div className="mental-hero-actions"><Link to="/register" className="btn btn-primary">Get Started</Link><Link to="/resources" className="btn btn-outline">Explore Wellness</Link></div></div>
     {selected && <ReflectionDialog card={selected} onClose={() => setSelected(null)} />}
   </section>
 }

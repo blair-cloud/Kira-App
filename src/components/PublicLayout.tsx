@@ -14,9 +14,9 @@ const supportLinks = [
 ]
 
 function Brand({ inverse = false }: { inverse?: boolean }) {
-  return <Link to="/" className={`inline-flex items-center gap-3 ${inverse ? 'text-white' : 'text-navy'}`} aria-label="Kira App, Kepler College home">
+  return <Link to="/" className={`inline-flex items-center gap-3 ${inverse ? 'text-white' : 'text-navy'}`} aria-label={inverse ? "Kira App, Kepler College home" : "Kira App home"}>
     <span className={`grid h-11 w-11 place-items-center rounded-[14px] ${inverse ? 'bg-white/15' : 'bg-trust'} text-white`}><HeartPulse size={25} strokeWidth={2.1} /></span>
-    <span className="flex flex-col leading-none"><strong className="text-[19px] font-extrabold tracking-[.06em]">KIRA APP</strong><small className={`mt-1 text-[9px] font-bold tracking-[.23em] ${inverse ? 'text-white/85' : 'text-muted'}`}>KEPLER COLLEGE</small></span>
+    <span className="flex flex-col leading-none"><strong className="text-[19px] font-extrabold tracking-[.06em]">KIRA APP</strong>{inverse && <small className={`mt-1 text-[9px] font-bold tracking-[.23em] ${inverse ? 'text-white/85' : 'text-muted'}`}>KEPLER COLLEGE</small>}</span>
   </Link>
 }
 
