@@ -5,6 +5,7 @@ import { LandingPage } from '../pages/LandingPage'
 import { InfoPage, pageContent } from '../pages/InfoPage'
 import { AppointmentsPage } from '../pages/AppointmentsPage'
 import { CheckInPage } from '../pages/CheckInPage'
+import { ChatPage } from '../pages/ChatPage'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -23,7 +24,10 @@ export function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/appointments" element={<AppointmentsPage />} />
         <Route path="/check-in" element={<CheckInPage />} />
-        {Object.keys(pageContent).map(path => <Route key={path} path={path} element={<InfoPage path={path} />} />)}
+        <Route path="/ask" element={<ChatPage mode="ask" />} />
+        <Route path="/chat" element={<ChatPage mode="professional" />} />
+        <Route path="/ai-assistant" element={<ChatPage mode="ai" />} />
+        {Object.keys(pageContent).filter(path => !['/ask', '/chat', '/ai-assistant'].includes(path)).map(path => <Route key={path} path={path} element={<InfoPage path={path} />} />)}
         <Route path="*" element={<InfoPage path="/not-found" />} />
       </Route>
     </Routes>
