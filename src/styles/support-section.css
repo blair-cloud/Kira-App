@@ -5,7 +5,7 @@
 .support-section-art { display: grid; height: 205px; place-items: center; }
 .support-section-art .wellness-illustration { width: 265px; }
 .support-card-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 20px; }
-.support-path-card { --support-accent: #2276b1; --support-tint: #e5f3ff; --support-line: #b8dbf4; position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #dce8f1; border-radius: 24px; background: #fff; box-shadow: 0 8px 26px #1b527808; transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 180ms ease, border-color 180ms ease; }
+.support-path-card { --support-accent: #2276b1; --support-tint: #e5f3ff; --support-line: #b8dbf4; position: relative; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #dce8f1; border-radius: 24px; background: #fff; box-shadow: 0 8px 26px #1b527808; transition: transform 360ms cubic-bezier(.22,1,.36,1), box-shadow 360ms ease, border-color 240ms ease; }
 .support-path-lavender { --support-accent: #7760ad; --support-tint: #f0ecfc; --support-line: #d5c9ed; }
 .support-path-teal { --support-accent: #228c7c; --support-tint: #e4f6ef; --support-line: #b6dfd1; }
 .support-path-peach { --support-accent: #ad624e; --support-tint: #fff0e7; --support-line: #efd1bf; }
@@ -20,7 +20,7 @@
 .support-art-dot.first { top: 37px; left: calc(50% - 63px); }
 .support-art-dot.second { bottom: 38px; right: calc(50% - 65px); width: 5px; height: 5px; }
 .support-card-copy { padding: 25px 24px 29px; }
-.support-card-label { display: block; color: var(--support-accent); font-size: 24px; font-weight: 800; line-height: 1.25; letter-spacing: .04em; }
+.support-card-label { display: block; color: var(--support-accent); font-size: 21px; font-weight: 800; line-height: 1.25; letter-spacing: .04em; }
 .support-card-copy h3 { margin: 10px 0; color: #1b5278; font-size: 19px; font-weight: 600; line-height: 1.4; letter-spacing: -.025em; }
 .support-card-copy p { margin: 0; color: #000; font-size: 13px; line-height: 1.8; }
 .support-card-art .support-icon-tile { animation: support-icon-float 6s ease-in-out infinite; }
@@ -29,8 +29,8 @@
 .support-path-card:nth-child(2) .support-icon-tile { animation-delay: -1.5s; }
 .support-path-card:nth-child(3) .support-icon-tile { animation-delay: -3s; }
 .support-path-card:nth-child(4) .support-icon-tile { animation-delay: -4.5s; }
-@media (hover:hover) { .support-path-card:hover { z-index: 2; transform: translateY(-14px) scale(1.045); border-color: var(--support-accent); box-shadow: 0 26px 44px #1b527824; } }
-.support-path-card:focus-visible { z-index: 2; transform: translateY(-14px) scale(1.045); outline: 3px solid #2585c5; outline-offset: 4px; }
+@media (hover:hover) { .support-path-card:hover { z-index: 2; transform: translateY(-8px) scale(1.03); border-color: transparent; box-shadow: 0 22px 40px #1b52781c; } }
+.support-path-card:focus-visible { z-index: 2; transform: translateY(-8px) scale(1.03); outline: 3px solid #2585c5; outline-offset: 4px; }
 @keyframes support-icon-float { 0%,100% { translate: 0 0; rotate: -3deg; } 50% { translate: 0 -5px; rotate: 3deg; } }
 @keyframes support-orbit-breathe { 0%,100% { opacity: .35; scale: .96; } 50% { opacity: .7; scale: 1.04; } }
 @keyframes support-dot-glow { 0%,100% { opacity: .25; } 50% { opacity: .65; } }
