@@ -1,7 +1,6 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router'
 import { BookOpen, CalendarDays, Check, CircleHelp, Heart, LockKeyhole, MessageCircle, ShieldCheck } from 'lucide-react'
-import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
 import { MentalHealthHero } from '../components/MentalHealthHero'
 import { LandingMotion } from '../components/LandingMotion'
 import { WellnessIllustration } from '../components/WellnessIllustration'
@@ -41,7 +40,7 @@ function BeginWhereYouAre() {
 }
 
 function AiSection() {
-  return <section className="section-pad bg-[#f8fbfe]"><div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-20"><div className="ai-visual home-photo-panel" data-reveal><img src="/images/counselors.jpg" alt="Two people smiling with a Kepler World Mental Health Day frame" width={799} height={533} loading="lazy" decoding="async" /></div><div data-reveal><h2 className="section-title">Wellness support, one question away.</h2><p className="section-subtitle mt-5">Explore everyday wellness questions and find relevant resources in a calm, conversational space.</p><div className="mt-6 space-y-3">{['How can I manage academic stress?', 'Where can I find support?', 'How do I prepare for a counselling session?'].map(question => <div key={question} className="flex items-center gap-3 text-sm text-main"><span className="grid h-7 w-7 place-items-center rounded-lg bg-softsky text-trust"><CircleHelp size={15} /></span>{question}</div>)}</div><p className="mt-7 max-w-lg text-xs leading-6 text-secondary">The AI assistant provides educational information and navigation help. It does not diagnose or treat health conditions. Qualified professionals are available for personal support.</p><Link to="/ai-assistant" className="btn btn-primary mt-7">Explore AI Assistant</Link></div></div></section>
+  return <section className="section-pad bg-[#f8fbfe]"><div className="shell grid items-center gap-12 lg:grid-cols-2 lg:gap-20"><div data-reveal><h2 className="section-title">Wellness support, one question away.</h2><p className="section-subtitle mt-5">Explore everyday wellness questions and find relevant resources in a calm, conversational space.</p><div className="mt-6 space-y-3">{['How can I manage academic stress?', 'Where can I find support?', 'How do I prepare for a counselling session?'].map(question => <div key={question} className="flex items-center gap-3 text-sm text-main"><span className="grid h-7 w-7 place-items-center rounded-lg bg-softsky text-trust"><CircleHelp size={15} /></span>{question}</div>)}</div><p className="mt-7 max-w-lg text-xs leading-6 text-secondary">The AI assistant provides educational information and navigation help. It does not diagnose or treat health conditions. Qualified professionals are available for personal support.</p><Link to="/ai-assistant" className="btn btn-primary mt-7">Explore AI Assistant</Link></div><div className="ai-visual home-photo-panel" data-reveal><img src="/images/counselors.jpg" alt="Two people smiling with a Kepler World Mental Health Day frame" width={799} height={533} loading="lazy" decoding="async" /></div></div></section>
 }
 
 
@@ -60,5 +59,5 @@ function FinalCta() {
 }
 
 export function LandingPage() {
-  return <LandingMotion><MentalHealthHero /><Services /><BeginWhereYouAre /><DailyWellnessCarousel /><AiSection /><TrustSection /><FinalCta /></LandingMotion>
+  return <LandingMotion><MentalHealthHero /><Services /><BeginWhereYouAre /><AiSection /><TrustSection /><FinalCta /></LandingMotion>
 }
