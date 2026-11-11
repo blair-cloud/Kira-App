@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router'
-import { ArrowRight, ChevronDown, HeartPulse, LifeBuoy, Menu, X } from 'lucide-react'
+import { ChevronDown, HeartPulse, LifeBuoy, Menu, X } from 'lucide-react'
 
 const nav = [
   { to: '/resources', label: 'Learn' },
@@ -44,7 +44,7 @@ function Header() {
         </div>
         {nav.slice(1).map(item => <NavLink key={item.to} to={item.to} className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''}`}>{item.label}</NavLink>)}
       </nav>
-      <div className="hidden items-center gap-3 lg:flex"><Link to="/login" className="px-4 py-2.5 text-sm font-bold text-navy hover:text-trust">Login</Link><Link to="/register" className="btn btn-primary !min-h-[43px] !px-5">Get Started <ArrowRight size={16} /></Link></div>
+      <div className="hidden items-center gap-3 lg:flex"><Link to="/login" className="px-4 py-2.5 text-sm font-bold text-navy hover:text-trust">Login</Link><Link to="/register" className="btn btn-primary !min-h-[43px] !px-5">Get Started</Link></div>
       <div className="flex items-center gap-2 lg:hidden"><Link to="/emergency" className="grid h-11 w-11 place-items-center rounded-xl border border-[#f3d3d3] bg-[#fff7f7] text-[#c74747]" aria-label="Emergency support"><LifeBuoy size={21} /></Link><button type="button" className="grid h-11 w-11 place-items-center rounded-xl border border-line text-navy" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen} aria-controls="mobile-nav" onClick={() => setMobileOpen(v => !v)}>{mobileOpen ? <X size={22} /> : <Menu size={22} />}</button></div>
     </div>
     {mobileOpen && <nav id="mobile-nav" className="max-h-[calc(100dvh-78px)] overflow-y-auto border-t border-line bg-white px-5 pb-6 pt-3 lg:hidden" aria-label="Mobile navigation">
@@ -55,13 +55,13 @@ function Header() {
 
 function Footer() {
   const groups = [
-    { title: 'Quick links', links: [['About','/about'],['Explore wellness','/resources'],['Daily wellness','/daily-wellness'],['How it works','/#how-it-works']] },
+    { title: 'Quick links', links: [['About','/about'],['Explore wellness','/resources'],['Daily wellness','/daily-wellness'],['Services','/#services']] },
     { title: 'Wellness services', links: [['Ask a question','/ask'],['Chat with a professional','/chat'],['AI assistant','/ai-assistant'],['Appointments','/appointments']] },
     { title: 'Information', links: [['Emergency support','/emergency'],['Privacy policy','/privacy'],['Terms of service','/terms'],['Contact','/contact']] },
   ]
   return <footer className="bg-navy text-white">
     <div className="shell grid gap-10 py-16 md:grid-cols-[1.5fr_1fr_1fr] xl:grid-cols-[1.7fr_1fr_1fr_1fr]">
-      <div><Brand inverse /><p className="mt-6 max-w-xs text-sm leading-7 text-white/85">A welcoming space for the Kepler College community to learn, connect, and find wellbeing support.</p><Link to="/emergency" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"><LifeBuoy size={17} /> Emergency support <ArrowRight size={15} /></Link></div>
+      <div><Brand inverse /><p className="mt-6 max-w-xs text-sm leading-7 text-white/85">A welcoming space for the Kepler College community to learn, connect, and find wellbeing support.</p><Link to="/emergency" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"><LifeBuoy size={17} /> Emergency support</Link></div>
       {groups.map(group => <div key={group.title}><h2 className="text-sm font-bold">{group.title}</h2><ul className="mt-5 space-y-3">{group.links.map(([label,to]) => <li key={to}><Link to={to} className="text-sm text-white/85 transition hover:text-white">{label}</Link></li>)}</ul></div>)}
     </div>
     <div className="border-t border-white/15"><div className="shell flex flex-col gap-2 py-5 text-xs text-white/80 sm:flex-row sm:justify-between"><span>© {new Date().getFullYear()} Wellness App — Kepler College</span><span>Contact information will be added after institutional approval.</span></div></div>
