@@ -5,6 +5,8 @@ import { DailyWellnessCarousel } from '../components/DailyWellnessCarousel'
 import { MentalHealthHero } from '../components/MentalHealthHero'
 import { resources } from '../data/wellness'
 import { LandingMotion } from '../components/LandingMotion'
+import { WellnessIllustration } from '../components/WellnessIllustration'
+import '../styles/support-section.css'
 
 const services = [
   { label: 'INFORM', title: 'Explore Wellness', description: 'Discover reliable information about mental health, physical health, relationships, and general wellbeing.', to: '/resources', icon: BookOpen, tone: 'blue' },
@@ -20,9 +22,21 @@ const trust = [
 ]
 
 function Services() {
-  return <section className="section-pad bg-white" id="services"><div className="shell">
-    <div className="text-center" data-reveal><h2 className="section-title mx-auto">Support, one step at a time</h2><p className="section-subtitle mx-auto mt-3 max-w-2xl">Whether you want to understand something, talk it through, or find care, there is a place to begin.</p></div>
-    <div className="mt-11 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">{services.map((service, index) => { const Icon = service.icon; return <Link to={service.to} key={service.label} className="service-card group" data-reveal style={{ '--reveal-order': index } as CSSProperties}><span className={`service-icon service-icon-${service.tone}`}><Icon size={27} strokeWidth={1.8} /></span><span className="mt-6 block text-[11px] font-extrabold tracking-[.15em] text-trust">{service.label}</span><h3 className="mt-2 text-base font-semibold tracking-tight text-navy">{service.title}</h3><p className="mt-3 text-sm leading-6 text-secondary">{service.description}</p></Link> })}</div>
+  return <section className="support-section section-pad" id="services" aria-labelledby="support-heading"><div className="shell">
+    <div className="support-section-intro">
+      <div data-reveal><h2 id="support-heading" className="section-title">Support, one step at a time</h2><p className="section-subtitle mt-4">Whether you want to understand something, talk it through, or find care, there is a place to begin.</p></div>
+      <div className="support-section-art" data-reveal data-animated-graphic><WellnessIllustration /></div>
+    </div>
+    <div className="support-card-grid">{services.map((service, index) => { const Icon = service.icon; return <Link to={service.to} key={service.label} className={`support-path-card support-path-${service.tone}`} data-reveal style={{ '--reveal-order': index } as CSSProperties}>
+      <div className="support-card-art" aria-hidden="true" data-animated-graphic>
+        <span className="support-art-orbit support-art-orbit-outer" /><span className="support-art-orbit support-art-orbit-inner" />
+        <span className="support-icon-tile"><Icon size={36} strokeWidth={1.65} /></span>
+        <span className="support-icon-badge"><Heart size={14} strokeWidth={1.8} /></span>
+        <svg className="support-art-wave" viewBox="0 0 280 70" fill="none"><path d="M-20 50C30 50 30 10 80 10S130 60 180 40s70-40 120-20" stroke="currentColor" strokeWidth="1.2" /><path d="M-20 65C30 65 30 25 80 25s50 50 100 30 70-40 120-20" stroke="currentColor" strokeWidth="1.2" /></svg>
+        <span className="support-art-dot first" /><span className="support-art-dot second" />
+      </div>
+      <div className="support-card-copy"><span className="support-card-label">{service.label}</span><h3>{service.title}</h3><p>{service.description}</p></div>
+    </Link> })}</div>
   </div></section>
 }
 
