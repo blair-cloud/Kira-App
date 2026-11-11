@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link, NavLink } from 'react-router'
 import { CalendarDays, Check, ChevronDown, CircleHelp, Heart, LifeBuoy, LockKeyhole, MessageCircle, Moon, Plus, Send, ShieldCheck, Sparkles, Sun, X } from 'lucide-react'
 import { MedicalSupportIcon } from '../components/MedicalSupportIcon'
@@ -60,6 +60,21 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
     if (list) list.scrollTo({ top: list.scrollHeight, behavior: 'instant' })
   }, [conversation.id, conversation.messages.length, conversation.pending, mode])
   useEffect(() => () => { timers.current.forEach(clearTimeout) }, [])
+  useLayoutEffect(() => {
+    const input = composer.current
+    if (!input) return
+    const resize = () => {
+      const lineHeight = Number.parseFloat(getComputedStyle(input).lineHeight) || 24
+      input.style.height = lineHeight + 'px'
+      const contentHeight = input.scrollHeight
+      const maximumHeight = lineHeight * 5
+      input.style.height = Math.min(contentHeight, maximumHeight) + 'px'
+      input.style.overflowY = contentHeight > maximumHeight ? 'auto' : 'hidden'
+    }
+    resize()
+    window.addEventListener('resize', resize)
+    return () => window.removeEventListener('resize', resize)
+  }, [draft, mode, conversation.id, conversation.messages.length])
 
   function newConversation() {
     if (!conversation.messages.length) { composer.current?.focus(); setSidebarOpen(false); return }
