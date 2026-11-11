@@ -62,7 +62,7 @@ function Footer() {
   return <footer className="bg-navy text-white">
     <div className="shell grid gap-10 py-16 md:grid-cols-[1.5fr_1fr_1fr] xl:grid-cols-[1.7fr_1fr_1fr_1fr]">
       <div><Brand inverse /><p className="mt-6 max-w-xs text-sm leading-7 text-white/85">A welcoming space for the Kepler College community to learn, connect, and find wellbeing support.</p><Link to="/emergency" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white hover:underline"><LifeBuoy size={17} /> Emergency support</Link></div>
-      {groups.map(group => <div key={group.title}><h2 className="text-sm font-bold">{group.title}</h2><ul className="mt-5 space-y-3">{group.links.map(([label,to]) => <li key={to}><Link to={to} className="text-sm text-white/85 transition hover:text-white">{label}</Link></li>)}</ul></div>)}
+      {groups.map(group => <div key={group.title}><h2 className="text-sm font-semibold">{group.title}</h2><ul className="mt-5 space-y-3">{group.links.map(([label,to]) => <li key={to}><Link to={to} className="text-sm text-white/85 transition hover:text-white">{label}</Link></li>)}</ul></div>)}
     </div>
     <div className="border-t border-white/15"><div className="shell flex flex-col gap-2 py-5 text-xs text-white/80 sm:flex-row sm:justify-between"><span>© {new Date().getFullYear()} Kira App — Kepler College</span><span>Contact information will be added after institutional approval.</span></div></div>
   </footer>

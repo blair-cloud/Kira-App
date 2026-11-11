@@ -2,7 +2,7 @@
 .mental-health-hero { position: relative; overflow: hidden; padding: 45px 0 28px; background: radial-gradient(ellipse at 50% 52%, #eaf0ff88, #f8fcff 58%, #fff); }
 .mental-hero-intro { position: relative; z-index: 2; text-align: center; }
 .mental-hero-intro .eyebrow { font-size: 10px; letter-spacing: .18em; }
-.mental-hero-intro h1 { margin: 17px auto 4px; color: #1b5278; font-size: clamp(42px, 5.2vw, 64px); font-weight: 800; line-height: 1.09; letter-spacing: -.055em; }
+.mental-hero-intro h1 { margin: 17px auto 4px; color: #1b5278; font-size: clamp(35.7px, 4.42vw, 54.4px); font-weight: 600; line-height: 1.09; letter-spacing: -.055em; }
 .mental-hero-intro h1 span { color: #2585c5; }
 .mental-fan-stage { --fan-step: clamp(110px, 11.1vw, 160px); position: relative; max-width: 1280px; height: 440px; margin: 27px auto 0; isolation: isolate; }
 .mental-fan-stage::after { position: absolute; left: 12%; right: 12%; bottom: 15px; z-index: -1; height: 37px; border-radius: 50%; background: #697ead29; filter: blur(24px); content: ''; }
@@ -12,7 +12,7 @@
 .mental-flash-card::after { position: absolute; right: -55px; bottom: 18px; width: 150px; height: 150px; border-radius: 48% 52% 0 50%; background: #ffffff24; pointer-events: none; content: ''; }
 .mental-theme-badge { position: relative; z-index: 3; display: inline-flex; min-height: 26px; align-items: center; gap: 5px; flex: none; max-width: 100%; border-radius: 30px; background: var(--card-accent); padding: 3px 9px 3px 3px; color: #fff; font-size: 9px; font-weight: 700; line-height: 1.15; letter-spacing: -.02em; white-space: nowrap; box-shadow: inset 0 1px 1px #ffffff30; }
 .mental-theme-badge>span { display: grid; width: 23px; height: 23px; flex: none; place-items: center; border-radius: 50%; background: #00000019; }
-.mental-flash-card h2 { position: relative; z-index: 3; max-width: 180px; margin: 17px 0 9px; color: var(--card-ink); font-size: 22px; font-weight: 800; line-height: 1.15; letter-spacing: -.04em; }
+.mental-flash-card h2 { position: relative; z-index: 3; max-width: 180px; margin: 17px 0 9px; color: var(--card-ink); font-size: 18.7px; font-weight: 600; line-height: 1.15; letter-spacing: -.04em; }
 .mental-card-message { position: relative; z-index: 3; max-width: 174px; margin: 0; color: var(--card-ink); font-size: 13px; line-height: 1.45; letter-spacing: -.02em; }
 .mental-card-illustration { position: absolute; right: 0; bottom: -3px; left: 0; z-index: 2; display: block; height: 174px; pointer-events: none; }
 .mental-card-art { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center bottom; }
@@ -41,7 +41,7 @@
 .mental-reflection-art>button { position: absolute; top: 15px; right: 15px; z-index: 5; display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: #ffffffb0; }
 .mental-reflection-art .mental-card-illustration { height: 165px; }
 .mental-reflection-copy { padding: 25px 28px 23px; }
-.mental-reflection-copy h2 { color: #1b5278; font-size: 28px; font-weight: 800; line-height: 1.15; letter-spacing: -.035em; }
+.mental-reflection-copy h2 { color: #1b5278; font-size: 23.8px; font-weight: 600; line-height: 1.15; letter-spacing: -.035em; }
 .mental-reflection-copy>p { margin-top: 14px; color: #617b90; font-size: 14px; line-height: 1.7; }
 .mental-reflection-prompt { margin: 21px 0; border-radius: 13px; background: #f2f8fc; padding: 17px; }
 .mental-reflection-prompt>span { color: #2585c5; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
@@ -52,11 +52,11 @@
 @keyframes kira-reflection-open { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
 @media (min-width: 701px) and (max-width: 1050px) {
   .mental-fan-stage { --fan-step: 100px; height: 425px; } .mental-fan-slot { width: 184px; height: 334px; }
-  .mental-flash-card { padding-inline: 12px; } .mental-flash-card h2 { font-size: 20px; }
+  .mental-flash-card { padding-inline: 12px; } .mental-flash-card h2 { font-size: 17px; }
   .mental-card-message { font-size: 12px; } .mental-theme-badge { font-size: 8px; } .mental-card-illustration { height: 163px; }
 }
 @media (max-width: 700px) {
-  .mental-health-hero { padding-top: 43px; } .mental-hero-intro h1 { font-size: clamp(30px,7.8vw,50px); }
+  .mental-health-hero { padding-top: 43px; } .mental-hero-intro h1 { font-size: clamp(25.5px,6.63vw,42.5px); }
   .mental-fan-stage { display: flex; height: 402px; gap: 15px; overflow-x: auto; margin-top: 19px; padding: 22px max(24px,calc((100vw - 222px)/2)) 25px; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
   .mental-fan-stage::-webkit-scrollbar { display: none; } .mental-fan-stage::after { display: none; }
   .mental-fan-slot { position: relative; top: auto; left: auto; width: 222px; height: 350px; flex: 0 0 222px; transform: none; animation: kira-reflection-open 650ms ease-out var(--card-delay) backwards; scroll-snap-align: center; }
