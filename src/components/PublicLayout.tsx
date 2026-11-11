@@ -33,7 +33,7 @@ function Header() {
     document.addEventListener('keydown', closeOnEscape)
     return () => { document.removeEventListener('pointerdown', closeOnOutside); document.removeEventListener('keydown', closeOnEscape) }
   }, [])
-  return <header className="sticky top-0 z-50 border-b border-[#e2edf5] bg-white/95 backdrop-blur-xl">
+  return <header className="sticky top-0 z-50 bg-transparent">
     <div className="shell flex h-[78px] items-center justify-between gap-5">
       <Brand />
       <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
