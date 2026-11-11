@@ -115,3 +115,8 @@ header .nav-link, header .nav-link:hover, header .nav-link-active, header a:not(
 .confidentiality-link:hover { color: #1b5278; }
 @media (max-width:760px) { .confidentiality-panel { gap: 20px; flex-wrap: wrap; padding: 26px; } .confidentiality-graphic { flex-basis: 88px; height: 88px; } .confidentiality-graphic>svg { width: 68px; height: 68px; } .confidentiality-link { margin-left: 108px; } }
 @media (max-width:480px) { .confidentiality-panel { flex-direction: column; align-items: flex-start; gap: 18px; } .confidentiality-graphic { flex-basis: auto; width: 88px; } .confidentiality-link { margin-left: 0; } }
+
+/* Keep short pages filled and the footer at the document’s lower edge. */
+.public-layout { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; overflow-x: clip; }
+.public-layout > header, .public-layout > footer { flex: none; }
+.public-layout > main { display: flow-root; flex: 1 0 auto; min-width: 0; }

@@ -68,4 +68,4 @@ function Footer() {
   </footer>
 }
 
-export function PublicLayout() { return <><a href="#main-content" className="skip-link">Skip to content</a><Header /><main id="main-content"><Outlet /></main><Footer /></> }
+export function PublicLayout() { return <div className="public-layout"><a href="#main-content" className="skip-link">Skip to content</a><Header /><main id="main-content"><Outlet /></main><Footer /></div> }
