@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { PublicLayout } from '../components/PublicLayout'
 import { LandingPage } from '../pages/LandingPage'
 import { InfoPage, pageContent } from '../pages/InfoPage'
+import { AppointmentsPage } from '../pages/AppointmentsPage'
+import { CheckInPage } from '../pages/CheckInPage'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -19,6 +21,8 @@ export function App() {
     <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/appointments" element={<AppointmentsPage />} />
+        <Route path="/check-in" element={<CheckInPage />} />
         {Object.keys(pageContent).map(path => <Route key={path} path={path} element={<InfoPage path={path} />} />)}
         <Route path="*" element={<InfoPage path="/not-found" />} />
       </Route>

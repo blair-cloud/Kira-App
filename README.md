@@ -18,6 +18,7 @@ Then open the URL printed by Vite. Use `npm run build` to type-check and create 
 - Complete landing page: hero, daily wellness carousel, services, six-step journey, AI introduction, featured resources, privacy and trust, final call to action, and footer.
 - Seven mock daily wellness cards. The hero flash card and carousel's featured starting card rotate by the **Africa/Kigali** calendar date. Visitors can flip the hero card, swipe the carousel, use arrow buttons or keyboard arrows, open details, and save cards in this browser.
 - Public routes for resources, resource previews, daily wellness, about, services, emergency, privacy, and other footer destinations.
+- Appointments and Check-in pages follow the original prototype layouts, with example time selection and a private, unsaved mood interaction.
 - Clearly labeled previews for student features scheduled for later phases. No messages, appointments, account details, or wellbeing records are collected by Phase 1.
 
 ## Structure
