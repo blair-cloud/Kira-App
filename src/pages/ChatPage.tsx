@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link, NavLink } from 'react-router'
-import { BookOpen, CalendarDays, Check, ChevronDown, CircleHelp, Heart, LifeBuoy, LockKeyhole, MessageCircle, Plus, Send, ShieldCheck, Sparkles, Trash2, Users, X } from 'lucide-react'
+import { BookOpen, CalendarDays, Check, ChevronDown, CircleHelp, Heart, Home, LifeBuoy, LockKeyhole, MessageCircle, Plus, Send, ShieldCheck, Sparkles, Trash2, Users, X } from 'lucide-react'
 import '../styles/chat.css'
 
 export type ChatMode = 'ask' | 'professional' | 'ai'
@@ -30,6 +30,7 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
   const [anonymous, setAnonymous] = useState(true)
   const [topics, setTopics] = useState({ ask: 'General wellbeing', professional: 'Counselling team' })
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const viewport = useRef<HTMLElement>(null)
   const messageList = useRef<HTMLDivElement>(null)
   const composer = useRef<HTMLTextAreaElement>(null)
   const timers = useRef<Set<ReturnType<typeof setTimeout>>>(new Set())
@@ -37,6 +38,17 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
   const draft = drafts[mode]
 
   useEffect(() => { setSidebarOpen(false) }, [mode])
+  useEffect(() => {
+    const updateHeight = () => {
+      const visual = window.visualViewport
+      const height = visual && visual.scale === 1 ? visual.height : window.innerHeight
+      viewport.current?.style.setProperty('--chat-viewport-height', height + 'px')
+    }
+    updateHeight()
+    window.visualViewport?.addEventListener('resize', updateHeight)
+    window.addEventListener('resize', updateHeight)
+    return () => { window.visualViewport?.removeEventListener('resize', updateHeight); window.removeEventListener('resize', updateHeight) }
+  }, [])
   useEffect(() => {
     const list = messageList.current
     if (list) list.scrollTo({ top: list.scrollHeight, behavior: 'instant' })
@@ -79,22 +91,23 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
     if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing && !window.matchMedia('(max-width: 700px)').matches) { event.preventDefault(); sendMessage() }
   }
 
-  return <section className={`chat-page chat-mode-${mode}`} aria-label={config.label}>
+  return <main ref={viewport} className={`chat-page chat-mode-${mode}`} aria-label={config.label}>
     <div className="shell">
-      <div className="chat-page-heading"><div><span className="chat-heading-label"><Heart size={14} aria-hidden="true" />YOUR SPACE TO TALK</span><h1>Let’s talk, at your pace.</h1></div><Link to="/privacy" className="chat-privacy-link"><LockKeyhole size={15} aria-hidden="true" />About confidentiality</Link></div>
       <div className="chat-workspace">
         <button type="button" className="chat-mobile-sidebar" aria-expanded={sidebarOpen} aria-controls="chat-sidebar" onClick={() => setSidebarOpen(open => !open)}>{sidebarOpen ? <X size={18} /> : <MessageCircle size={18} />}Conversations<ChevronDown size={15} /></button>
+        {sidebarOpen && <button type="button" className="chat-sidebar-backdrop" aria-label="Close conversations" onClick={() => setSidebarOpen(false)} />}
         <aside id="chat-sidebar" className={`chat-sidebar ${sidebarOpen ? 'chat-sidebar-open' : ''}`} aria-label="Chat navigation">
-          <div className="chat-sidebar-brand"><span><Heart size={20} strokeWidth={1.7} /></span><div><strong>Kira support</strong><small>A place to begin</small></div></div>
+          <Link to="/" className="chat-sidebar-brand" aria-label="Kira App home"><span><Heart size={20} strokeWidth={1.7} /></span><div><strong>Kira support</strong><small>A place to begin</small></div></Link>
           <nav className="chat-mode-nav" aria-label="Choose support type">{(Object.keys(modes) as ChatMode[]).map(key => { const ModeIcon = modes[key].icon; return <NavLink key={key} to={modes[key].path} className={`chat-mode-link ${mode === key ? 'is-active' : ''}`}><ModeIcon size={18} strokeWidth={1.7} /><span>{modes[key].label}</span></NavLink> })}</nav>
           <button type="button" className="chat-new-button" onClick={newConversation}><Plus size={17} />New conversation</button>
           <div className="chat-history-heading">THIS VISIT<span>{conversations[mode].length}</span></div>
           <div className="chat-history">{conversations[mode].map(item => <button type="button" key={item.id} aria-current={conversation.id === item.id ? 'true' : undefined} className={`chat-history-item ${conversation.id === item.id ? 'is-active' : ''}`} onClick={() => { setSelectedIds(previous => ({ ...previous, [mode]: item.id })); setSidebarOpen(false) }}><MessageCircle size={15} /><span>{item.title}</span></button>)}</div>
           <div className="chat-sidebar-note"><ShieldCheck size={19} /><p>Preview conversations stay in this visit and clear when you refresh.</p></div>
+          <Link to="/privacy" className="chat-urgent-link"><LockKeyhole size={16} />About confidentiality</Link>
           <Link to="/emergency" className="chat-urgent-link"><LifeBuoy size={16} />Need urgent support?</Link>
         </aside>
         <div className="chat-main">
-          <header className="chat-conversation-header"><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h2>{config.short}</h2><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div><button type="button" className="chat-icon-button" aria-label="Delete this preview conversation" title="Delete this preview conversation" onClick={removeConversation}><Trash2 size={17} /></button></header>
+          <header className="chat-conversation-header"><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h1>{config.short}</h1><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div><div className="chat-header-actions"><Link to="/" className="chat-icon-button" aria-label="Return to Home" title="Return to Home"><Home size={18} /></Link><button type="button" className="chat-icon-button" aria-label="Delete this preview conversation" title="Delete this preview conversation" onClick={removeConversation}><Trash2 size={17} /></button></div></header>
           <div className="chat-preview-notice"><CircleHelp size={14} aria-hidden="true" /><span>Interactive preview. Messages are not sent to an AI service or a professional.</span></div>
           {mode !== 'ai' && <div className="chat-options"><label>{mode === 'ask' ? 'Topic' : 'Connect with'}<select value={topics[mode]} onChange={event => setTopics(previous => ({ ...previous, [mode]: event.target.value }))}>{(mode === 'ask' ? ['General wellbeing', 'Academic balance', 'Relationships', 'Accessing services'] : ['Counselling team', 'Medical team', 'Student wellbeing team']).map(topic => <option key={topic}>{topic}</option>)}</select></label>{mode === 'ask' && <label className="chat-anonymous"><input type="checkbox" checked={anonymous} onChange={event => setAnonymous(event.target.checked)} /><span className="chat-switch" aria-hidden="true" /><span>Ask anonymously</span></label>}</div>}
           <div className="chat-message-list" ref={messageList} role="log" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions text">
@@ -104,5 +117,5 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
         </div>
       </div>
     </div>
-  </section>
+  </main>
 }

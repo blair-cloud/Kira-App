@@ -20,13 +20,13 @@ export function App() {
   return <>
     <ScrollToTop />
     <Routes>
+      <Route path="/ask" element={<ChatPage mode="ask" />} />
+      <Route path="/chat" element={<ChatPage mode="professional" />} />
+      <Route path="/ai-assistant" element={<ChatPage mode="ai" />} />
       <Route element={<PublicLayout />}>
         <Route path="/" element={<LandingPage />} />
         <Route path="/appointments" element={<AppointmentsPage />} />
         <Route path="/check-in" element={<CheckInPage />} />
-        <Route path="/ask" element={<ChatPage mode="ask" />} />
-        <Route path="/chat" element={<ChatPage mode="professional" />} />
-        <Route path="/ai-assistant" element={<ChatPage mode="ai" />} />
         {Object.keys(pageContent).filter(path => !['/ask', '/chat', '/ai-assistant'].includes(path)).map(path => <Route key={path} path={path} element={<InfoPage path={path} />} />)}
         <Route path="*" element={<InfoPage path="/not-found" />} />
       </Route>
