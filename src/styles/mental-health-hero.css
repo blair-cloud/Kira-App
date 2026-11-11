@@ -27,12 +27,12 @@
   .mental-fan-slot:hover .mental-flash-card { animation-play-state: paused !important; box-shadow: 0 26px 48px #354f8035; }
 }
 .mental-hero-outro { position: relative; text-align: center; }
-.mental-hero-outro>p { color: #334155; font-size: 14px; line-height: 1.8; }
+.mental-hero-outro>p { color: #000000; font-size: 14px; line-height: 1.8; }
 .mental-hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 21px; }
 .mental-hero-actions .btn { padding-inline: 25px; }
-.mental-hero-hint { display: block; margin-top: 12px; color: #334155; font-size: 10px; line-height: 1.8; }
+.mental-hero-hint { display: block; margin-top: 12px; color: #000000; font-size: 10px; line-height: 1.8; }
 .mental-mobile-hint { display: none; }
-.mental-hero-error { max-width: 450px; margin: auto; padding-top: 105px; color: #334155; font-size: 14px; text-align: center; }
+.mental-hero-error { max-width: 450px; margin: auto; padding-top: 105px; color: #000000; font-size: 14px; text-align: center; }
 .mental-fan-skeleton { display: inline-block; width: 12%; height: 340px; margin: 35px 1% 0; border-radius: 21px; background: #e8f3fa; }
 .mental-reflection-overlay { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; overflow-y: auto; background: #173c5c80; padding: 24px; backdrop-filter: blur(7px); }
 .mental-reflection-panel { width: min(100%,440px); max-height: calc(100dvh - 48px); overflow-y: auto; border-radius: 23px; background: #fff; box-shadow: 0 30px 100px #123b6540; animation: kira-reflection-open 260ms ease-out; }
@@ -42,7 +42,7 @@
 .mental-reflection-art .mental-card-illustration { height: 165px; }
 .mental-reflection-copy { padding: 25px 28px 23px; }
 .mental-reflection-copy h2 { color: #1b5278; font-size: 23.8px; font-weight: 600; line-height: 1.15; letter-spacing: -.035em; }
-.mental-reflection-copy>p { margin-top: 14px; color: #334155; font-size: 14px; line-height: 1.7; }
+.mental-reflection-copy>p { margin-top: 14px; color: #000000; font-size: 14px; line-height: 1.7; }
 .mental-reflection-prompt { margin: 21px 0; border-radius: 13px; background: #f2f8fc; padding: 17px; }
 .mental-reflection-prompt>span { color: #2585c5; font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .mental-reflection-prompt p { margin-top: 7px; color: #19344d; font-size: 14px; line-height: 1.65; }
