@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react'
 import { Link, NavLink } from 'react-router'
-import { BookOpen, CalendarDays, Check, ChevronDown, CircleHelp, Heart, Home, LifeBuoy, LockKeyhole, MessageCircle, Plus, Send, ShieldCheck, Sparkles, Trash2, Users, X } from 'lucide-react'
+import { BookOpen, CalendarDays, Check, ChevronDown, CircleHelp, Heart, LifeBuoy, LockKeyhole, MessageCircle, Plus, Send, ShieldCheck, Sparkles, Stethoscope, X } from 'lucide-react'
 import '../styles/chat.css'
 
 export type ChatMode = 'ask' | 'professional' | 'ai'
@@ -8,7 +8,7 @@ type Message = { id: string; role: 'user' | 'assistant'; text: string; time: str
 type Conversation = { id: string; title: string; messages: Message[]; pending: boolean }
 const modes = {
   ask: { path: '/ask', label: 'Ask a Question', short: 'Confidential questions', icon: CircleHelp, title: 'A question is a good place to start.', description: 'Share what’s on your mind, at your own pace.', placeholder: 'What would you like to ask?', prompts: ['How can I find the right support?', 'Can I ask a question anonymously?', 'What happens in a counselling session?'] },
-  professional: { path: '/chat', label: 'Chat with a Professional', short: 'Professional support', icon: Users, title: 'Make room for a conversation.', description: 'Explore a conversation with the wellness team.', placeholder: 'Write a message to the wellness team…', prompts: ['I would like to talk to someone.', 'How do I prepare for my first session?', 'I have a question about appointments.'] },
+  professional: { path: '/chat', label: 'Chat with a Professional', short: 'Professional support', icon: Stethoscope, title: 'Make room for a conversation.', description: 'Explore a conversation with the wellness team.', placeholder: 'Write a message to the wellness team…', prompts: ['I would like to talk to someone.', 'How do I prepare for my first session?', 'I have a question about appointments.'] },
   ai: { path: '/ai-assistant', label: 'Ask AI Assistant', short: 'Kira AI assistant', icon: Sparkles, title: 'A little clarity, one question at a time.', description: 'Explore wellness topics and find your next step.', placeholder: 'Ask Kira about wellness or finding support…', prompts: ['Help me explore academic balance.', 'Where can I learn about wellbeing?', 'Help me find professional support.'] },
 } as const
 
@@ -28,7 +28,7 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
   const [selectedIds, setSelectedIds] = useState<Partial<Record<ChatMode, string>>>({})
   const [drafts, setDrafts] = useState<Record<ChatMode, string>>({ ask: '', professional: '', ai: '' })
   const [anonymous, setAnonymous] = useState(true)
-  const [topics, setTopics] = useState({ ask: 'General wellbeing', professional: 'Counselling team' })
+  const [topic, setTopic] = useState('General wellbeing')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const viewport = useRef<HTMLElement>(null)
   const messageList = useRef<HTMLDivElement>(null)
@@ -64,20 +64,13 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
     setSidebarOpen(false)
     composer.current?.focus()
   }
-  function removeConversation() {
-    const remaining = conversations[mode].filter(item => item.id !== conversation.id)
-    if (!remaining.length) remaining.push(createConversation())
-    setConversations(previous => ({ ...previous, [mode]: remaining }))
-    setSelectedIds(previous => ({ ...previous, [mode]: remaining[0].id }))
-    setDrafts(previous => ({ ...previous, [mode]: '' }))
-  }
   function sendMessage(value = draft) {
     const text = value.trim()
     if (!text || conversation.pending || text.length > 2000) return
     const targetMode = mode, targetId = conversation.id
     const time = new Date().toISOString()
     const message: Message = { id: crypto.randomUUID(), role: 'user', text, time }
-    const reply = previewReply(mode, text, anonymous, mode === 'ai' ? '' : topics[mode])
+    const reply = previewReply(mode, text, anonymous, mode === 'ask' ? topic : 'Wellness team')
     setConversations(previous => ({ ...previous, [targetMode]: previous[targetMode].map(item => item.id === targetId ? { ...item, title: item.messages.length ? item.title : text.slice(0, 44), messages: [...item.messages, message], pending: true } : item) }))
     setDrafts(previous => ({ ...previous, [targetMode]: '' }))
     const timer = setTimeout(() => {
@@ -107,9 +100,8 @@ export function ChatPage({ mode }: { mode: ChatMode }) {
           <Link to="/emergency" className="chat-urgent-link"><LifeBuoy size={16} />Need urgent support?</Link>
         </aside>
         <div className="chat-main">
-          <header className="chat-conversation-header"><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h1>{config.short}</h1><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div><div className="chat-header-actions"><Link to="/" className="chat-icon-button" aria-label="Return to Home" title="Return to Home"><Home size={18} /></Link><button type="button" className="chat-icon-button" aria-label="Delete this preview conversation" title="Delete this preview conversation" onClick={removeConversation}><Trash2 size={17} /></button></div></header>
-          <div className="chat-preview-notice"><CircleHelp size={14} aria-hidden="true" /><span>Interactive preview. Messages are not sent to an AI service or a professional.</span></div>
-          {mode !== 'ai' && <div className="chat-options"><label>{mode === 'ask' ? 'Topic' : 'Connect with'}<select value={topics[mode]} onChange={event => setTopics(previous => ({ ...previous, [mode]: event.target.value }))}>{(mode === 'ask' ? ['General wellbeing', 'Academic balance', 'Relationships', 'Accessing services'] : ['Counselling team', 'Medical team', 'Student wellbeing team']).map(topic => <option key={topic}>{topic}</option>)}</select></label>{mode === 'ask' && <label className="chat-anonymous"><input type="checkbox" checked={anonymous} onChange={event => setAnonymous(event.target.checked)} /><span className="chat-switch" aria-hidden="true" /><span>Ask anonymously</span></label>}</div>}
+          <header className="chat-conversation-header"><div className="chat-agent"><span className="chat-agent-avatar"><Icon size={23} strokeWidth={1.65} /></span><div><h1>{config.short}</h1><span className="chat-agent-status"><span />{mode === 'ai' ? 'AI preview · educational guidance' : mode === 'professional' ? 'Preview · no professional connected' : 'Preview · no questions submitted'}</span></div></div></header>
+          {mode === 'ask' && <div className="chat-options"><label>Topic<select value={topic} onChange={event => setTopic(event.target.value)}>{['General wellbeing', 'Academic balance', 'Relationships', 'Accessing services'].map(item => <option key={item}>{item}</option>)}</select></label><label className="chat-anonymous"><input type="checkbox" checked={anonymous} onChange={event => setAnonymous(event.target.checked)} /><span className="chat-switch" aria-hidden="true" /><span>Ask anonymously</span></label></div>}
           <div className="chat-message-list" ref={messageList} role="log" aria-label="Conversation messages" aria-live="polite" aria-relevant="additions text">
             {!conversation.messages.length ? <div className="chat-empty"><div className="chat-welcome-art" aria-hidden="true"><span className="chat-welcome-ring" /><span className="chat-welcome-icon"><Icon size={43} strokeWidth={1.5} /></span><span className="chat-welcome-heart"><Heart size={16} /></span></div><h2>{config.title}</h2><p>{config.description}</p><div className="chat-prompts">{config.prompts.map(prompt => <button type="button" key={prompt} onClick={() => sendMessage(prompt)}><MessageCircle size={15} strokeWidth={1.6} /><span>{prompt}</span></button>)}</div><span className="chat-empty-note">Start with a suggestion, or write in your own words.</span></div> : <><div className="chat-day-label">Today · preview conversation</div>{conversation.messages.map(message => <div key={message.id} className={`chat-message chat-message-${message.role}`}>{message.role === 'assistant' && <span className="chat-message-avatar"><Icon size={17} strokeWidth={1.7} /></span>}<div className="chat-message-content"><span className="chat-message-name">{message.role === 'user' ? mode === 'ask' && anonymous ? 'You · anonymous' : 'You' : mode === 'ai' ? 'Kira · example response' : 'Preview assistant'}</span><div className="chat-bubble"><p>{message.text}</p></div><span className="chat-message-time">{new Date(message.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}{message.role === 'user' && <><Check size={12} />Preview only</>}</span></div></div>)}{conversation.pending && <div className="chat-pending" role="status"><span /><span /><span /><span className="sr-only">Preparing a preview response</span></div>}{mode !== 'ai' && !conversation.pending && <Link to="/appointments" className="chat-appointment-link"><CalendarDays size={15} />Explore appointment options</Link>}</>}
           </div>

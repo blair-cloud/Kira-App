@@ -35,10 +35,6 @@ body:has(.chat-page) { overflow: hidden; }
 .chat-agent h1 { color: #1b5278; font-size: 14px; font-weight: 600; line-height: 1.4; }
 .chat-agent-status { display: flex; align-items: center; gap: 5px; margin-top: 4px; color: #000; font-size: 9px; }
 .chat-agent-status>span { width: 5px; height: 5px; border-radius: 50%; background: #9ab2c3; }
-.chat-icon-button { display: grid; flex: none; place-items: center; width: 34px; height: 34px; border-radius: 10px; color: #1b5278; }
-.chat-icon-button:hover { background: #f0f6fa; }
-.chat-preview-notice { display: flex; align-items: center; justify-content: center; gap: 7px; flex: none; padding: 10px 20px; background: #f5faff; color: #000; font-size: 10px; line-height: 1.5; }
-.chat-preview-notice svg { flex: none; color: #2585c5; }
 .chat-options { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 28px; border-bottom: 1px solid #eef3f7; }
 .chat-options>label { display: inline-flex; align-items: center; gap: 9px; color: #000; font-size: 10px; }
 .chat-options select { max-width: 185px; padding: 6px 24px 6px 9px; border: 1px solid #dae7f0; border-radius: 8px; background: #fff; color: #000; font-size: 10px; }
@@ -91,7 +87,6 @@ body:has(.chat-page) { overflow: hidden; }
 .chat-composer-note { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 7px 16px; margin-top: 10px; color: #000; font-size: 8px; line-height: 1.6; }
 .chat-composer-note>span,.chat-composer-note>a { display: inline-flex; align-items: center; gap: 5px; }.chat-composer-note>a:hover { text-decoration: underline; }
 .chat-mobile-sidebar, .chat-sidebar-backdrop { display: none; }
-.chat-header-actions { display: flex; align-items: center; gap: 5px; }
 @keyframes chat-typing { 0%,80%,100% { opacity: .35; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
 @media (max-width:1000px) { .chat-workspace { grid-template-columns: 220px minmax(0,1fr); }.chat-sidebar { padding-inline: 12px; }.chat-message-list { padding-inline: 22px; }.chat-conversation-header,.chat-composer-area,.chat-options { padding-inline: 20px; }.chat-agent-status { font-size: 8px; } }
 @media (max-width:700px) {
