@@ -1,44 +1,33 @@
 # Kira App — Kepler College
 
-Phase 1 of the Kepler College wellness frontend. Built with React, TypeScript, Vite, Tailwind CSS, React Router, Lucide React, and Embla Carousel.
+The React frontend lives in [`Frontend/`](Frontend/). The FastAPI backend, migrations, tests, and Supabase setup instructions live in [`backend/`](backend/README.md).
 
 ## Run locally
 
 ```bash
+cd Frontend
 npm install
 npm run dev
 ```
 
-Then open the URL printed by Vite. Use `npm run build` to type-check and create a production bundle.
+Open the local URL printed by Vite.
 
-## Phase 1 features
+Start the backend in a separate terminal after following [backend setup](backend/README.md):
 
-- Responsive public navigation, with a mobile menu and Ask & Connect dropdown.
-- A centered Home hero with seven illustrated mental-health cards in a colorful animated fan. Each card opens a reflection; today's featured theme sits in the center and rotates by the Africa/Kigali date. On mobile, the cards form a swipeable deck.
-- Hero cards use pastel gradients, icon badges, live titles and messages, and seven custom soft 3D illustrations. Optimized transparent PNGs are stored in `public/images/hero-wellness/`; the ImageGen prompt set is documented in `docs/hero-illustration-prompts.md`.
-- Complete landing page: hero, daily wellness carousel, services, AI introduction, featured resources, privacy and trust, final call to action, and footer.
-- Landing motion includes staggered section entrances, card hover interactions, a custom animated wellness illustration, and subtle daily-card and chat graphics. Motion can be paused, respects the system's reduced-motion preference, and pauses offscreen or when the tab is hidden.
-- Seven mock daily wellness carousel cards, separate from the hero's mental-health themes. The carousel's featured starting card rotates by the **Africa/Kigali** calendar date. Visitors can swipe the carousel, use navigation buttons or keyboard arrows, open details, and save cards in this browser.
-- Public routes for resources, resource previews, daily wellness, about, services, emergency, privacy, and other footer destinations.
-- Appointments and Check-in pages follow the original prototype layouts, with example time selection and a private, unsaved mood interaction.
-- Clearly labeled previews for student features scheduled for later phases. No messages, appointments, account details, or wellbeing records are collected by Phase 1.
+```bash
+cd backend
+.venv/Scripts/python -m uvicorn app.main:app --reload --host 127.0.0.1
+```
 
-## Structure
+API documentation: [Swagger UI](http://127.0.0.1:8000/docs). Supabase is intentionally unconfigured until a project is connected; public content works locally, while sign-in requires those settings. Never commit `.env` secrets.
 
-- `src/data/` — mock content, independent of UI components.
-- `src/services/` — data access and Kigali date logic; replace mock data here when Supabase/FastAPI integration is ready.
-- `src/components/` — reusable layout, illustration, and carousel components.
-- `src/pages/` — route-level pages.
-- `src/routes/` — React Router configuration.
-- `src/styles.css` — Tailwind theme tokens and component styling.
-- `src/styles/landing-motion.css` — landing animations and reduced-motion overrides.
-- `src/styles/mental-health-hero.css` — styles and fan animation scoped to the Home hero.
+## Production build
 
-## Next phases
+```bash
+cd Frontend
+npm run build
+```
 
-1. Simulated authentication, registration, student layout and dashboard.
-2. Student resources, questions, messaging, AI assistant, appointments, and personal wellbeing flows.
-3. Professional, administration, and aggregated management dashboards.
-4. Service integration, accessibility review, content review, privacy approval, and institutional contact verification.
+The build output is written to `Frontend/dist/`. For hosting, set the project root to `Frontend`, use `npm run build`, and publish `dist`.
 
-The educational card copy is sample content and needs review by qualified staff before publication. Emergency numbers and professional credentials are intentionally absent until approved.
+See [the frontend documentation](Frontend/README.md) for the source structure and feature details.

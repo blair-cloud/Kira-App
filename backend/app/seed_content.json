@@ -1,0 +1,108 @@
+{
+  "wellnessCards": [
+    {
+      "id": "rest",
+      "category": "Self-care",
+      "title": "Rest is part of productivity.",
+      "message": "Taking breaks can help you recharge and maintain focus.",
+      "action": "Take a five-minute pause between tasks today.",
+      "detail": "Rest supports attention and gives you room to reset. Try stepping away from your screen, stretching, or getting a glass of water before you return to your work.",
+      "icon": "sparkles",
+      "tone": "blue"
+    },
+    {
+      "id": "small-steps",
+      "category": "Personal Development",
+      "title": "Small steps are still progress.",
+      "message": "You do not have to accomplish everything in one day.",
+      "action": "Choose one manageable next step.",
+      "detail": "Large goals often become easier to approach when you name the first small action. Notice what you complete, even when the day does not go exactly as planned.",
+      "icon": "growth",
+      "tone": "teal"
+    },
+    {
+      "id": "mental-health",
+      "category": "Mental Wellbeing",
+      "title": "Your mental wellbeing matters.",
+      "message": "Give yourself time to recognize your emotions and seek support when needed.",
+      "action": "Pause and name one feeling you have today.",
+      "detail": "Noticing how you feel can help you decide what you need. If something feels difficult to carry, a trusted person or qualified professional can help you explore it.",
+      "icon": "brain",
+      "tone": "lavender"
+    },
+    {
+      "id": "academic",
+      "category": "Academic Wellbeing",
+      "title": "Break big tasks into smaller steps.",
+      "message": "Organizing academic responsibilities can make challenging workloads feel more manageable.",
+      "action": "Write down the first ten-minute task.",
+      "detail": "Pick one specific action you can complete soon, such as outlining a paragraph or reviewing one page. Then decide what comes next.",
+      "icon": "book",
+      "tone": "blue"
+    },
+    {
+      "id": "boundaries",
+      "category": "Healthy Relationships",
+      "title": "Healthy boundaries matter.",
+      "message": "Respecting your limits is an important part of healthy relationships.",
+      "action": "Think of one need you could express clearly.",
+      "detail": "A boundary can be a clear, respectful statement about your time, energy, or comfort. Healthy conversations leave room for both people to be heard.",
+      "icon": "users",
+      "tone": "peach"
+    },
+    {
+      "id": "movement",
+      "category": "Physical Health",
+      "title": "Make time to move.",
+      "message": "Regular physical activity can contribute to general wellbeing.",
+      "action": "Find a way to move that feels comfortable today.",
+      "detail": "Movement can be simple: a short walk, stretching, or another activity you enjoy. Choose an option that works for your body and your day.",
+      "icon": "activity",
+      "tone": "teal"
+    },
+    {
+      "id": "ask-help",
+      "category": "Emotional Wellbeing",
+      "title": "It is okay to ask for help.",
+      "message": "Reaching out to someone you trust can be an important step towards support.",
+      "action": "Identify one person or service you could contact.",
+      "detail": "You do not need to have a perfect explanation before reaching out. A simple “I could use someone to talk to” is enough to begin.",
+      "icon": "heart",
+      "tone": "lavender"
+    }
+  ],
+  "resources": [
+    {
+      "slug": "understanding-stress",
+      "category": "Mental Health",
+      "title": "Understanding stress and your response to it",
+      "description": "Recognize common signs of stress and explore practical ways to care for yourself.",
+      "minutes": 5,
+      "tone": "blue"
+    },
+    {
+      "slug": "academic-balance",
+      "category": "Academic Stress",
+      "title": "Finding balance during a busy semester",
+      "description": "Simple ideas for planning work, rest, and support when your schedule feels full.",
+      "minutes": 4,
+      "tone": "lavender"
+    },
+    {
+      "slug": "healthy-boundaries",
+      "category": "Healthy Relationships",
+      "title": "Building healthy boundaries",
+      "description": "Explore how to express your needs and listen respectfully to others.",
+      "minutes": 6,
+      "tone": "peach"
+    },
+    {
+      "slug": "everyday-movement",
+      "category": "Physical Wellbeing",
+      "title": "Everyday movement that works for you",
+      "description": "Find approachable ways to include comfortable movement in your day.",
+      "minutes": 3,
+      "tone": "teal"
+    }
+  ]
+}
