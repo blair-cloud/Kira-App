@@ -103,7 +103,9 @@ def sample_records(db, student, staff):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--demo', action='store_true', help='Provision Supabase demo accounts and private sample records')
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument('--demo', action='store_true', help='Provision Supabase demo accounts and private sample records')
+    mode.add_argument('--local-demo', action='store_true', help='Seed local mock roles without Supabase')
     args = parser.parse_args()
     if get_settings().app_env != 'development':
         raise RuntimeError('Sample seeding is development-only')
@@ -111,7 +113,10 @@ def main():
         content(db)
         if args.demo:
             demo_users(db)
-    print('Development fixtures seeded. Demo authentication is handled exclusively by Supabase Auth.')
+        elif args.local_demo:
+            from app.services.local_demo import seed_local_profiles
+            seed_local_profiles(db)
+    print('Local mock roles are ready.' if args.local_demo else 'Development fixtures seeded. Supabase demo accounts require --demo.')
 
 
 if __name__ == '__main__':

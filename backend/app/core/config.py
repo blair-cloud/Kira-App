@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     cors_origins: list[str] = ['http://127.0.0.1:5173', 'http://localhost:5173']
     auth_redirect_url: str = 'http://127.0.0.1:5173/auth/callback'
     enable_demo_accounts: bool = False
+    enable_local_demo: bool = False
     demo_project_url: str = ''
     retention_days: int = Field(default=365, ge=1, le=36500)
     report_min_group_size: int = 5
@@ -22,6 +23,8 @@ class Settings(BaseSettings):
     @model_validator(mode='after')
     def production_guards(self):
         self.supabase_url = self.supabase_url.rstrip('/')
+        if self.enable_local_demo and (self.app_env != 'development' or not self.database_url.startswith('sqlite:') or self.supabase_url):
+            raise ValueError('Local mock login requires development mode, a local SQLite database, and no Supabase project configured')
         if self.app_env == 'production':
             if self.enable_demo_accounts or not self.database_url.startswith(('postgresql+psycopg://', 'postgresql://', 'postgres://')):
                 raise ValueError('Production requires PostgreSQL and demo accounts disabled')

@@ -8,8 +8,33 @@ from app.database.session import get_db
 from app.models import Profile, Student
 from app.schemas.inputs import ProfileSync, ProfileUpdate
 from app.services.common import audit, dump
+from pydantic import Field
+from app.schemas.inputs import Input
+from app.core.security import bearer
+from fastapi.security import HTTPAuthorizationCredentials
 
 router = APIRouter(tags=['Authentication and profiles'])
+
+
+class DemoLogin(Input):
+    email: str = Field(min_length=3, max_length=254)
+    password: str = Field(min_length=1, max_length=128)
+
+
+@router.post('/auth/local-demo/login')
+def local_demo_login(data: DemoLogin, db: Session = Depends(get_db)):
+    from app.services.local_demo import login, SESSION_SECONDS
+    profile, token = login(db, data.email, data.password)
+    audit(db, profile, 'demo.signed_in', 'profile', profile.id)
+    db.commit()
+    return {'profile': dump(profile), 'access_token': token, 'expires_in': SESSION_SECONDS, 'token_type': 'bearer'}
+
+
+@router.post('/auth/local-demo/logout')
+def local_demo_logout(credentials: HTTPAuthorizationCredentials | None = Depends(bearer)):
+    from app.services.local_demo import logout
+    logout(credentials.credentials if credentials else '')
+    return {'signed_out': True}
 
 
 @router.post('/auth/sync-profile')

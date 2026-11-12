@@ -3,13 +3,14 @@ import type { Session } from '@supabase/supabase-js'
 import { Navigate, Outlet, useLocation } from 'react-router'
 import { api, dashboardPath, errorMessage, post, type Profile, type Role } from '../services/api'
 import { requireSupabase, supabase } from '../services/supabase'
+import { localDemoEnabled, localDemoToken, saveLocalDemoToken } from '../services/localDemo'
 
 type Auth = { profile: Profile | null; loading: boolean; error: string; signIn: (email: string, password: string) => Promise<Profile>; signOut: () => Promise<void>; refresh: () => Promise<void> }
 const AuthContext = createContext<Auth | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null)
-  const [loading, setLoading] = useState(!!supabase)
+  const [loading, setLoading] = useState(localDemoEnabled ? !!localDemoToken() : !!supabase)
   const [error, setError] = useState('')
   const currentToken = useRef<string | null>(null)
   const pending = useRef<{ token: string; request: Promise<Profile> } | null>(null)
@@ -20,6 +21,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return request
   }, [])
   useEffect(() => {
+    if (localDemoEnabled) {
+      let active = true
+      const token = localDemoToken()
+      currentToken.current = token
+      if (token) {
+        void api<Profile>('/auth/me', {}, token).then(next => { if (active && currentToken.current === token) setProfile(next) }).catch(() => { if (active && currentToken.current === token) { saveLocalDemoToken(null); setProfile(null) } }).finally(() => { if (active && currentToken.current === token) setLoading(false) })
+      } else setLoading(false)
+      return () => { active = false }
+    }
     if (!supabase) return
     let active = true
     const update = (session: Session | null) => {
@@ -34,6 +44,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [loadProfile])
   async function signIn(email: string, password: string) {
     setError('')
+    if (localDemoEnabled) {
+      const result = await post<{ profile: Profile; access_token: string }>('/auth/local-demo/login', { email, password })
+      saveLocalDemoToken(result.access_token)
+      currentToken.current = result.access_token
+      setProfile(result.profile)
+      setLoading(false)
+      return result.profile
+    }
     const { data, error: authError } = await requireSupabase().auth.signInWithPassword({ email, password })
     if (authError || !data.session) throw new Error(authError?.message || 'Sign-in did not return a session')
     const next = await loadProfile(data.session)
@@ -41,6 +59,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return next
   }
   async function signOut() {
+    if (localDemoEnabled) {
+      try { await post('/auth/local-demo/logout', {}) }
+      finally { currentToken.current = null; saveLocalDemoToken(null); setProfile(null); setError('') }
+      return
+    }
     const result = await requireSupabase().auth.signOut()
     if (result.error) throw result.error
     setProfile(null)

@@ -1,6 +1,7 @@
 import os
 from uuid import uuid4
 os.environ['APP_ENV'] = 'test'
+os.environ['ENABLE_LOCAL_DEMO'] = 'false'
 os.environ['SUPABASE_URL'] = 'https://test-project.supabase.invalid'
 os.environ['SUPABASE_PUBLISHABLE_KEY'] = 'test-public-key'
 

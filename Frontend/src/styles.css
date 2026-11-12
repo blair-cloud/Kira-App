@@ -133,10 +133,10 @@ html, body { overscroll-behavior-y: none; }
 #root { min-height: 100vh; min-height: 100dvh; }
 .public-layout > footer { display: flow-root; margin-bottom: 0; }
 
-.kira-brand-mark { width: 60px; height: 60px; filter: drop-shadow(.35px 0 0 #0072b9) drop-shadow(-.35px 0 0 #00aaa2); }
+.kira-brand-mark { width: 60px; height: 60px; filter: drop-shadow(.35px 0 0 #0054e3) drop-shadow(-.35px 0 0 #026c65); }
 .kira-wordmark { font-size: 21px; font-weight: 800; letter-spacing: .045em; white-space: nowrap; }
-.kira-wordmark>span:first-child { color: #0072b9; }
-.kira-wordmark>span:last-child { color: #00aaa2; }
+.kira-wordmark>span:first-child { color: #0054e3; }
+.kira-wordmark>span:last-child { color: #026c65; }
 .checkin-save { display: grid; gap: 13px; margin-top: 24px; }
 .checkin-save label { font-size: 14px; font-weight: 600; }
 .checkin-save textarea,.checkin-save select { width: 100%; border: 1px solid #cee1ed; border-radius: 15px; padding: 12px 15px; background: #fff; color: #000; font-size: 16px; line-height: 1.7; }

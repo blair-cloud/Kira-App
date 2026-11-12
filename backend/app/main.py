@@ -76,7 +76,9 @@ async def database_error(request, exception):
 
 @app.get('/api/v1/health', tags=['Health'])
 def health():
-    return {'status': 'ok', 'authentication_configured': bool(settings.supabase_url and settings.supabase_publishable_key), 'database': 'postgresql' if engine.dialect.name == 'postgresql' else 'sqlite-development', 'demo_accounts_enabled': settings.enable_demo_accounts and settings.app_env == 'development'}
+    from app.services.local_demo import enabled
+    local = enabled()
+    return {'status': 'ok', 'authentication_configured': local or bool(settings.supabase_url and settings.supabase_publishable_key), 'authentication_mode': 'local_demo' if local else 'supabase' if settings.supabase_url else 'unconfigured', 'local_demo_enabled': local, 'database': 'postgresql' if engine.dialect.name == 'postgresql' else 'sqlite-development', 'demo_accounts_enabled': local or (settings.enable_demo_accounts and settings.app_env == 'development')}
 
 
 @app.get('/api/v1/health/ready', tags=['Health'])
@@ -84,7 +86,8 @@ def ready():
     try:
         with engine.connect() as connection:
             connection.execute(select(Profile.id).limit(1))
-        if not (settings.supabase_url and settings.supabase_publishable_key):
+        from app.services.local_demo import enabled
+        if not enabled() and not (settings.supabase_url and settings.supabase_publishable_key):
             return JSONResponse({'status': 'configuration_required', 'detail': 'Configure Supabase Auth to enable sign-in'}, 503)
         return {'status': 'ready'}
     except SQLAlchemyError:

@@ -1,12 +1,20 @@
 # Kira backend
 
-FastAPI + SQLAlchemy 2 + Alembic, with **Supabase Auth** as the only identity provider. The React app remains in `../Frontend`.
+FastAPI + SQLAlchemy 2 + Alembic, with **Supabase Auth** for connected accounts and an explicitly enabled, development-only local mock mode. The React app remains in `../Frontend`.
 
 ## Current connection status
 
-Supabase configuration is intentionally left blank until the project owner connects a project. The API runs with a local SQLite development database for public content and automated tests. It **does not create a replacement login system**: authenticated operations stay unavailable until Supabase is configured. SQLite is rejected in production and must not contain real student health information.
+Supabase configuration is intentionally left blank until the project owner connects a project. The API runs with a local SQLite development database for public content and automated tests. Connected account access requires Supabase. For dashboard testing without Supabase, the local mock mode below supplies three sample identities and opaque, short-lived local sessions; it cannot be used in production or against a Supabase database. SQLite is rejected in production and must not contain real student health information.
 
 The assistant currently retrieves published guidance from resources and knowledge documents. It does not call a generative model or use a vector index. Its adapter is `app/services/assistant.py`; no AI credentials belong in React.
+
+## Enter the dashboards without Supabase or a database
+
+The frontend now has an independent browser-only mockup. Run `npm run dev` in `Frontend` and open `/login`. The three role previews work automatically in development, with sample data and changes stored in the current browser tab. Set `VITE_AUTH_MODE=mock` to explicitly select it. No backend command or database connection is needed.
+
+This is a UI preview, not real authentication or server authorization. Its adapter is `Frontend/src/services/mockApi.ts`; it never calls FastAPI or Supabase. Production builds exclude it. Choose `VITE_AUTH_MODE=supabase` when you are ready to connect the real services documented below.
+
+The backend also retains an optional local mock API for backend testing. It is separate from the frontend-only preview: set `APP_ENV=development`, `DATABASE_URL=sqlite:///./kira-demo.db`, `ENABLE_LOCAL_DEMO=true`, and leave `SUPABASE_URL` empty, then run migrations and `python -m app.seed --local-demo`. This optional API mode uses server-side permissions and two-hour opaque sessions; it is not required to browse the dashboards, and is prohibited in production or against Supabase/PostgreSQL.
 
 ## Local setup (PowerShell, Python 3.12+)
 
@@ -56,7 +64,7 @@ Official references: [JWT validation](https://supabase.com/docs/guides/auth/jwts
 
 ## Development demo accounts
 
-No accounts have been created until you connect Supabase and run the seed script.
+The local mock accounts are created by `--local-demo`. Actual Supabase demo accounts are created only after connecting Supabase and running `--demo`. Both use the development credentials below.
 
 | Role | Email | Development password |
 |---|---|---|
@@ -80,7 +88,7 @@ DEMO_PROJECT_URL=https://YOUR-DEVELOPMENT-PROJECT.supabase.co
 
 The script provisions passwords through Supabase Auth’s admin API and creates sample questions, replies, availability, appointments, messages, check-ins, notifications, goals, and a referral. Passwords are never stored in Kira’s database. Existing seed records are preserved; the script does not reset existing account passwords. If an Auth account exists without its matching profile, review that account manually rather than automatically taking it over.
 
-To show quick-login buttons and credentials, set `VITE_ENABLE_DEMO_LOGIN=true` in `Frontend/.env` and restart Vite. The login component is dynamically imported only in a Vite **development** build, and also checks the backend demo flag. Production configuration rejects demo mode. There is no endpoint that returns demo passwords.
+To show quick-login buttons and credentials, set `VITE_ENABLE_DEMO_LOGIN=true` in `Frontend/.env` and restart Vite. The login component is dynamically imported only in a Vite **development** build, and also checks the backend demo flag. Production configuration rejects both demo modes. There is no endpoint that returns demo passwords.
 
 ## Workspaces and implemented actions
 

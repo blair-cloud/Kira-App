@@ -14,7 +14,7 @@ const features = [
 function HealthChatIcon({ still }: { still: boolean }) {
   return <span className="health-chat-icon" aria-hidden="true">
     <svg className="health-chat-bubble" viewBox="0 0 48 48" fill="none"><path d="M12 5h24a7 7 0 0 1 7 7v21a7 7 0 0 1-7 7H22l-11 6v-6a7 7 0 0 1-7-7V12a7 7 0 0 1 8-7Z" stroke="white" strokeWidth="2" strokeLinejoin="round" /></svg>
-    <motion.img className="health-chat-brain" src="/images/kira-brain-health-logo-outline.png" alt="" width={31} height={31}
+    <motion.img className="health-chat-brain" src="/images/kira-brain-health-logo-outline-blue-deep-green.png" alt="" width={31} height={31}
       animate={still ? { scale: 1, y: 0 } : { scale: [1, 1.12, 1], y: [0, -1, 0] }} transition={{ duration: 2, repeat: still ? 0 : Infinity, repeatDelay: .6, ease: 'easeInOut' }} />
   </span>
 }

@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router'
 import { lazy, Suspense } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { requireSupabase } from '../services/supabase'
+import { localDemoEnabled } from '../services/localDemo'
 import { dashboardPath, errorMessage } from '../services/api'
-const DemoAccounts = import.meta.env.DEV && import.meta.env.VITE_ENABLE_DEMO_LOGIN === 'true' ? lazy(() => import('../components/DemoAccounts')) : null
+const DemoAccounts = localDemoEnabled || (import.meta.env.DEV && import.meta.env.VITE_ENABLE_DEMO_LOGIN === 'true') ? lazy(() => import('../components/DemoAccounts')) : null
 import { BookOpen, Check, CircleCheck, Eye, EyeOff, Heart, LockKeyhole, Mail, MessageCircle, UserRound } from 'lucide-react'
 import '../styles/auth.css'
 
@@ -57,6 +58,7 @@ export function AuthPage({ mode }: { mode: AuthMode }) {
     setServerError('')
     setSuccess('')
     try {
+      if (localDemoEnabled && mode !== 'login') throw new Error('This browser mockup uses the three demo roles. Open Login and choose Continue as Student, Staff, or Admin.')
       if (mode === 'login') {
         const profile = await auth.signIn(fields.email.trim(), fields.password)
         const from = (location.state as { from?: string } | null)?.from
@@ -86,7 +88,7 @@ export function AuthPage({ mode }: { mode: AuthMode }) {
   }
 
   return <main className={`auth-page auth-mode-${mode}`}>
-    <aside className="auth-image-panel" aria-label="Welcome to Kira"><img className="auth-cover-photo" src="/images/login.jpg" alt="Kepler community members attending a mental health panel discussion" width={799} height={369} /><Link to="/" className="auth-brand" aria-label="Kira App home"><span><img src="/images/kira-brain-health-logo-outline.png" alt="" width={60} height={60} /></span><strong className="kira-wordmark"><span>KIRA</span> <span>APP</span></strong></Link><div className="auth-image-content"><span className="auth-image-kicker"><Heart size={15} />A LITTLE CARE, EVERY DAY</span><h2>{config.imageTitle}</h2><p>{config.imageDescription}</p><div className="auth-image-values"><span><BookOpen size={16} />Learn</span><span><MessageCircle size={16} />Connect</span><span><Heart size={16} />Feel supported</span></div></div><span className="auth-image-bottom">One small step can make a difference.</span></aside>
+    <aside className="auth-image-panel" aria-label="Welcome to Kira"><img className="auth-cover-photo" src="/images/login.jpg" alt="Kepler community members attending a mental health panel discussion" width={799} height={369} /><Link to="/" className="auth-brand" aria-label="Kira App home"><span><img src="/images/kira-brain-health-logo-outline-blue-deep-green.png" alt="" width={60} height={60} /></span><strong className="kira-wordmark"><span>KIRA</span> <span>APP</span></strong></Link><div className="auth-image-content"><span className="auth-image-kicker"><Heart size={15} />A LITTLE CARE, EVERY DAY</span><h2>{config.imageTitle}</h2><p>{config.imageDescription}</p><div className="auth-image-values"><span><BookOpen size={16} />Learn</span><span><MessageCircle size={16} />Connect</span><span><Heart size={16} />Feel supported</span></div></div><span className="auth-image-bottom">One small step can make a difference.</span></aside>
     <section className="auth-form-panel" aria-labelledby="auth-heading"><div className="auth-form-topbar"><Link to="/" className="auth-home-link">Back to home</Link><div className="auth-switch-link">{mode === 'register' ? <>Already have an account? <Link to="/login">Log in</Link></> : <>New to Kira? <Link to="/register">Get started</Link></>}</div></div><div className="auth-form-content"><h1 id="auth-heading">{config.title}</h1><p className="auth-intro">{config.description}</p>
       <form ref={form} className="auth-form" noValidate onSubmit={submit}>
         {mode === 'register' && <div className="auth-field"><label htmlFor="auth-name">Full name</label><div className={`auth-input ${errors.name ? 'has-error' : ''}`}><UserRound size={17} aria-hidden="true" /><input id="auth-name" name="name" type="text" autoComplete="name" required value={fields.name} onChange={event => update('name', event.target.value)} aria-invalid={!!errors.name} aria-describedby={errors.name ? 'auth-name-error' : undefined} /></div>{errors.name && <p className="auth-error" id="auth-name-error">{errors.name}</p>}</div>}
@@ -98,7 +100,7 @@ export function AuthPage({ mode }: { mode: AuthMode }) {
       </form>
       {serverError && <p className="auth-error" role="alert">{serverError}</p>}
       {checked && <div ref={status} tabIndex={-1} className="auth-result" role="status"><CircleCheck size={20} /><div><strong>Next step</strong><p>{success}</p></div></div>}
-      <div className="auth-preview-note"><Check size={14} /><span>Secure account access through Supabase Auth.</span></div>
+      <div className="auth-preview-note"><Check size={14} /><span>{localDemoEnabled ? 'Browser mockup · no database or Supabase needed.' : 'Secure account access through Supabase Auth.'}</span></div>
       {mode === 'login' && DemoAccounts && <Suspense fallback={null}><DemoAccounts /></Suspense>}
       {mode === 'recover' && <Link className="auth-back-login" to="/login">Back to log in</Link>}
       <p className="auth-policy">Read our <Link to="/privacy">Privacy policy</Link> and <Link to="/terms">Terms of service</Link>.</p>

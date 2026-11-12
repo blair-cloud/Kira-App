@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { localDemoEnabled, localDemoToken } from './localDemo'
 
 const base = (import.meta.env.VITE_API_URL as string | undefined) || '/api/v1'
 export type Page<T> = { items: T[]; total: number; offset: number; limit: number }
@@ -20,7 +21,11 @@ export type Report = { suppressed: boolean; items: { label: string; count: numbe
 export type Dashboard = { profile: Profile; stats: Record<string, number>; appointments?: Appointment[]; questions?: Question[]; checkins?: Checkin[]; shared_checkins?: Checkin[]; conversations?: Conversation[]; resources?: Resource[]; notifications?: Notification[]; goals?: Goal[]; referrals?: Referral[]; reports?: Record<string, Report | string> }
 
 export async function api<T>(path: string, options: RequestInit = {}, suppliedToken?: string): Promise<T> {
-  const token = suppliedToken ?? (supabase ? (await supabase.auth.getSession()).data.session?.access_token : undefined)
+  if (localDemoEnabled) {
+    const { mockRequest } = await import('./mockApi')
+    return await mockRequest(path, options, suppliedToken ?? localDemoToken()) as T
+  }
+  const token = suppliedToken ?? localDemoToken() ?? (supabase ? (await supabase.auth.getSession()).data.session?.access_token : undefined)
   const headers = new Headers(options.headers)
   if (options.body && !(options.body instanceof FormData)) headers.set('Content-Type', 'application/json')
   if (token) headers.set('Authorization', `Bearer ${token}`)

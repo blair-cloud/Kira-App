@@ -12,14 +12,19 @@ npm run dev
 
 Open the local URL printed by Vite.
 
-Start the backend in a separate terminal after following [backend setup](backend/README.md):
+Local development now opens a **browser-only mockup** automatically in local development. Log in with the Student, Staff, or Admin demo account. No backend or database is needed for these previews; sample changes stay in the current browser tab.
 
-```bash
-cd backend
-.venv/Scripts/python -m uvicorn app.main:app --reload --host 127.0.0.1
-```
+To force the preview, set `VITE_AUTH_MODE=mock` in `Frontend/.env`. To connect real services later, set `VITE_AUTH_MODE=supabase` and follow [backend setup](backend/README.md). Mock access is not included in production builds.
 
-API documentation: [Swagger UI](http://127.0.0.1:8000/docs). Supabase is intentionally unconfigured until a project is connected; public content works locally, while sign-in requires those settings. Never commit `.env` secrets.
+Development credentials:
+
+| Role | Email | Password |
+|---|---|---|
+| Student | student@wellness.test | Student@123 |
+| Professional | staff@wellness.test | Staff@123 |
+| Admin | admin@wellness.test | Admin@123 |
+
+Run the offline mock tests with `npm run test:mock` inside `Frontend`.
 
 ## Production build
 

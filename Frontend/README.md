@@ -2,16 +2,28 @@
 
 The Kepler College wellness frontend, connected to FastAPI and prepared for Supabase Auth. Built with React, TypeScript, Vite, Tailwind CSS, React Router, Lucide React, and Embla Carousel.
 
-## Run locally
+## Run locally — no Supabase or database needed
 
-Run these commands from the `Frontend` directory. From the repository root, enter `cd Frontend` first.
+From the repository root:
 
-```bash
-npm install
+```powershell
+cd Frontend
+npm ci
 npm run dev
 ```
 
-Start the backend as described in [backend setup](../backend/README.md). Copy `.env.example` to `.env` and configure the public Supabase values when your project is ready. Then open the URL printed by Vite. Use `npm run build` to type-check and create a production bundle.
+Development mode uses browser-only mock roles and sample data by default. You do not need an `.env` file, demo flags, a running backend, or a database. Open `/login` and choose **Continue as Student**, **Continue as Staff**, or **Continue as Admin**. The displayed email/password combinations also work in the normal login form.
+
+Mock actions change sample data in session storage in the current browser tab. No authentication or data request is sent to Supabase or FastAPI. These are UI previews, not real accounts, secure authorization, clinical records, sent emails, or live AI responses. Account creation, email invitations, password recovery and file uploads require the connected service and are not simulated as successful deliveries.
+
+To force preview mode, set `VITE_AUTH_MODE=mock` in `.env`. To connect Supabase later, set `VITE_AUTH_MODE=supabase`, configure the public project URL and publishable key, and follow [backend setup](../backend/README.md). Restart the frontend after changing environment variables. Browser mock mode and demo credentials are excluded from production builds.
+
+```powershell
+npm run test:mock
+npm run build
+```
+
+The mock tests run with networking disabled and cover all roles, wrong credentials, role-scoped data, reload persistence, sign-out, and production guards.
 
 ## Frontend features
 
@@ -38,7 +50,7 @@ Start the backend as described in [backend setup](../backend/README.md). Copy `.
 
 ## Integration status
 
-The backend now supplies resources, daily cards, questions, conversations, appointments, check-ins, referrals, notifications and role-based dashboards. Supabase credentials are intentionally pending. See [the backend README](../backend/README.md) for setup, development accounts, tests, and remaining production requirements.
+The backend now supplies resources, daily cards, questions, conversations, appointments, check-ins, referrals, notifications and role-based dashboards. Supabase credentials are intentionally pending. Development-only mock roles can be enabled without Supabase; see the backend setup guide. See [the backend README](../backend/README.md) for setup, development accounts, tests, and remaining production requirements.
 
 ## Original roadmap
 
