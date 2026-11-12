@@ -1,5 +1,6 @@
 const mode = import.meta.env.VITE_AUTH_MODE as string | undefined
-export const localDemoEnabled = import.meta.env.DEV && mode !== 'supabase'
+const publicDemo = import.meta.env.VITE_PUBLIC_DEMO === 'true' && mode === 'mock'
+export const localDemoEnabled = (import.meta.env.DEV && mode !== 'supabase') || publicDemo
 const key = 'kira-browser-mock-session-v1'
 let memoryToken: string | null = null
 

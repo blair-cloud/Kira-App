@@ -16,7 +16,7 @@ Development mode uses browser-only mock roles and sample data by default. You do
 
 Mock actions change sample data in session storage in the current browser tab. No authentication or data request is sent to Supabase or FastAPI. These are UI previews, not real accounts, secure authorization, clinical records, sent emails, or live AI responses. Account creation, email invitations, password recovery and file uploads require the connected service and are not simulated as successful deliveries.
 
-To force preview mode, set `VITE_AUTH_MODE=mock` in `.env`. To connect Supabase later, set `VITE_AUTH_MODE=supabase`, configure the public project URL and publishable key, and follow [backend setup](../backend/README.md). Restart the frontend after changing environment variables. Browser mock mode and demo credentials are excluded from production builds.
+To force preview mode, set `VITE_AUTH_MODE=mock` in `.env`. To connect Supabase later, set `VITE_AUTH_MODE=supabase`, configure the public project URL and publishable key, and follow [backend setup](../backend/README.md). Restart the frontend after changing environment variables. The standard production build excludes browser mock mode and demo credentials. The explicit `npm run build:demo` command includes only the requested public mockup, isolated from any real services.
 
 ```powershell
 npm run test:mock
@@ -60,3 +60,9 @@ The backend now supplies resources, daily cards, questions, conversations, appoi
 4. Service integration, accessibility review, content review, privacy approval, and institutional contact verification.
 
 The educational card copy is sample content and needs review by qualified staff before publication. The emergency and contact pages distinguish published contact routes from preview features. Privacy and terms remain drafts for institutional review.
+
+## Hosting the public mockup
+
+Use `npm run build:demo` and publish `dist`. The included Vercel configuration already does this and handles direct navigation to `/login`, `/student/dashboard`, `/professional/dashboard`, and `/admin/dashboard`. The explicit public-demo flag is required for mock mode in a deployed build; ordinary `npm run build` remains protected from accidental mock access.
+
+The public demo contains synthetic browser-only roles, not real authentication or student records. Normal sign-in and the role shortcut buttons both navigate to the corresponding dashboard. Each tab stores only its own preview changes.

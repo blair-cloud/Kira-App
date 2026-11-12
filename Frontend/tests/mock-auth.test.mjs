@@ -123,3 +123,18 @@ test('old or placeholder Supabase settings do not override the default mock prev
   assert.equal(client.supabaseCalls(), 0)
   assert.equal(client.networkCalls(), 0)
 })
+
+test('the explicitly enabled public demo build can enter all role dashboards offline', async () => {
+  const client = preview({ DEV: false, VITE_AUTH_MODE: 'mock', VITE_PUBLIC_DEMO: 'true' })
+  for (const role of ['student', 'staff', 'admin']) {
+    await login(client, role)
+    assert.equal((await client.api(`/${role}/dashboard`)).profile.role, role)
+  }
+  assert.equal(client.networkCalls(), 0)
+  assert.equal(client.supabaseCalls(), 0)
+})
+
+test('the public demo flag cannot override an explicitly connected Supabase build', () => {
+  const client = preview({ DEV: false, VITE_AUTH_MODE: 'supabase', VITE_PUBLIC_DEMO: 'true' })
+  assert.equal(client.auth.localDemoEnabled, false)
+})

@@ -12,7 +12,7 @@ The assistant currently retrieves published guidance from resources and knowledg
 
 The frontend now has an independent browser-only mockup. Run `npm run dev` in `Frontend` and open `/login`. The three role previews work automatically in development, with sample data and changes stored in the current browser tab. Set `VITE_AUTH_MODE=mock` to explicitly select it. No backend command or database connection is needed.
 
-This is a UI preview, not real authentication or server authorization. Its adapter is `Frontend/src/services/mockApi.ts`; it never calls FastAPI or Supabase. Production builds exclude it. Choose `VITE_AUTH_MODE=supabase` when you are ready to connect the real services documented below.
+This is a UI preview, not real authentication or server authorization. Its adapter is `Frontend/src/services/mockApi.ts`; it never calls FastAPI or Supabase. Standard production builds exclude it; the separately configured public mockup build intentionally enables browser-only sample previews without connecting to this backend. Choose `VITE_AUTH_MODE=supabase` when you are ready to connect the real services documented below.
 
 The backend also retains an optional local mock API for backend testing. It is separate from the frontend-only preview: set `APP_ENV=development`, `DATABASE_URL=sqlite:///./kira-demo.db`, `ENABLE_LOCAL_DEMO=true`, and leave `SUPABASE_URL` empty, then run migrations and `python -m app.seed --local-demo`. This optional API mode uses server-side permissions and two-hour opaque sessions; it is not required to browse the dashboards, and is prohibited in production or against Supabase/PostgreSQL.
 
